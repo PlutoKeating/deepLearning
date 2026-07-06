@@ -95,3 +95,33 @@ To build the static application for production deployment:
 npm run build
 ```
 The optimized single-page app will be outputted to `dist/`, ready to upload and serve via any static platform.
+
+---
+
+## ☁️ Cloudflare Pages Deployment Guide
+
+This decoupled web application (`exam-prep-site/`) is perfectly engineered for seamless hosting on **Cloudflare Pages** with automated CI/CD.
+
+### Step-by-Step Deployment Configuration
+
+1. **Log in to Cloudflare Dashboard:** Go to the [Cloudflare Dashboard](https://dash.cloudflare.com/) and navigate to **Workers & Pages** > **Pages** > **Connect to Git**.
+2. **Select Repository:** Connect your GitHub account and select your `deepLearning` repository.
+3. **Configure Build Settings:** Enter the following exact settings in the deployment configuration page:
+
+| Configuration Field | Target Setting / Value | Explanation |
+| :--- | :--- | :--- |
+| **Project Name** | `deep-learning-study-site` | Your public subdomain (e.g., `deep-learning-study-site.pages.dev`) |
+| **Production Branch** | `main` | The default branch to trigger live production deployments |
+| **Framework Preset** | **Vite** | Auto-configures standard Vite single-page application presets |
+| **Root Directory** | `exam-prep-site` | **[CRITICAL]** Points Cloudflare to the sub-folder containing the frontend project |
+| **Build Command** | `npm run build` | Compiles the React + TS + Vite project |
+| **Build Output Directory** | `dist` | The folder containing production-ready compiled static HTML/JS/CSS |
+
+4. **Environment Variables (Optional):** If your app uses custom APIs, configure them under the **Environment variables** section.
+5. **Click "Save and Deploy":** Cloudflare will instantly pull your code, install dependencies, run the Vite build, and deploy your site live!
+
+> [!IMPORTANT]
+> Because we have set the **Root Directory** to `exam-prep-site`, Cloudflare Pages will run all installation and build commands relative to that subdirectory. Do not set the build command to `cd exam-prep-site && npm run build` unless Root Directory is left blank.
+
+> [!NOTE]
+> Every commit pushed to your GitHub `main` branch will trigger an automated build and deploy. Preview deployments are also automatically generated for non-main branches!

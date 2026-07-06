@@ -1,0 +1,264 @@
+=== PAGE 1 ===
+Lecture 3: Regularization and Optimization
+Prof. Xiaowei HU
+
+
+=== PAGE 2 ===
+Courtesy of Zane Durante
+
+=== PAGE 3 ===
+Courtesy of Zane Durante
+
+=== PAGE 4 ===
+Courtesy of Zane Durante
+
+=== PAGE 5 ===
+Courtesy of Zane Durante
+
+=== PAGE 6 ===
+Courtesy of Zane Durante
+
+=== PAGE 7 ===
+Courtesy of Zane Durante
+
+=== PAGE 8 ===
+Courtesy of Zane Durante
+
+=== PAGE 9 ===
+Courtesy of Zane Durante
+
+=== PAGE 10 ===
+Courtesy of Zane Durante
+
+=== PAGE 11 ===
+Courtesy of Zane Durante
+
+=== PAGE 12 ===
+Courtesy of Zane Durante
+
+=== PAGE 13 ===
+Courtesy of Zane Durante
+
+=== PAGE 14 ===
+Courtesy of Zane Durante
+
+=== PAGE 15 ===
+Courtesy of Zane Durante
+
+=== PAGE 16 ===
+Courtesy of Zane Durante
+
+=== PAGE 17 ===
+Courtesy of Zane Durante
+
+=== PAGE 18 ===
+Courtesy of Zane Durante
+
+=== PAGE 19 ===
+Courtesy of Zane Durante
+
+=== PAGE 20 ===
+Courtesy of Zane Durante
+
+=== PAGE 21 ===
+Courtesy of Zane Durante
+
+=== PAGE 22 ===
+Courtesy of Zane Durante
+
+=== PAGE 23 ===
+Courtesy of Zane Durante
+
+=== PAGE 24 ===
+Courtesy of Zane Durante
+
+=== PAGE 25 ===
+Courtesy of Zane Durante
+
+=== PAGE 26 ===
+Courtesy of Zane Durante
+
+=== PAGE 27 ===
+Courtesy of Zane Durante
+
+=== PAGE 28 ===
+Courtesy of Zane Durante
+
+=== PAGE 29 ===
+Courtesy of Zane Durante
+
+=== PAGE 30 ===
+Courtesy of Zane Durante
+
+=== PAGE 31 ===
+Courtesy of Zane Durante
+
+=== PAGE 32 ===
+Courtesy of Zane Durante
+
+=== PAGE 33 ===
+Courtesy of Zane Durante
+
+=== PAGE 34 ===
+Courtesy of Zane Durante
+
+=== PAGE 35 ===
+Courtesy of Zane Durante
+
+=== PAGE 36 ===
+Courtesy of Zane Durante
+
+=== PAGE 37 ===
+Courtesy of Zane Durante
+
+=== PAGE 38 ===
+Courtesy of Zane Durante
+
+=== PAGE 39 ===
+Courtesy of Zane Durante
+
+=== PAGE 40 ===
+Courtesy of Zane Durante
+
+=== PAGE 41 ===
+Courtesy of Zane Durante
+
+=== PAGE 42 ===
+Courtesy of Zane Durante
+
+=== PAGE 43 ===
+Courtesy of Zane Durante
+
+=== PAGE 44 ===
+Courtesy of Zane Durante
+
+=== PAGE 45 ===
+Courtesy of Zane Durante
+
+=== PAGE 46 ===
+Courtesy of Zane Durante
+
+=== PAGE 47 ===
+Courtesy of Zane Durante
+
+=== PAGE 48 ===
+Courtesy of Zane Durante
+
+=== PAGE 49 ===
+Courtesy of Zane Durante
+
+=== PAGE 50 ===
+Courtesy of Zane Durante
+
+=== PAGE 51 ===
+Courtesy of Zane Durante
+
+=== PAGE 52 ===
+Courtesy of Zane Durante
+
+=== PAGE 53 ===
+Courtesy of Zane Durante
+
+=== PAGE 55 ===
+Courtesy of Zane Durante
+
+=== PAGE 56 ===
+Courtesy of Zane Durante
+
+=== PAGE 57 ===
+Courtesy of Zane Durante
+
+
+=== PAGE 58 ===
+Courtesy of Zane Durante
+
+=== PAGE 59 ===
+Courtesy of Zane Durante
+
+=== PAGE 60 ===
+Courtesy of Zane Durante
+
+=== PAGE 61 ===
+Courtesy of Zane Durante
+
+=== PAGE 62 ===
+Courtesy of Zane Durante
+• SGD: same step size everywhere
+• Momentum: better direction
+• RMSProp: better scaling
+• Adam: both direction + scaling
+
+=== PAGE 63 ===
+Courtesy of Zane Durante
+
+=== PAGE 64 ===
+Courtesy of Zane Durante
+
+=== PAGE 65 ===
+Courtesy of Zane Durante
+
+=== PAGE 66 ===
+Courtesy of Zane Durante
+
+=== PAGE 67 ===
+Courtesy of Zane Durante
+
+=== PAGE 68 ===
+Courtesy of Zane Durante
+
+=== PAGE 69 ===
+Courtesy of Zane Durante
+
+=== PAGE 70 ===
+Courtesy of Zane Durante
+
+=== PAGE 71 ===
+Courtesy of Zane Durante
+
+=== PAGE 72 ===
+Courtesy of Zane Durante
+
+=== PAGE 73 ===
+Courtesy of Zane Durante
+
+=== PAGE 74 ===
+Courtesy of Zane Durante
+
+=== PAGE 75 ===
+Courtesy of Zane Durante
+
+=== PAGE 76 ===
+Courtesy of Zane Durante
+
+=== PAGE 77 ===
+Courtesy of Zane Durante
+
+=== PAGE 78 ===
+Courtesy of Zane Durante
+
+=== PAGE 79 ===
+Courtesy of Zane Durante
+
+=== PAGE 80 ===
+Courtesy of Zane Durante
+
+=== PAGE 81 ===
+Courtesy of Zane Durante
+
+=== PAGE 82 ===
+Courtesy of Zane Durante
+
+=== PAGE 83 ===
+Courtesy of Zane Durante
+
+=== PAGE 84 ===
+Courtesy of Zane Durante
+
+=== PAGE 85 ===
+Courtesy of Zane Durante
+
+=== PAGE 86 ===
+Courtesy of Zane Durante
+
+=== PAGE 87 ===
+Courtesy of Zane Durante

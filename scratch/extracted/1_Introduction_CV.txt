@@ -1,0 +1,359 @@
+=== PAGE 1 ===
+Deep Learning and Computer Vision
+Prof. Xiaowei HU
+School of Future Technology
+South China University of Technology
+2026
+
+=== PAGE 2 ===
+Xiaowei Hu
+Professor
+School of Future Technology
+Office: B1c-411
+Email: huxiaowei@scut.edu.cn
+Who’s who
+Work Experience
+• Research Scientist at Shanghai AI Laboratory
+• Postdoctoral Fellow at The Chinese University of Hong Kong
+Academic Background
+• Ph.D., The Chinese University of Hong Kong
+• B.Eng., South China University of T echnology
+Achievements & Honors
+• Published 60+ papers in top venues (IEEE TPAMI, CVPR, ICCV ,etc.)
+• 8,000+ citations
+• World’s T op2% Scientists by Stanford University
+• Achieved Excellence in the Hong Kong Young Scientist Award
+Research Interests
+• Computer vision, low-level vision, intelligent perception and reasoning, multim
+odal foundation models and agents, and medical AI
+
+=== PAGE 3 ===
+Course Content
+• Content: Images, videos, deep network architectures, classification, detection, 
+segmentation, large models, applications, and practical research skills.
+• Coding:  Python, PyTorch
+– Tutorials in Python and Pytorch will be offered.
+• Learning Objectives
+– Formalize computer vision applications into tasks
+Formalize inputs and outputs for vision-related problems.
+Understand what data and computational requirements you need to train a model.
+– Develop and train vision models
+Learn to code, debug, and train convolutional neural networks.
+Learn how to use software frameworks like PyTorch and TensorFlow.
+– Gain an understanding of where the field is and where it is headed
+What new research has come out in the last 0-5 years?
+What are open research challenges? 
+
+=== PAGE 4 ===
+Grading
+• Attendance (20%)
+- Active participation and engagement in lectures
+• Experiments (30%)
+- Weeks 17 & 18
+• Final Exam (50%) 
+Another related course (深度学习与计算机视觉课程设计) only for the Major of AI 
+(24人工智能1班;24人工智能2班)
+- Additional 2 points 
+
+=== PAGE 5 ===
+Collaboration Policy
+• Experiments and project should be written up individually and should reflect your 
+own individual work. However, you may discuss with your classmates and TAs.
+• You should not copy or share complete solutions or code.
+• If you work with anyone else (other than TAs and instructors), list their names at the 
+top of the submissions. 
+
+=== PAGE 6 ===
+Collaboration Policy
+• Our policy for using ChatGPT, DeepSeek and other AI assistants is identical to our 
+policy for using human assistants.
+• This is an AI class and you should try out all the latest AI assistants (they are pretty 
+much all using deep learning). It's very important to play with them to learn what 
+they can do and what they can't do. That's a part of the content of this course.
+• Just like you can come to office hours and ask a human questions (about the lecture 
+material, clarifications about questions, tips for getting started, etc.), you are very 
+welcome to do the same with AI assistants.
+• But: just like you are not allowed to ask an expert friend to do your homework for 
+you, you also should not ask an expert AI.
+• If it is ever unclear, just imagine the AI as a human and apply the same rules as you 
+would with a human.
+• If you work with any AI, briefly describe which AI and how you used it at the top of 
+the submissions (a few sentences is enough).
+
+=== PAGE 7 ===
+Schedule Overview
+AI
+Big Data
+all
+
+=== PAGE 8 ===
+Where to find the slides
+Baidu Cloud：CV2026
+Link: https://pan.baidu.com/s/1PxL6Ljvmim-C0SHozWKE-
+Q?pwd=scut 
+Access Code: scut
+
+
+=== PAGE 9 ===
+Lecture 1: 
+Introduction to Computer Vision
+29 Sep. 2023
+
+
+=== PAGE 16 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 17 ===
+To see
+“What does it mean, to see? The 
+plain man's answer (and 
+Aristotle's, too). would be, to 
+know what is where by looking.” 
+To discover from images what is 
+present in the world, where things 
+are, what actions are taking place, to 
+predict and anticipate events in the 
+world.
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 18 ===
+Healthcare
+Robotics
+Driving
+Gaming
+Accessibility
+Weather
+Exciting times in computer vision
+
+
+=== PAGE 19 ===
+“A cup of cat”
+“A cup of coffee”
+ “A cat”
+DALL-E 2 (Open AI)
+https://www.reddit.com/r/dalle2/comments/y4mygn/a_cup_of_cat/
+Slide credit: Shuang Li
+Exciting times in computer vision
+
+=== PAGE 20 ===
+Sheep
+Airplane
+Bed
+Horse
+When some of us started…
+
+=== PAGE 21 ===
+Why is vision hard?Why is vision hard?
+Why is vision hard?
+Courtesy of Kaiming He
+
+=== PAGE 22 ===
+What the machine gets
+The input
+Courtesy of Kaiming He
+
+=== PAGE 23 ===
+What we see
+What the machine gets
+The camera is a measurement device, not a vision system
+The input
+Courtesy of Kaiming He
+
+=== PAGE 24 ===
+To see: perception vs. measurement
+Courtesy of Kaiming He
+
+=== PAGE 25 ===
+To see: perception vs. measurement
+Courtesy of Kaiming He
+
+=== PAGE 30 ===
+Where did vision come from?
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 31 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 32 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 33 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 34 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 35 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 36 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 37 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 38 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 40 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 41 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 42 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 43 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 44 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 45 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 46 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 47 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 48 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 49 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 50 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 51 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 52 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 53 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 54 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 55 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 56 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 57 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 58 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 59 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 60 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 61 ===
+Courtesy of Kaiming He
+2012 to Present: Deep Learning is Everywhere
+
+=== PAGE 62 ===
+Semantic segmentation: 
+Assign labels to all the pixels in the image
+Building
+People
+Grass
+Tree
+Sky
+Related tasks:
+• Semantic segmentation
+• Object categorization
+Courtesy of Kaiming He
+2012 to Present: Deep Learning is Everywhere
+
+=== PAGE 63 ===
+Detection: Locate all the people in this image
+Courtesy of Kaiming He
+2012 to Present: Deep Learning is Everywhere
+
+=== PAGE 64 ===
+Recognition: who is this person?
+Courtesy of Kaiming He
+2012 to Present: Deep Learning is Everywhere
+
+=== PAGE 65 ===
+Rough 3D layout, 
+depth ordering
+Courtesy of Kaiming He
+2012 to Present: Deep Learning is Everywhere
+
+=== PAGE 66 ===
+Making new images
+Courtesy of Kaiming He
+2012 to Present: Deep Learning is Everywhere
+
+=== PAGE 67 ===
+Adding missing content
+Input image
+ Colorized output
+Courtesy of Kaiming He
+2012 to Present: Deep Learning is Everywhere
+
+=== PAGE 68 ===
+Predicting future events
+What is going to happen?
+Courtesy of Kaiming He
+2012 to Present: Deep Learning is Everywhere
+
+=== PAGE 69 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 70 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 71 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 72 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 73 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 74 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 75 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 76 ===
+76
+Real World Applications of Computer Vision
+https://www.youtube.com/watch?v=bkjqDcprRVs
+
+=== PAGE 78 ===
+Source: AI Index (2024)
+
+=== PAGE 96 ===
+2024 Nobel Prize in Physics
+They used physics to find patterns in information
+
+
+=== PAGE 97 ===
+ Deep Learning 
+by Goodfellow, Bengio, and Courville
+ Mathematics of deep learning 
+Chapters 5, 6, 7 are useful to understand vector calculus and continuous optimization.
+ Dive into deep learning
+An interactive deep learning book with code, math, and discussions, based on the 
+NumPy interface.
+Optional Textbook Resources
+
+=== PAGE 98 ===
+98
+Thanks!

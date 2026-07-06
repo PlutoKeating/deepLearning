@@ -1,0 +1,1711 @@
+=== PAGE 1 ===
+Lecture 12:
+Generative Models (part 1)
+
+=== PAGE 2 ===
+Last Time: Self-Supervised Learning
+Pretext tasks from image transformations
+• Rotation, inpainting, rearrangement, coloring
+• Reconstruction-based learning (MAE)
+Rotation Rearrangement Reconstruction
+
+=== PAGE 3 ===
+Last Time: Self-Supervised Learning
+Contrastive representation learning
+• Intuition and formulation
+• Instance contrastive learning: SimCLR and MOCO
+• Sequence contrastive learning: CPC
+• Self-Distillation Without Labels, DINO
+
+=== PAGE 4 ===
+Contrastive Learning: MoCo
+He et al, “Momentum Contrast for Unsupervised Visual Representation Learning”, CVPR 2020
+no_grad Key differences to SimCLR:
+● Keep a running queue of keys (negative
+samples).
+● Compute gradients and update the
+encoder only through the queries .
+● Decouple min-batch size with the
+number of keys: can support a large
+number of negative samples .
+● The key encoder is slowly progressing
+through the momentum update rules:
+
+=== PAGE 5 ===
+Self-Supervised Learning: DINO
+Caron et al. 2021 Emerging Properties in Self-Supervised Vision Transformers
+Similar in spirit to MoCo, but matches features using KL divergence 
+instead of dot product, and uses Vision Transformers instead of ResNets
+
+=== PAGE 6 ===
+Today:
+Generative Models (part 1)
+
+=== PAGE 7 ===
+Supervised vs Unsupervised Learning
+Supervised Learning
+Data: (x, y)
+x is data, y is label
+Goal: Learn a function to map x -> y
+Examples: Classification, regression, 
+object detection, semantic 
+segmentation, image captioning, etc.
+
+=== PAGE 8 ===
+Supervised vs Unsupervised Learning
+Cat
+Classification
+This image is CC0 public domain
+Supervised Learning
+Data: (x, y)
+x is data, y is label
+Goal: Learn a function to map x -> y
+Examples: Classification, regression, 
+object detection, semantic 
+segmentation, image captioning, etc.
+
+=== PAGE 9 ===
+Supervised vs Unsupervised Learning
+Image captioning
+A cat sitting on a suitcase on the floor
+Caption generated using neuraltalk2
+Image is CC0 Public domain.
+Supervised Learning
+Data: (x, y)
+x is data, y is label
+Goal: Learn a function to map x -> y
+Examples: Classification, regression, 
+object detection, semantic 
+segmentation, image captioning, etc.
+
+=== PAGE 10 ===
+Supervised vs Unsupervised Learning
+DOG, DOG, CAT
+This image is CC0 public domain
+Object Detection
+Supervised Learning
+Data: (x, y)
+x is data, y is label
+Goal: Learn a function to map x -> y
+Examples: Classification, regression, 
+object detection, semantic 
+segmentation, image captioning, etc.
+
+=== PAGE 11 ===
+Supervised vs Unsupervised Learning
+Semantic Segmentation
+GRASS, CAT, 
+TREE, SKY
+Supervised Learning
+Data: (x, y)
+x is data, y is label
+Goal: Learn a function to map x -> y
+Examples: Classification, regression, 
+object detection, semantic 
+segmentation, image captioning, etc.
+
+=== PAGE 12 ===
+Supervised vs Unsupervised Learning
+Unsupervised Learning
+Data: x
+Just data, no labels!
+Goal: Learn hidden structure in data
+Examples: Clustering, dimensionality 
+reduction, density estimation, etc.
+Supervised Learning
+Data: (x, y)
+x is data, y is label
+Goal: Learn a function to map x -> y
+Examples: Classification, regression, 
+object detection, semantic 
+segmentation, image captioning, etc.
+
+=== PAGE 13 ===
+Supervised vs Unsupervised Learning
+Unsupervised Learning
+Data: x
+Just data, no labels!
+Goal: Learn hidden structure in data
+Examples: Clustering, dimensionality 
+reduction, density estimation, etc.
+K-means clustering
+This image is CC0 public domain
+
+=== PAGE 14 ===
+Supervised vs Unsupervised Learning
+Unsupervised Learning
+Data: x
+Just data, no labels!
+Goal: Learn hidden structure in data
+Examples: Clustering, dimensionality 
+reduction, density estimation, etc.Principal Component Analysis 
+(Dimensionality reduction)
+This image from Matthias Scholz  
+is CC0 public domain
+3-d 2-d
+
+=== PAGE 15 ===
+Supervised vs Unsupervised Learning
+Unsupervised Learning
+Data: x
+Just data, no labels!
+Goal: Learn hidden structure in data
+Examples: Clustering, dimensionality 
+reduction, density estimation, etc.
+2-d density estimation
+2-d density images left and right
+are CC0 public domain
+1-d density estimation
+Figure copyright Ian Goodfellow, 2016. Reproduced with permission. 
+Modeling p(x)
+
+=== PAGE 16 ===
+Generative vs Discriminative Models
+Discriminative Model:
+Learn a probability 
+distribution p(y|x)
+Generative Model:
+Learn a probability 
+distribution p(x)
+Conditional Generative 
+Model: Learn p(x|y)
+Data: x
+Label: y
+Cat
+
+=== PAGE 17 ===
+Generative vs Discriminative Models
+Discriminative Model:
+Learn a probability 
+distribution p(y|x)
+Generative Model:
+Learn a probability 
+distribution p(x)
+Conditional Generative 
+Model: Learn p(x|y)
+Data: x
+Label: y
+Cat
+Probability Recap:
+Density Function
+p(x) assigns a positive 
+number to each possible 
+x; higher numbers mean 
+x is more likely.
+Density functions are 
+normalized:
+න
+𝑋
+𝑝 𝑥 𝑑𝑥 = 1
+Different values of x 
+compete for density 
+
+=== PAGE 18 ===
+Generative vs Discriminative Models
+Discriminative Model:
+Learn a probability 
+distribution p(y|x)
+Generative Model:
+Learn a probability 
+distribution p(x)
+Conditional Generative 
+Model: Learn p(x|y)
+Data: x
+Label: y
+Cat
+න
+𝑋
+𝑝 𝑥 𝑑𝑥 = 1
+Different values of x 
+compete for density 
+P(cat|    )
+P(dog|   )
+
+
+=== PAGE 19 ===
+Generative vs Discriminative Models
+Discriminative Model:
+Learn a probability 
+distribution p(y|x)
+Generative Model:
+Learn a probability 
+distribution p(x)
+Conditional Generative 
+Model: Learn p(x|y)
+P(cat|  )
+P(dog|  )
+P(cat|  )
+P(dog|  )
+Possible labels for each image compete for probability.
+No competition between images
+
+=== PAGE 20 ===
+Generative vs Discriminative Models
+Discriminative Model:
+Learn a probability 
+distribution p(y|x)
+Generative Model:
+Learn a probability 
+distribution p(x)
+Conditional Generative 
+Model: Learn p(x|y)
+P(cat|  )
+P(dog|  )
+P(cat|  )
+P(dog|  )
+No way to handle unreasonable inputs; must 
+give a label distribution for all possible inputs
+Monkey imageis CC 0 Public Domain
+Abst ract  image is free to use under the Pixabaylicense
+
+=== PAGE 21 ===
+Generative vs Discriminative Models
+Discriminative Model:
+Learn a probability 
+distribution p(y|x)
+Generative Model:
+Learn a probability 
+distribution p(x)
+Conditional Generative 
+Model: Learn p(x|y)
+P(  )
+P(    )
+P(    )
+P(    )
+…
+Cat im age is CC0 publi c domain
+Dog i mage is CC0 Public Dom ain
+M onkey i mage is CC0 Public Dom ain
+Abstract im age is free to use under the Pixabay license
+All possible images compete for probability mass
+
+=== PAGE 22 ===
+Generative vs Discriminative Models
+Discriminative Model:
+Learn a probability 
+distribution p(y|x)
+Generative Model:
+Learn a probability 
+distribution p(x)
+Conditional Generative 
+Model: Learn p(x|y)
+P(  )
+P(    )
+P(    )
+P(    )
+…
+Cat im age is CC0 publi c domain
+Dog i mage is CC0 Public Dom ain
+M onkey i mage is CC0 Public Dom ain
+Abstract im age is free to use under the Pixabay license
+All possible images compete for probability mass
+Requires deep understanding: Is a dog more 
+likely to sit or stand? Is a 3-legged dog more likely 
+than a 3-armed monkey?
+
+=== PAGE 23 ===
+Generative vs Discriminative Models
+Discriminative Model:
+Learn a probability 
+distribution p(y|x)
+Generative Model:
+Learn a probability 
+distribution p(x)
+Conditional Generative 
+Model: Learn p(x|y)
+P(  )
+P(    )
+P(    )
+P(    )
+…
+Cat im age is CC0 publi c domain
+Dog i mage is CC0 Public Dom ain
+M onkey i mage is CC0 Public Dom ain
+Abstract im age is free to use under the Pixabay license
+All possible images compete for probability mass
+Model can “reject” unreasonable inputs by giving 
+them small probability mass
+
+=== PAGE 24 ===
+Generative vs Discriminative Models
+Discriminative Model:
+Learn a probability 
+distribution p(y|x)
+Generative Model:
+Learn a probability 
+distribution p(x)
+Conditional Generative 
+Model: Learn p(x|y)
+Cat im age is CC0 publi c domain
+Dog i mage is CC0 Public Dom ain
+M onkey i mage is CC0 Public Dom ain
+Abstract im age is free to use under the Pixabay license
+Each possible label induces a 
+competition across all possible images
+P( |cat)
+ P(   |cat)
+P(    |cat)
+P(    |cat)
+…
+P(  |dog)
+ P(  |dog)
+P(    |dog)
+P(    |dog)
+
+
+=== PAGE 25 ===
+Generative vs Discriminative Models
+Discriminative Model:
+Learn a probability 
+distribution p(y|x)
+Generative Model:
+Learn a probability 
+distribution p(x)
+Conditional Generative 
+Model: Learn p(x|y)
+Recall Bayes’ Rule:
+𝑃 𝑥 𝑦) = 𝑃 𝑦 𝑥)
+𝑃 𝑦 𝑃(𝑥)
+
+=== PAGE 26 ===
+Generative vs Discriminative Models
+Discriminative Model:
+Learn a probability 
+distribution p(y|x)
+Generative Model:
+Learn a probability 
+distribution p(x)
+Conditional Generative 
+Model: Learn p(x|y)
+Recall Bayes’ Rule:
+𝑃 𝑥 𝑦) = 𝑃 𝑦 𝑥)
+𝑃 𝑦 𝑃(𝑥)
+Discriminative Model
+Conditional 
+Generative Model
+(Unconditional) 
+Generative ModelPrior over 
+labels
+We can build a conditional generative model from 
+other components … but not common in practice
+
+=== PAGE 27 ===
+Generative vs Discriminative Models
+Discriminative Model:
+Learn a probability 
+distribution p(y|x)
+Generative Model:
+Learn a probability 
+distribution p(x)
+Conditional Generative 
+Model: Learn p(x|y)
+Assign labels to data
+Feature learning (with labels)
+
+=== PAGE 28 ===
+Generative vs Discriminative Models
+Discriminative Model:
+Learn a probability 
+distribution p(y|x)
+Generative Model:
+Learn a probability 
+distribution p(x)
+Conditional Generative 
+Model: Learn p(x|y)
+Assign labels to data
+Feature learning (with labels)
+Detect outliers
+Feature learning (without labels)
+Sample to generate new data
+
+=== PAGE 29 ===
+Generative vs Discriminative Models
+Discriminative Model:
+Learn a probability 
+distribution p(y|x)
+Generative Model:
+Learn a probability 
+distribution p(x)
+Conditional Generative 
+Model: Learn p(x|y)
+Assign labels to data
+Feature learning (with labels)
+Detect outliers
+Feature learning (without labels)
+Sample to generate new data
+Assign labels while rejecting outliers
+Sample to generate data from labels
+
+=== PAGE 30 ===
+Generative vs Discriminative Models
+Discriminative Model:
+Learn a probability 
+distribution p(y|x)
+Generative Model:
+Learn a probability 
+distribution p(x)
+Conditional Generative 
+Model: Learn p(x|y)
+”Generative models” means 
+either of these; conditional 
+generative models are most 
+common in practice
+
+=== PAGE 31 ===
+Why Generative Models?
+Modeling ambiguity: If there are many possible 
+outputs x for an input y, we want to model P(x | y)
+Language Modeling: Produce output text x from input text y
+Write me a short 
+rhyming poem about 
+generative models
+They sample from a learned P,
+A distribution—structured, free.
+Each token comes conditionally,
+On all the ones that used to be.
+
+=== PAGE 32 ===
+Why Generative Models?
+Modeling ambiguity: If there are many possible 
+outputs x for an input y, we want to model P(x | y)
+Text to Image: Produce output image x from input text y
+Make me an image showing 
+a person teaching a class on 
+generative models in front of 
+a whiteboard
+
+
+=== PAGE 33 ===
+Why Generative Models?
+Modeling ambiguity: If there are many possible 
+outputs x for an input y, we want to model P(x | y)
+Image to Video: What happens next?
+
+
+=== PAGE 34 ===
+Taxonomy of Generative Models
+Generative models
+Figure adapted from Ian 
+Goodfellow, Tutorial on 
+Generative Adversarial 
+Networks, 2017
+
+=== PAGE 35 ===
+Taxonomy of Generative Models
+Generative models
+Explicit density
+Model can 
+compute P(x)
+Figure adapted from Ian 
+Goodfellow, Tutorial on 
+Generative Adversarial 
+Networks, 2017
+
+=== PAGE 36 ===
+Taxonomy of Generative Models
+Generative models
+Explicit density Implicit density
+Model can 
+compute P(x)
+Cannot compute p(x) but 
+can sample from P(x)
+Figure adapted from Ian 
+Goodfellow, Tutorial on 
+Generative Adversarial 
+Networks, 2017
+
+=== PAGE 37 ===
+Taxonomy of Generative Models
+Generative models
+Explicit density Implicit density
+Tractable density
+Autoregressive
+Model can 
+compute P(x)
+Cannot compute p(x) but 
+can sample from P(x)
+Really 
+compute 
+P(x)
+Figure adapted from Ian 
+Goodfellow, Tutorial on 
+Generative Adversarial 
+Networks, 2017
+
+=== PAGE 38 ===
+Taxonomy of Generative Models
+Generative models
+Explicit density Implicit density
+Tractable density Approximate density
+Autoregressive Variational Autoencoder 
+(VAE)
+Model can 
+compute P(x)
+Cannot compute p(x) but 
+can sample from P(x)
+Really 
+compute 
+P(x)
+Approximate 
+P(x)
+Figure adapted from Ian 
+Goodfellow, Tutorial on 
+Generative Adversarial 
+Networks, 2017
+
+=== PAGE 39 ===
+Taxonomy of Generative Models
+Generative models
+Explicit density Implicit density
+Tractable density Approximate density Direct
+Autoregressive Variational Autoencoder 
+(VAE)
+Generative Adversarial 
+Network (GAN)
+Model can 
+compute P(x)
+Cannot compute p(x) but 
+can sample from P(x)
+Really 
+compute 
+P(x)
+Approximate 
+P(x)
+Can directly 
+sample 
+from P(x)
+Figure adapted from Ian 
+Goodfellow, Tutorial on 
+Generative Adversarial 
+Networks, 2017
+
+=== PAGE 40 ===
+Taxonomy of Generative Models
+Generative models
+Explicit density Implicit density
+Tractable density Approximate density Direct Indirect
+Autoregressive Variational Autoencoder 
+(VAE)
+Generative Adversarial 
+Network (GAN) Diffusion Models
+Model can 
+compute P(x)
+Cannot compute p(x) but 
+can sample from P(x)
+Really 
+compute 
+P(x)
+Approximate 
+P(x)
+Can directly 
+sample 
+from P(x)
+Iterative 
+procedure to 
+approximate 
+samples 
+from P(x)
+Figure adapted from Ian 
+Goodfellow, Tutorial on 
+Generative Adversarial 
+Networks, 2017
+
+=== PAGE 41 ===
+Taxonomy of Generative Models
+Generative models
+Explicit density Implicit density
+Tractable density Approximate density Direct Indirect
+Autoregressive Variational Autoencoder 
+(VAE)
+Generative Adversarial 
+Network (GAN) Diffusion Models
+Model can 
+compute P(x)
+Cannot compute p(x) but 
+can sample from P(x)
+Really 
+compute 
+P(x)
+Approximate 
+P(x)
+Can directly 
+sample 
+from P(x)
+Iterative 
+procedure to 
+approximate 
+samples 
+from P(x)
+Figure adapted from Ian 
+Goodfellow, Tutorial on 
+Generative Adversarial 
+Networks, 2017
+Today Next Time
+
+=== PAGE 42 ===
+Autoregressive Models
+
+=== PAGE 43 ===
+Maximum Likelihood Estimation
+Goal: Write down an explicit function for 𝑝 𝑥 = 𝑓(𝑥, 𝑊)
+
+=== PAGE 44 ===
+Maximum Likelihood Estimation
+Goal: Write down an explicit function for 𝑝 𝑥 = 𝑓(𝑥, 𝑊)
+Given dataset 𝑥(1), 𝑥(2), … 𝑥 𝑁 , train the model by solving:
+Maximize probability of training data 
+(Maximum likelihood estimation)𝑊∗ = arg max
+W
+ෑ
+𝑖
+𝑝(𝑥 𝑖 )
+
+=== PAGE 45 ===
+Maximum Likelihood Estimation
+Goal: Write down an explicit function for 𝑝 𝑥 = 𝑓(𝑥, 𝑊)
+Given dataset 𝑥(1), 𝑥(2), … 𝑥 𝑁 , train the model by solving:
+Maximize probability of training data 
+(Maximum likelihood estimation)𝑊∗ = arg max
+W
+ෑ
+𝑖
+𝑝(𝑥 𝑖 )
+= arg max
+𝑊
+σ𝑖 log 𝑝(𝑥 𝑖 ) Log trick: Swap product and sum
+
+=== PAGE 46 ===
+Maximum Likelihood Estimation
+Goal: Write down an explicit function for 𝑝 𝑥 = 𝑓(𝑥, 𝑊)
+Given dataset 𝑥(1), 𝑥(2), … 𝑥 𝑁 , train the model by solving:
+Maximize probability of training data 
+(Maximum likelihood estimation)𝑊∗ = arg max
+W
+ෑ
+𝑖
+𝑝(𝑥 𝑖 )
+= arg max
+𝑊
+σ𝑖 log 𝑝(𝑥 𝑖 )
+= arg max
+𝑊
+σ𝑖 log 𝑓(𝑥 𝑖 , 𝑊)
+Log trick: Swap product and sum
+This is our loss function.  
+maximize it with gradient descent
+
+=== PAGE 47 ===
+Autoregressive Models
+Goal: Write down an explicit function for 𝑝 𝑥 = 𝑓(𝑥, 𝑊)
+Assume x is a sequence:  𝑥 = (𝑥1, 𝑥2, … , 𝑥𝑇)
+
+=== PAGE 48 ===
+Autoregressive Models
+Goal: Write down an explicit function for 𝑝 𝑥 = 𝑓(𝑥, 𝑊)
+Assume x is a sequence:  𝑥 = (𝑥1, 𝑥2, … , 𝑥𝑇)
+𝑝 𝑥 = 𝑝 𝑥1, 𝑥2, 𝑥3, … , 𝑥𝑇
+= 𝑝 𝑥1 𝑝 𝑥2 𝑥1)𝑝 𝑥3 𝑥1, 𝑥2) …
+= ς𝑡=1
+𝑇 𝑝 𝑥𝑡 𝑥1, … , 𝑥𝑡−1)
+Use the chain rule of probability:
+
+=== PAGE 49 ===
+Autoregressive Models
+Goal: Write down an explicit function for 𝑝 𝑥 = 𝑓(𝑥, 𝑊)
+Assume x is a sequence:  𝑥 = (𝑥1, 𝑥2, … , 𝑥𝑇)
+𝑝 𝑥 = 𝑝 𝑥1, 𝑥2, 𝑥3, … , 𝑥𝑇
+= 𝑝 𝑥1 𝑝 𝑥2 𝑥1)𝑝 𝑥3 𝑥1, 𝑥2) …
+= ς𝑡=1
+𝑇 𝑝 𝑥𝑡 𝑥1, … , 𝑥𝑡−1)
+Use the chain rule of probability:
+We have already seen this!
+Language modeling with RNN
+
+=== PAGE 50 ===
+LLMs are Autoregressive Models
+Goal: Write down an explicit function for 𝑝 𝑥 = 𝑓(𝑥, 𝑊)
+Assume x is a sequence:  𝑥 = (𝑥1, 𝑥2, … , 𝑥𝑇)
+𝑝 𝑥 = 𝑝 𝑥1, 𝑥2, 𝑥3, … , 𝑥𝑇
+= 𝑝 𝑥1 𝑝 𝑥2 𝑥1)𝑝 𝑥3 𝑥1, 𝑥2) …
+= ς𝑡=1
+𝑇 𝑝 𝑥𝑡 𝑥1, … , 𝑥𝑡−1)
+Use the chain rule of probability:Language 
+modeling 
+with masked 
+Transformer
+
+
+=== PAGE 51 ===
+Autoregressive Models of Images
+Treat an image as a sequence of 8-bit 
+subpixel values (scanline order)
+Predict each subpixel as a classification 
+among 256 values [0…255]
+Model with an RNN or Transformer
+ …
+…
+…
+…
+…
+Van den Oord et al, “Pixel Recurrent Neural Networks”, ICML 2016
+Van den Oord et al, “Conditional Image Generation with PixelCNN Decoders”, NeurIPS 2016
+
+=== PAGE 52 ===
+Autoregressive Models of Images
+Treat an image as a sequence of 8-bit 
+subpixel values (scanline order)
+Predict each subpixel as a classification 
+among 256 values [0…255]
+Model with an RNN or Transformer
+ …
+…
+…
+…
+…
+Problem: Too expensive. 1024x1024 
+image is a sequence of 3M subpixels
+Van den Oord et al, “Pixel Recurrent Neural Networks”, ICML 2016
+Van den Oord et al, “Conditional Image Generation with PixelCNN Decoders”, NeurIPS 2016
+
+=== PAGE 53 ===
+Autoregressive Models of Images
+Treat an image as a sequence of 8-bit 
+subpixel values (scanline order)
+Predict each subpixel as a classification 
+among 256 values [0…255]
+Model with an RNN or Transformer
+ …
+…
+…
+…
+…
+Problem: Too expensive. 1024x1024 
+image is a sequence of 3M subpixels
+Solution (jumping ahead): Model as 
+sequence of tiles, not sequence of subpixels
+
+=== PAGE 54 ===
+Variational Autoencoders (VAEs)
+
+=== PAGE 55 ===
+Variational Autoencoders
+PixelRNN / PixelCNN explicitly parameterizes density function with a 
+neural network, so we can train to maximize likelihood of training data:
+Variational Autoencoders (VAE) define an intractable density that we 
+cannot explicitly compute or optimize
+But we will be able to directly optimize a lower bound on the density
+p𝑊(𝑥) = ෑ
+𝑡=1
+𝑇
+𝑝𝑊 𝑥𝑡 𝑥1, … , 𝑥𝑡−1)
+
+=== PAGE 56 ===
+Variational Autoencoders (VAEs)
+
+=== PAGE 57 ===
+(Non-Variational) Autoencoders
+Encoder
+Input data
+Features
+Idea: Unsupervised method for learning to extract features z from inputs x, without labels
+Input Data
+Features should extract useful information 
+(object identity, appearance, scene type, etc) 
+that can be used for downstream tasks
+Encoder can be MLP, 
+CNN, Transformer, …
+
+=== PAGE 58 ===
+(Non-Variational) Autoencoders
+Encoder
+Input data
+Features
+Problem: How can we learn without labels?
+Input Data
+Features should extract useful information 
+(object identity, appearance, scene type, etc) 
+that can be used for downstream tasks
+Encoder can be MLP, 
+CNN, Transformer, …
+
+=== PAGE 59 ===
+(Non-Variational) Autoencoders
+Encoder
+Input data
+Features
+Problem: How can we learn without labels?
+Input Data
+Solution: Reconstruct the input data with a decoder. 
+Decoder
+Reconstructed 
+input data
+Decoder can be MLP, 
+CNN, Transformer, …
+“Autoencoding” = 
+Encoding yourself
+
+=== PAGE 60 ===
+(Non-Variational) Autoencoders
+Encoder
+Input data
+Features
+Loss: L2 distance between input and reconstructed data. 
+Decoder
+Reconstructed 
+input data
+Loss Function
+ො𝑥 − 𝑥 2
+2
+Input Data
+Does not use any 
+labels! Just raw data!
+Reconstructed data
+
+=== PAGE 61 ===
+(Non-Variational) Autoencoders
+Encoder
+Input data
+Features
+After training, can use encoder for downstream tasks
+Classifier
+Predicted label
+Loss Function
+(Softmax)
+Input Data
+Reconstructed data
+
+
+=== PAGE 62 ===
+(Non-Variational) Autoencoders
+Features
+If we could generate new z, could use the decoder to generate images
+Decoder
+Generated image
+
+=== PAGE 63 ===
+(Non-Variational) Autoencoders
+Features
+If we could generate new z, could use the decoder to generate images
+Decoder
+Generated image
+Problem: Generating new z is not any easier than generating new x
+
+=== PAGE 64 ===
+(Non-Variational) Autoencoders
+Features
+If we could generate new z, could use the decoder to generate images
+Decoder
+Generated image
+Problem: Generating new z is not any easier than generating new x
+Solution: What if we force all z to come from a known distribution?
+
+=== PAGE 65 ===
+Variational Autoencoders (VAEs)
+Kingma and Welling, Auto-Encoding Variational Beyes, ICLR 2014
+
+=== PAGE 66 ===
+Variational Autoencoders
+Probabilistic spin on autoencoders: 
+1. Learn latent features z from raw data
+2. Sample from the model to generate new data
+
+=== PAGE 67 ===
+Variational Autoencoders
+Probabilistic spin on autoencoders: 
+1. Learn latent features z from raw data
+2. Sample from the model to generate new data
+Intuition: x is an image, z is latent 
+factors used to generate x: attributes, 
+orientation, etc. 
+Assume training data 𝑥 𝑖
+𝑖=1
+𝑁
+is 
+generated from unobserved (latent) 
+representation z
+
+=== PAGE 68 ===
+Variational Autoencoders
+Probabilistic spin on autoencoders: 
+1. Learn latent features z from raw data
+2. Sample from the model to generate new data
+Sample z 
+from prior
+Sample from 
+conditional
+After training, sample new data like this: Intuition: x is an image, z is latent 
+factors used to generate x: attributes, 
+orientation, etc. 
+Assume training data 𝑥 𝑖
+𝑖=1
+𝑁
+is 
+generated from unobserved (latent) 
+representation z
+
+=== PAGE 69 ===
+Variational Autoencoders
+Probabilistic spin on autoencoders: 
+1. Learn latent features z from raw data
+2. Sample from the model to generate new data
+Sample z 
+from prior
+Sample from 
+conditional
+After training, sample new data like this: Intuition: x is an image, z is latent 
+factors used to generate x: attributes, 
+orientation, etc. 
+Assume simple prior p(z), e.g. Gaussian
+Assume training data 𝑥 𝑖
+𝑖=1
+𝑁
+is 
+generated from unobserved (latent) 
+representation z
+
+=== PAGE 70 ===
+Variational Autoencoders
+Probabilistic spin on autoencoders: 
+1. Learn latent features z from raw data
+2. Sample from the model to generate new data
+Sample z 
+from prior
+Sample from 
+conditional
+After training, sample new data like this: How can we train this?
+Assume training data 𝑥 𝑖
+𝑖=1
+𝑁
+is 
+generated from unobserved (latent) 
+representation z
+Basic idea: maximum likelihood
+If we had a dataset of (x, z) then train a 
+conditional generative model p(x | z)
+
+=== PAGE 71 ===
+Variational Autoencoders
+Probabilistic spin on autoencoders: 
+1. Learn latent features z from raw data
+2. Sample from the model to generate new data
+Sample z 
+from prior
+Sample from 
+conditional
+After training, sample new data like this: How can we train this?
+Assume training data 𝑥 𝑖
+𝑖=1
+𝑁
+is 
+generated from unobserved (latent) 
+representation z
+Basic idea: maximum likelihood
+We don’t observe z, so marginalize:
+𝑝𝜃 𝑥 = න 𝑝𝜃 𝑥, 𝑧 𝑑𝑧 = න 𝑝𝜃 𝑥 𝑧 𝑝𝜃 𝑧 𝑑𝑧
+
+=== PAGE 72 ===
+Variational Autoencoders
+Probabilistic spin on autoencoders: 
+1. Learn latent features z from raw data
+2. Sample from the model to generate new data
+Sample z 
+from prior
+Sample from 
+conditional
+After training, sample new data like this: How can we train this?
+Assume training data 𝑥 𝑖
+𝑖=1
+𝑁
+is 
+generated from unobserved (latent) 
+representation z
+Basic idea: maximum likelihood
+We don’t observe z, so marginalize:
+𝑝𝜃 𝑥 = න 𝑝𝜃 𝑥, 𝑧 𝑑𝑧 = න 𝑝𝜃 𝑥 𝑧 𝑝𝜃 𝑧 𝑑𝑧
+Ok, we can compute this with the decoder
+
+=== PAGE 73 ===
+Variational Autoencoders
+Probabilistic spin on autoencoders: 
+1. Learn latent features z from raw data
+2. Sample from the model to generate new data
+Sample z 
+from prior
+Sample from 
+conditional
+After training, sample new data like this: How can we train this?
+Assume training data 𝑥 𝑖
+𝑖=1
+𝑁
+is 
+generated from unobserved (latent) 
+representation z
+Basic idea: maximum likelihood
+We don’t observe z, so marginalize:
+𝑝𝜃 𝑥 = න 𝑝𝜃 𝑥, 𝑧 𝑑𝑧 = න 𝑝𝜃 𝑥 𝑧 𝑝𝜃 𝑧 𝑑𝑧
+Ok, we assumed Gaussian prior for z
+
+=== PAGE 74 ===
+Variational Autoencoders
+Probabilistic spin on autoencoders: 
+1. Learn latent features z from raw data
+2. Sample from the model to generate new data
+Sample z 
+from prior
+Sample from 
+conditional
+After training, sample new data like this: How can we train this?
+Assume training data 𝑥 𝑖
+𝑖=1
+𝑁
+is 
+generated from unobserved (latent) 
+representation z
+Basic idea: maximum likelihood
+We don’t observe z, so marginalize:
+𝑝𝜃 𝑥 = න 𝑝𝜃 𝑥, 𝑧 𝑑𝑧 = න 𝑝𝜃 𝑥 𝑧 𝑝𝜃 𝑧 𝒅𝒛
+Problem, we can’t integrate over all z
+
+=== PAGE 75 ===
+Variational Autoencoders
+Probabilistic spin on autoencoders: 
+1. Learn latent features z from raw data
+2. Sample from the model to generate new data
+Sample z 
+from prior
+Sample from 
+conditional
+After training, sample new data like this: How can we train this?
+Assume training data 𝑥 𝑖
+𝑖=1
+𝑁
+is 
+generated from unobserved (latent) 
+representation z
+Basic idea: maximum likelihood
+Another idea: Try Bayes’ Rule:
+𝑝𝜃 𝑥 = 𝑝𝜃 𝑥 𝑧)𝑝𝜃(𝑧)
+𝑝𝜃 𝑧 | 𝑥
+
+=== PAGE 76 ===
+Variational Autoencoders
+Probabilistic spin on autoencoders: 
+1. Learn latent features z from raw data
+2. Sample from the model to generate new data
+Sample z 
+from prior
+Sample from 
+conditional
+After training, sample new data like this: How can we train this?
+Assume training data 𝑥 𝑖
+𝑖=1
+𝑁
+is 
+generated from unobserved (latent) 
+representation z
+Basic idea: maximum likelihood
+Another idea: Try Bayes’ Rule:
+Ok, we can compute this with the decoder
+𝑝𝜃 𝑥 = 𝑝𝜃 𝑥 𝑧)𝑝𝜃(𝑧)
+𝑝𝜃 𝑧 | 𝑥
+
+=== PAGE 77 ===
+Variational Autoencoders
+Probabilistic spin on autoencoders: 
+1. Learn latent features z from raw data
+2. Sample from the model to generate new data
+Sample z 
+from prior
+Sample from 
+conditional
+After training, sample new data like this: How can we train this?
+Assume training data 𝑥 𝑖
+𝑖=1
+𝑁
+is 
+generated from unobserved (latent) 
+representation z
+Basic idea: maximum likelihood
+Another idea: Try Bayes’ Rule:
+Ok, we assumed Gaussian prior for z
+𝑝𝜃 𝑥 = 𝑝𝜃 𝑥 𝑧)𝑝𝜃(𝑧)
+𝑝𝜃 𝑧 | 𝑥
+
+=== PAGE 78 ===
+Variational Autoencoders
+Probabilistic spin on autoencoders: 
+1. Learn latent features z from raw data
+2. Sample from the model to generate new data
+Sample z 
+from prior
+Sample from 
+conditional
+After training, sample new data like this: How can we train this?
+Assume training data 𝑥 𝑖
+𝑖=1
+𝑁
+is 
+generated from unobserved (latent) 
+representation z
+Basic idea: maximum likelihood
+Another idea: Try Bayes’ Rule:
+𝑝𝜃 𝑥 = 𝑝𝜃 𝑥 𝑧)𝑝𝜃(𝑧)
+𝑝𝜃 𝑧 | 𝑥
+Problem: no way 
+to compute this
+
+=== PAGE 79 ===
+Variational Autoencoders
+Probabilistic spin on autoencoders: 
+1. Learn latent features z from raw data
+2. Sample from the model to generate new data
+Sample z 
+from prior
+Sample from 
+conditional
+After training, sample new data like this: How can we train this?
+Assume training data 𝑥 𝑖
+𝑖=1
+𝑁
+is 
+generated from unobserved (latent) 
+representation z
+Basic idea: maximum likelihood
+Another idea: Try Bayes’ Rule:
+𝑝𝜃 𝑥 = 𝑝𝜃 𝑥 𝑧)𝑝𝜃(𝑧)
+𝑝𝜃 𝑧 | 𝑥
+Problem: no way 
+to compute this
+Solution: Train another network 
+that learns 𝑞𝜙 𝑧 𝑥) ≈ 𝑝𝜃 𝑧 𝑥)
+
+=== PAGE 80 ===
+Variational Autoencoders
+Probabilistic spin on autoencoders: 
+1. Learn latent features z from raw data
+2. Sample from the model to generate new data
+Sample z 
+from prior
+Sample from 
+conditional
+After training, sample new data like this: How can we train this?
+Assume training data 𝑥 𝑖
+𝑖=1
+𝑁
+is 
+generated from unobserved (latent) 
+representation z
+Basic idea: maximum likelihood
+Another idea: Try Bayes’ Rule:
+𝑝𝜃 𝑥 = 𝑝𝜃 𝑥 𝑧)𝑝𝜃(𝑧)
+𝑝𝜃 𝑧 | 𝑥 ≈ 𝑝𝜃 𝑥 𝑧)𝑝𝜃(𝑧)
+𝑞𝜙 𝑧 | 𝑥
+Solution: Train another network 
+that learns 𝑞𝜙 𝑧 𝑥) ≈ 𝑝𝜃 𝑧 𝑥)
+
+=== PAGE 81 ===
+Variational Autoencoders
+𝑝𝜃 𝑥 𝑧)
+𝑧
+Decoder Network:
+Input latent code z,
+Output distribution over data x
+Encoder Network:
+Input data x,
+Output distribution 
+over latent codes z
+𝑥
+𝑞𝜙 𝑧 | 𝑥
+If we can ensure that 
+𝑞𝜙 𝑧 𝑥) ≈ 𝑝𝜃 𝑧 𝑥), 
+then we can approximate 
+𝑝𝜃 𝑥 ≈ 𝑝𝜃 𝑥 𝑧)𝑝(𝑧)
+𝑞𝜙 𝑧 𝑥)
+Idea: Jointly train both 
+encoder and decoder
+
+=== PAGE 82 ===
+Variational Autoencoders
+𝑝𝜃 𝑥 𝑧)
+𝑧
+Decoder Network:
+Input latent code z,
+Output distribution over data x
+Encoder Network:
+Input data x,
+Output distribution 
+over latent codes z
+𝑥
+𝑞𝜙 𝑧 | 𝑥
+If we can ensure that 
+𝑞𝜙 𝑧 𝑥) ≈ 𝑝𝜃 𝑧 𝑥), 
+then we can approximate 
+𝑝𝜃 𝑥 ≈ 𝑝𝜃 𝑥 𝑧)𝑝(𝑧)
+𝑞𝜙 𝑧 𝑥)
+Idea: Jointly train both 
+encoder and decoder
+Aside: How to output probability 
+distributions from neural networks?
+Network outputs mean (and std) of 
+a (diagonal) distribution
+
+=== PAGE 83 ===
+Variational Autoencoders
+𝜇𝑥|𝑧
+𝑧
+Decoder Network:
+Input latent code z,
+Output distribution over data x
+Encoder Network:
+Input data x,
+Output distribution 
+over latent codes z
+𝑥
+𝜇𝑧|𝑥
+If we can ensure that 
+𝑞𝜙 𝑧 𝑥) ≈ 𝑝𝜃 𝑧 𝑥), 
+then we can approximate 
+𝑝𝜃 𝑥 ≈ 𝑝𝜃 𝑥 𝑧)𝑝(𝑧)
+𝑞𝜙 𝑧 𝑥)
+Idea: Jointly train both 
+encoder and decoder
+Aside: How to output probability 
+distributions from neural networks?
+Network outputs mean (and std) of 
+a (diagonal) distribution
+Σ𝑧|𝑥
+𝑝𝜃 𝑥 | 𝑧 = 𝑁(𝜇𝑥|𝑧, 𝜎2) 𝑞𝜙 𝑧 | 𝑥 = 𝑁(𝜇𝑧|𝑥, Σ𝑧|𝑥)
+
+=== PAGE 84 ===
+Variational Autoencoders
+𝜇𝑥|𝑧
+𝑧
+Decoder Network:
+Input latent code z,
+Output distribution over data x
+Encoder Network:
+Input data x,
+Output distribution 
+over latent codes z
+𝑥
+𝜇𝑧|𝑥
+If we can ensure that 
+𝑞𝜙 𝑧 𝑥) ≈ 𝑝𝜃 𝑧 𝑥), 
+then we can approximate 
+𝑝𝜃 𝑥 ≈ 𝑝𝜃 𝑥 𝑧)𝑝(𝑧)
+𝑞𝜙 𝑧 𝑥)
+Idea: Jointly train both 
+encoder and decoderΣ𝑧|𝑥
+𝑝𝜃 𝑥 | 𝑧 = 𝑁(𝜇𝑥|𝑧, 𝜎2) 𝑞𝜙 𝑧 | 𝑥 = 𝑁(𝜇𝑧|𝑥, Σ𝑧|𝑥)
+log 𝑝𝜃 𝑥 𝑧) = − 1
+2𝜎2 𝑥 − 𝜇 2
+2 + 𝐶2
+Maximizing log 𝑝𝜃 𝑥 𝑧) is 
+equivalent to minimizing 
+L2 distance between x 
+and network output!
+
+=== PAGE 85 ===
+Variational Autoencoders
+𝜇𝑥|𝑧
+𝑧
+Decoder Network:
+Input latent code z,
+Output distribution over data x
+Encoder Network:
+Input data x,
+Output distribution 
+over latent codes z
+𝑥
+𝜇𝑧|𝑥
+If we can ensure that 
+𝑞𝜙 𝑧 𝑥) ≈ 𝑝𝜃 𝑧 𝑥), 
+then we can approximate 
+𝑝𝜃 𝑥 ≈ 𝑝𝜃 𝑥 𝑧)𝑝(𝑧)
+𝑞𝜙 𝑧 𝑥)
+Idea: Jointly train both 
+encoder and decoderΣ𝑧|𝑥
+𝑝𝜃 𝑥 | 𝑧 = 𝑁(𝜇𝑥|𝑧, 𝜎2) 𝑞𝜙 𝑧 | 𝑥 = 𝑁(𝜇𝑧|𝑥, Σ𝑧|𝑥)
+log 𝑝𝜃 𝑥 𝑧) = − 1
+2𝜎2 𝑥 − 𝜇 2
+2 + 𝐶2
+Q: What’s our 
+training objective?
+
+=== PAGE 86 ===
+Variational Autoencoders (ELBO)
+log 𝑝𝜃(𝑥) = log 𝑝𝜃 𝑥 𝑧)𝑝(𝑧)
+𝑝𝜃 𝑧 𝑥) = log
+𝑝𝜃 𝑥 𝑧 𝑝 𝑧 𝑞𝜙(𝑧|𝑥)
+𝑝𝜃 𝑧 𝑥 𝑞𝜙(𝑧|𝑥)
+Bayes’ Rule
+
+=== PAGE 87 ===
+Variational Autoencoders (ELBO)
+log 𝑝𝜃(𝑥) = log 𝑝𝜃 𝑥 𝑧)𝑝(𝑧)
+𝑝𝜃 𝑧 𝑥) = log
+𝑝𝜃 𝑥 𝑧 𝑝 𝑧 𝑞𝜙(𝑧|𝑥)
+𝑝𝜃 𝑧 𝑥 𝑞𝜙(𝑧|𝑥)
+Multiply top and bottom by qΦ(z|x)
+
+=== PAGE 88 ===
+Variational Autoencoders (ELBO)
+log 𝑝𝜃(𝑥) = log 𝑝𝜃 𝑥 𝑧)𝑝(𝑧)
+𝑝𝜃 𝑧 𝑥) = log
+𝑝𝜃 𝑥 𝑧 𝑝 𝑧 𝑞𝜙(𝑧|𝑥)
+𝑝𝜃 𝑧 𝑥 𝑞𝜙(𝑧|𝑥)
+= log 𝑝𝜃 𝑥 𝑧 − log
+𝑞𝜙 𝑧|𝑥
+𝑝(𝑧) + log
+𝑞𝜙(𝑧|𝑥)
+𝑝𝜃(𝑧|𝑥)
+Logarithms + rearranging 
+
+=== PAGE 89 ===
+Variational Autoencoders (ELBO)
+log 𝑝𝜃(𝑥) = log 𝑝𝜃 𝑥 𝑧)𝑝(𝑧)
+𝑝𝜃 𝑧 𝑥) = log
+𝑝𝜃 𝑥 𝑧 𝑝 𝑧 𝑞𝜙(𝑧|𝑥)
+𝑝𝜃 𝑧 𝑥 𝑞𝜙(𝑧|𝑥)
+= log 𝑝𝜃 𝑥 𝑧 − log
+𝑞𝜙 𝑧|𝑥
+𝑝(𝑧) + log
+𝑞𝜙(𝑧|𝑥)
+𝑝𝜃(𝑧|𝑥)
+log 𝑝𝜃 𝑥 = 𝐸𝑧~𝑞𝜙(𝑧|𝑥) log 𝑝𝜃(𝑥)
+We can wrap in an 
+expectation since it 
+doesn’t depend on z
+
+=== PAGE 90 ===
+Variational Autoencoders (ELBO)
+log 𝑝𝜃(𝑥) = log 𝑝𝜃 𝑥 𝑧)𝑝(𝑧)
+𝑝𝜃 𝑧 𝑥) = log
+𝑝𝜃 𝑥 𝑧 𝑝 𝑧 𝑞𝜙(𝑧|𝑥)
+𝑝𝜃 𝑧 𝑥 𝑞𝜙(𝑧|𝑥)
+= 𝐸𝑧[log 𝑝𝜃(𝑥|𝑧)] − 𝐸𝑧 log
+𝑞𝜙 𝑧 𝑥
+𝑝 𝑧 + 𝐸𝑧 log
+𝑞𝜙(𝑧|𝑥)
+𝑝𝜃(𝑧|𝑥)
+log 𝑝𝜃 𝑥 = 𝐸𝑧~𝑞𝜙(𝑧|𝑥) log 𝑝𝜃(𝑥)
+We can wrap in an 
+expectation since it 
+doesn’t depend on z
+
+=== PAGE 91 ===
+Variational Autoencoders (ELBO)
+log 𝑝𝜃(𝑥) = log 𝑝𝜃 𝑥 𝑧)𝑝(𝑧)
+𝑝𝜃 𝑧 𝑥) = log
+𝑝𝜃 𝑥 𝑧 𝑝 𝑧 𝑞𝜙(𝑧|𝑥)
+𝑝𝜃 𝑧 𝑥 𝑞𝜙(𝑧|𝑥)
+= 𝐸𝑧[log 𝑝𝜃(𝑥|𝑧)] − 𝐸𝑧 log
+𝑞𝜙 𝑧 𝑥
+𝑝 𝑧 + 𝐸𝑧 log
+𝑞𝜙(𝑧|𝑥)
+𝑝𝜃(𝑧|𝑥)
+= 𝐸𝑧~𝑞𝜙(𝑧|𝑥)[log 𝑝𝜃(𝑥|𝑧)] − 𝐷𝐾𝐿 𝑞𝜙 𝑧 𝑥 , 𝑝 𝑧 + 𝐷𝐾𝐿(𝑞𝜙 𝑧 𝑥 , 𝑝𝜃 𝑧 𝑥 )
+
+=== PAGE 92 ===
+Variational Autoencoders (ELBO)
+log 𝑝𝜃(𝑥) = log 𝑝𝜃 𝑥 𝑧)𝑝(𝑧)
+𝑝𝜃 𝑧 𝑥) = log
+𝑝𝜃 𝑥 𝑧 𝑝 𝑧 𝑞𝜙(𝑧|𝑥)
+𝑝𝜃 𝑧 𝑥 𝑞𝜙(𝑧|𝑥)
+= 𝐸𝑧[log 𝑝𝜃(𝑥|𝑧)] − 𝐸𝑧 log
+𝑞𝜙 𝑧 𝑥
+𝑝 𝑧 + 𝐸𝑧 log
+𝑞𝜙(𝑧|𝑥)
+𝑝𝜃(𝑧|𝑥)
+= 𝐸𝑧~𝑞𝜙(𝑧|𝑥)[log 𝑝𝜃(𝑥|𝑧)] − 𝐷𝐾𝐿 𝑞𝜙 𝑧 𝑥 , 𝑝 𝑧 + 𝐷𝐾𝐿(𝑞𝜙 𝑧 𝑥 , 𝑝𝜃 𝑧 𝑥 )
+Data reconstruction: x => encoder => decoder should reconstruct x
+Can compute in closed form for Gaussians. 
+
+=== PAGE 93 ===
+Variational Autoencoders (ELBO)
+log 𝑝𝜃(𝑥) = log 𝑝𝜃 𝑥 𝑧)𝑝(𝑧)
+𝑝𝜃 𝑧 𝑥) = log
+𝑝𝜃 𝑥 𝑧 𝑝 𝑧 𝑞𝜙(𝑧|𝑥)
+𝑝𝜃 𝑧 𝑥 𝑞𝜙(𝑧|𝑥)
+= 𝐸𝑧[log 𝑝𝜃(𝑥|𝑧)] − 𝐸𝑧 log
+𝑞𝜙 𝑧 𝑥
+𝑝 𝑧 + 𝐸𝑧 log
+𝑞𝜙(𝑧|𝑥)
+𝑝𝜃(𝑧|𝑥)
+= 𝐸𝑧~𝑞𝜙(𝑧|𝑥)[log 𝑝𝜃(𝑥|𝑧)] − 𝐷𝐾𝐿 𝑞𝜙 𝑧 𝑥 , 𝑝 𝑧 + 𝐷𝐾𝐿(𝑞𝜙 𝑧 𝑥 , 𝑝𝜃 𝑧 𝑥 )
+Prior: Encoder output should match prior over z.
+Can compute in closed for for Gaussians.
+
+=== PAGE 94 ===
+Variational Autoencoders (ELBO)
+log 𝑝𝜃(𝑥) = log 𝑝𝜃 𝑥 𝑧)𝑝(𝑧)
+𝑝𝜃 𝑧 𝑥) = log
+𝑝𝜃 𝑥 𝑧 𝑝 𝑧 𝑞𝜙(𝑧|𝑥)
+𝑝𝜃 𝑧 𝑥 𝑞𝜙(𝑧|𝑥)
+= 𝐸𝑧[log 𝑝𝜃(𝑥|𝑧)] − 𝐸𝑧 log
+𝑞𝜙 𝑧 𝑥
+𝑝 𝑧 + 𝐸𝑧 log
+𝑞𝜙(𝑧|𝑥)
+𝑝𝜃(𝑧|𝑥)
+= 𝐸𝑧~𝑞𝜙(𝑧|𝑥)[log 𝑝𝜃(𝑥|𝑧)] − 𝐷𝐾𝐿 𝑞𝜙 𝑧 𝑥 , 𝑝 𝑧 + 𝐷𝐾𝐿(𝑞𝜙 𝑧 𝑥 , 𝑝𝜃 𝑧 𝑥 )
+Posterior Approximation: Encoder output 𝑞𝜙(𝑧|𝑥) should match 𝑝𝜃 𝑧 𝑥
+We cannot compute this for Gaussians…
+
+=== PAGE 95 ===
+Variational Autoencoders (ELBO)
+log 𝑝𝜃(𝑥) = log 𝑝𝜃 𝑥 𝑧)𝑝(𝑧)
+𝑝𝜃 𝑧 𝑥) = log
+𝑝𝜃 𝑥 𝑧 𝑝 𝑧 𝑞𝜙(𝑧|𝑥)
+𝑝𝜃 𝑧 𝑥 𝑞𝜙(𝑧|𝑥)
+= 𝐸𝑧[log 𝑝𝜃(𝑥|𝑧)] − 𝐸𝑧 log
+𝑞𝜙 𝑧 𝑥
+𝑝 𝑧 + 𝐸𝑧 log
+𝑞𝜙(𝑧|𝑥)
+𝑝𝜃(𝑧|𝑥)
+= 𝐸𝑧~𝑞𝜙(𝑧|𝑥)[log 𝑝𝜃(𝑥|𝑧)] − 𝐷𝐾𝐿 𝑞𝜙 𝑧 𝑥 , 𝑝 𝑧 + 𝐷𝐾𝐿(𝑞𝜙 𝑧 𝑥 , 𝑝𝜃 𝑧 𝑥 )
+Posterior Approximation: Decoder output 𝑞𝜙(𝑧|𝑥) should match 𝑝𝜃 𝑧 𝑥
+KL is >= 0, so we can drop it to get a lower bound on likelihood
+
+=== PAGE 96 ===
+Variational Autoencoders (ELBO)
+log 𝑝𝜃(𝑥) = log 𝑝𝜃 𝑥 𝑧)𝑝(𝑧)
+𝑝𝜃 𝑧 𝑥) = log
+𝑝𝜃 𝑥 𝑧 𝑝 𝑧 𝑞𝜙(𝑧|𝑥)
+𝑝𝜃 𝑧 𝑥 𝑞𝜙(𝑧|𝑥)
+= 𝐸𝑧[log 𝑝𝜃(𝑥|𝑧)] − 𝐸𝑧 log
+𝑞𝜙 𝑧 𝑥
+𝑝 𝑧 + 𝐸𝑧 log
+𝑞𝜙(𝑧|𝑥)
+𝑝𝜃(𝑧|𝑥)
+= 𝐸𝑧~𝑞𝜙(𝑧|𝑥)[log 𝑝𝜃(𝑥|𝑧)] − 𝐷𝐾𝐿 𝑞𝜙 𝑧 𝑥 , 𝑝 𝑧 + 𝐷𝐾𝐿(𝑞𝜙 𝑧 𝑥 , 𝑝𝜃 𝑧 𝑥 )
+log 𝑝𝜃(𝑥) ≥ 𝐸𝑧~𝑞𝜙(𝑧|𝑥)[log 𝑝𝜃(𝑥|𝑧)] − 𝐷𝐾𝐿 𝑞𝜙 𝑧 𝑥 , 𝑝 𝑧
+This is our VAE 
+training objective
+
+=== PAGE 97 ===
+Variational Autoencoders
+Jointly train encoder q and decoder p to maximize 
+the variational lower bound on the data likelihood
+Also called Evidence Lower Bound (ELBo)
+log 𝑝𝜃(𝑥) ≥ 𝐸𝑧~𝑞𝜙(𝑧|𝑥)[log 𝑝𝜃(𝑥|𝑧)] − 𝐷𝐾𝐿 𝑞𝜙 𝑧 𝑥 , 𝑝 𝑧
+𝜇𝑥|𝑧
+𝑧𝑥
+𝜇𝑧|𝑥 Σ𝑧|𝑥
+𝑝𝜃 𝑥 | 𝑧 = 𝑁(𝜇𝑥|𝑧, 𝜎2)𝑞𝜙 𝑧 | 𝑥 = 𝑁(𝜇𝑧|𝑥, Σ𝑧|𝑥)
+Decoder NetworkEncoder Network
+
+=== PAGE 98 ===
+Variational Autoencoders: Training
+𝐸𝑧~𝑞𝜙(𝑧|𝑥)[𝑙𝑜𝑔 𝑝𝜃(𝑥|𝑧)] − 𝐷𝐾𝐿 𝑞𝜙 𝑧 𝑥 , 𝑝 𝑧
+Train by maximizing the 
+variational lower bound
+
+=== PAGE 99 ===
+Variational Autoencoders: Training
+𝐸𝑧~𝑞𝜙(𝑧|𝑥)[𝑙𝑜𝑔 𝑝𝜃(𝑥|𝑧)] − 𝐷𝐾𝐿 𝑞𝜙 𝑧 𝑥 , 𝑝 𝑧
+𝑥
+𝜇𝑧|𝑥 Σ𝑧|𝑥
+𝑞𝜙 𝑧 | 𝑥 = 𝑁(𝜇𝑧|𝑥, Σ𝑧|𝑥)
+Encoder
+Train by maximizing the 
+variational lower bound
+1. Run input data through encoder to get
+distribution over z
+
+=== PAGE 100 ===
+Variational Autoencoders: Training
+𝐸𝑧~𝑞𝜙(𝑧|𝑥)[𝑙𝑜𝑔 𝑝𝜃(𝑥|𝑧)] − 𝐷𝐾𝐿 𝑞𝜙 𝑧 𝑥 , 𝑝 𝑧
+𝑥
+𝜇𝑧|𝑥 Σ𝑧|𝑥
+𝑞𝜙 𝑧 | 𝑥 = 𝑁(𝜇𝑧|𝑥, Σ𝑧|𝑥)
+Encoder
+Train by maximizing the 
+variational lower bound
+1. Run input data through encoder to get
+distribution over z
+2. Prior loss: Encoder output should be unit
+Gaussian (zero mean, unit variance)
+
+=== PAGE 101 ===
+Variational Autoencoders: Training
+𝐸𝑧~𝑞𝜙(𝑧|𝑥)[𝑙𝑜𝑔 𝑝𝜃(𝑥|𝑧)] − 𝐷𝐾𝐿 𝑞𝜙 𝑧 𝑥 , 𝑝 𝑧
+𝑧
+𝑥
+𝜇𝑧|𝑥 Σ𝑧|𝑥
+𝑞𝜙 𝑧 | 𝑥 = 𝑁(𝜇𝑧|𝑥, Σ𝑧|𝑥)
+Encoder
+𝜖 ∼ 𝑁 0, 𝐼
+𝑧 = 𝜖 ⊙ Σ𝑧|𝑥 + 𝜇𝑧|𝑥
+Train by maximizing the 
+variational lower bound
+1. Run input data through encoder to get
+distribution over z
+2. Prior loss: Encoder output should be unit
+Gaussian (zero mean, unit variance)
+3. Sample z from encoder output 𝑞𝜙 𝑧 | 𝑥
+(Reparameterization trick)
+
+=== PAGE 102 ===
+Variational Autoencoders: Training
+𝐸𝑧~𝑞𝜙(𝑧|𝑥)[𝑙𝑜𝑔 𝑝𝜃(𝑥|𝑧)] − 𝐷𝐾𝐿 𝑞𝜙 𝑧 𝑥 , 𝑝 𝑧
+𝜇𝑥|𝑧
+𝑧
+𝑥
+𝜇𝑧|𝑥 Σ𝑧|𝑥
+𝑝𝜃 𝑥 | 𝑧 = 𝑁(𝜇𝑥|𝑧, 𝜎2)
+𝑞𝜙 𝑧 | 𝑥 = 𝑁(𝜇𝑧|𝑥, Σ𝑧|𝑥)
+Encoder
+Decoder
+𝜖 ∼ 𝑁 0, 𝐼
+𝑧 = 𝜖 ⊙ Σ𝑧|𝑥 + 𝜇𝑧|𝑥
+Train by maximizing the 
+variational lower bound
+1. Run input data through encoder to get
+distribution over z
+2. Prior loss: Encoder output should be unit
+Gaussian (zero mean, unit variance)
+3. Sample z from encoder output 𝑞𝜙 𝑧 | 𝑥
+(Reparameterization trick)
+4. Run z through decoder to get predicted
+data mean
+
+=== PAGE 103 ===
+Variational Autoencoders: Training
+𝐸𝑧~𝑞𝜙(𝑧|𝑥)[𝑙𝑜𝑔 𝑝𝜃(𝑥|𝑧)] − 𝐷𝐾𝐿 𝑞𝜙 𝑧 𝑥 , 𝑝 𝑧
+𝜇𝑥|𝑧
+𝑧
+𝑥
+𝜇𝑧|𝑥 Σ𝑧|𝑥
+𝑝𝜃 𝑥 | 𝑧 = 𝑁(𝜇𝑥|𝑧, 𝜎2)
+𝑞𝜙 𝑧 | 𝑥 = 𝑁(𝜇𝑧|𝑥, Σ𝑧|𝑥)
+Encoder
+Decoder
+𝜖 ∼ 𝑁 0, 𝐼
+𝑧 = 𝜖 ⊙ Σ𝑧|𝑥 + 𝜇𝑧|𝑥
+Train by maximizing the 
+variational lower bound
+1. Run input data through encoder to get
+distribution over z
+2. Prior loss: Encoder output should be unit
+Gaussian (zero mean, unit variance)
+3. Sample z from encoder output 𝑞𝜙 𝑧 | 𝑥
+(Reparameterization trick)
+4. Run z through decoder to get predicted
+data mean
+5. Reconstruction loss: predicted mean
+should match x in L2
+
+=== PAGE 104 ===
+Variational Autoencoders: Training
+𝐸𝑧~𝑞𝜙(𝑧|𝑥)[𝑙𝑜𝑔 𝑝𝜃(𝑥|𝑧)] − 𝐷𝐾𝐿 𝑞𝜙 𝑧 𝑥 , 𝑝 𝑧
+𝜇𝑥|𝑧
+𝑧
+𝑥
+𝜇𝑧|𝑥 Σ𝑧|𝑥
+𝑝𝜃 𝑥 | 𝑧 = 𝑁(𝜇𝑥|𝑧, 𝜎2)
+𝑞𝜙 𝑧 | 𝑥 = 𝑁(𝜇𝑧|𝑥, Σ𝑧|𝑥)
+Encoder
+Decoder
+𝜖 ∼ 𝑁 0, 𝐼
+𝑧 = 𝜖 ⊙ Σ𝑧|𝑥 + 𝜇𝑧|𝑥
+Train by maximizing the 
+variational lower bound
+The loss terms fight against each other!
+Reconstruction loss wants Σ𝑧|𝑥 = 0 and 
+𝜇𝑧|𝑥 to be unique for each x, so decoder can 
+deterministically reconstruct x
+Prior loss wants Σ𝑧|𝑥 = 𝐈 and 𝜇𝑧|𝑥 = 0 so 
+encoder output is always a unit Gaussian
+
+=== PAGE 105 ===
+Variational Autoencoders: Sampling
+𝜇𝑥|𝑧
+𝑧
+𝑝𝜃 𝑥 | 𝑧 = 𝑁(𝜇𝑥|𝑧, 𝜎2)
+Decoder
+𝑧 ∼ 𝑁 0, 𝐼
+1. Sample z from the prior
+2. Run through decoder to get an image
+
+=== PAGE 106 ===
+Variational Autoencoders: Disentangling
+Vary z1
+Vary z2
+The diagonal prior on p(z) causes 
+dimensions of z to be independent
+“Disentangling factors of variation”
+Kingma and Welling, Auto-Encoding Variational Beyes, ICLR 2014
+
+=== PAGE 107 ===
+Recap: Supervised vs Unsupervised Learning
+Unsupervised Learning
+Data: x
+Just data, no labels!
+Goal: Learn hidden structure in data
+Examples: Clustering, dimensionality 
+reduction, density estimation, etc.
+Supervised Learning
+Data: (x, y)
+x is data, y is label
+Goal: Learn a function to map x -> y
+Examples: Classification, regression, 
+object detection, semantic 
+segmentation, image captioning, etc.
+
+=== PAGE 108 ===
+Recap: Generative vs Discriminative Models
+Discriminative Model:
+Learn a probability 
+distribution p(y|x)
+Generative Model:
+Learn a probability 
+distribution p(x)
+Conditional Generative 
+Model: Learn p(x|y)
+Data: x
+Label: y
+Cat
+Density Function
+p(x) assigns a positive 
+number to each possible 
+x; higher numbers mean 
+x is more likely.
+Density functions are 
+normalized:
+න
+𝑋
+𝑝 𝑥 𝑑𝑥 = 1
+Different values of x 
+compete for density 
+
+=== PAGE 109 ===
+Recap: Generative Models
+Generative models
+Explicit density Implicit density
+Tractable density Approximate density Direct Indirect
+Autoregressive Variational Autoencoder 
+(VAE)
+Generative Adversarial 
+Network (GAN) Diffusion Models
+Model can 
+compute P(x)
+Cannot compute p(x) but 
+can sample from P(x)
+Really 
+compute 
+P(x)
+Approximate 
+P(x)
+Can directly 
+sample 
+from P(x)
+Iterative 
+procedure to 
+approximate 
+samples 
+from P(x)
+Figure adapted from Ian 
+Goodfellow, Tutorial on 
+Generative Adversarial 
+Networks, 2017
+Today Next Time

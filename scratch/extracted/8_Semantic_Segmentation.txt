@@ -1,0 +1,59 @@
+=== PAGE 1 ===
+Lecture 8: Semantic Segmentation
+Prof. Xiaowei HU
+
+
+=== PAGE 30 ===
+Fully convolutional networks (FCNs) can efficiently learn to make dense predictions 
+for per-pixel tasks like semantic segmentation.
+Long, Jonathan, Evan Shelhamer, and Trevor Darrell. “Fully convolutional networks for semantic segmentation.” CVPR, 2015.
+
+=== PAGE 31 ===
+learn to combine 
+coarse, high layer 
+information with fine, 
+low layer information
+
+=== PAGE 36 ===
+DeepLab
+Dilated convolution
+(a) Sparse feature extraction with 
+standard convolution on a low 
+resolution input feature map.
+(b) Dense feature extraction with 
+atrous convolution with rate r = 2.
+L. Chen, G. Papandreou, I. Kokkinos, K. Murphy, and A. L. Yuille. Semantic image segmentation with deep convolutional nets and fully 
+connected CRFs. ICLR 2015.
+
+=== PAGE 37 ===
+DeepLab v2
+Atrous spatial pyramid pooling (ASPP)
+ASPP exploits multi-scale features by employing multiple parallel filters with different rates. 
+Chen L C, Papandreou G, Kokkinos I, et al. Deeplab: Semantic image segmentation with deep convolutional nets, atrous convolution, and 
+fully connected CRFs, TPAMI 2018.
+
+=== PAGE 38 ===
+DeepLab v3
+Deeper models
+Chen L C, Papandreou G, Schroff F, et al. Rethinking atrous convolution for semantic image segmentation. arXiv 2017.
+
+
+=== PAGE 39 ===
+DeepLab v3
+Chen L C, Papandreou G, Schroff F, et al. Rethinking atrous convolution for semantic image segmentation. arXiv 2017.
+Parallel modules
+
+=== PAGE 40 ===
+PSPNet
+Zhao H, Shi J, Qi X, et al. Pyramid scene parsing network. CVPR 2017.
+Pyramid pooling
+
+=== PAGE 41 ===
+PSPNet
+Zhao H, Shi J, Qi X, et al. Pyramid scene parsing network. CVPR 2017.
+Deep supervision
+
+
+=== PAGE 48 ===
+48
+Thanks!

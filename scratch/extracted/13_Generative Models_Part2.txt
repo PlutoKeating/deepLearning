@@ -1,0 +1,2036 @@
+=== PAGE 1 ===
+Lecture 13:
+Generative Models (part 2)
+
+=== PAGE 2 ===
+Last Time: Generative vs Discriminative Models
+Discriminative Model:
+Learn a probability 
+distribution p(y|x)
+Generative Model:
+Learn a probability 
+distribution p(x)
+Conditional Generative 
+Model: Learn p(x|y)
+Data: x
+Label: y
+Cat
+Density Function
+p(x) assigns a positive 
+number to each possible 
+x; higher numbers mean 
+x is more likely.
+Density functions are 
+normalized:
+න
+𝑋
+𝑝 𝑥 𝑑𝑥 = 1
+Different values of x 
+compete for density 
+
+=== PAGE 3 ===
+Last Time: Generative Models
+Generative models
+Explicit density Implicit density
+Tractable density Approximate density Direct Indirect
+Autoregressive Variational Autoencoder 
+(VAE)
+Generative Adversarial 
+Network (GAN) Diffusion Models
+Model can 
+compute P(x)
+Cannot compute p(x) but 
+can sample from P(x)
+Really 
+compute 
+P(x)
+Approximate 
+P(x)
+Can directly 
+sample 
+from P(x)
+Iterative 
+procedure to 
+approximate 
+samples 
+from P(x)
+Figure adapted from Ian 
+Goodfellow, Tutorial on 
+Generative Adversarial 
+Networks, 2017
+
+=== PAGE 4 ===
+Last Time: Autoregressive Models
+…
+…
+…
+…
+…
+Treat data as a sequence
+(e.g. image as sequence of pixels)
+𝑝 𝑥 = 𝑝 𝑥1, 𝑥2, … , 𝑥𝑁
+= 𝑝 𝑥1 𝑝 𝑥2 𝑥1)𝑝 𝑥3 𝑥1, 𝑥2) …
+= ς𝑡=1
+𝑇 𝑝 𝑥𝑡 𝑥1, … , 𝑥𝑡−1)
+Model with an RNN or Transformer
+
+=== PAGE 5 ===
+Last Time: Variational Autoencoders
+Jointly train encoder q and decoder p to maximize 
+the variational lower bound on the data likelihood
+Also called Evidence Lower Bound (ELBo)
+log 𝑝𝜃(𝑥) ≥ 𝐸𝑧~𝑞𝜙(𝑧|𝑥)[log 𝑝𝜃(𝑥|𝑧)] − 𝐷𝐾𝐿 𝑞𝜙 𝑧 𝑥 , 𝑝 𝑧
+𝜇𝑥|𝑧
+𝑧𝑥
+𝜇𝑧|𝑥 Σ𝑧|𝑥
+𝑝𝜃 𝑥 | 𝑧 = 𝑁(𝜇𝑥|𝑧, 𝜎2)𝑞𝜙 𝑧 | 𝑥 = 𝑁(𝜇𝑧|𝑥, Σ𝑧|𝑥)
+Decoder NetworkEncoder Network
+
+=== PAGE 6 ===
+Today: More Generative Models
+Generative models
+Explicit density Implicit density
+Tractable density Approximate density Direct Indirect
+Autoregressive Variational Autoencoder 
+(VAE)
+Generative Adversarial 
+Network (GAN) Diffusion Models
+Model can 
+compute P(x)
+Cannot compute p(x) but 
+can sample from P(x)
+Really 
+compute 
+P(x)
+Approximate 
+P(x)
+Can directly 
+sample 
+from P(x)
+Iterative 
+procedure to 
+approximate 
+samples 
+from P(x)
+Figure adapted from Ian 
+Goodfellow, Tutorial on 
+Generative Adversarial 
+Networks, 2017
+Last Time Today
+
+=== PAGE 7 ===
+Generative Adversarial Networks
+(GANs)
+
+=== PAGE 8 ===
+Generative Models So Far
+Autoregressive Models directly maximize likelihood of training data:
+𝑝𝜃 𝑥 = ෑ
+𝑖=1
+𝑁
+𝑝𝜃(𝑥𝑖|𝑥1, … , 𝑥𝑖−1)
+Variational Autoencoders introduce a latent z, and maximize a lower bound:
+𝑝𝜃 𝑥 = න
+𝑍
+𝑝𝜃 𝑥 𝑧 𝑝 𝑧 𝑑𝑧 ≥ 𝐸𝑧~𝑞𝜙 𝑧 𝑥 [log 𝑝𝜃(𝑥|𝑧)] − 𝐷𝐾𝐿 𝑞𝜙 𝑧 𝑥 , 𝑝 𝑧
+
+=== PAGE 9 ===
+Generative Models So Far
+Autoregressive Models directly maximize likelihood of training data:
+𝑝𝜃 𝑥 = ෑ
+𝑖=1
+𝑁
+𝑝𝜃(𝑥𝑖|𝑥1, … , 𝑥𝑖−1)
+Variational Autoencoders introduce a latent z, and maximize a lower bound:
+𝑝𝜃 𝑥 = න
+𝑍
+𝑝𝜃 𝑥 𝑧 𝑝 𝑧 𝑑𝑧 ≥ 𝐸𝑧~𝑞𝜙 𝑧 𝑥 [log 𝑝𝜃(𝑥|𝑧)] − 𝐷𝐾𝐿 𝑞𝜙 𝑧 𝑥 , 𝑝 𝑧
+Generative Adversarial Networks give up on modeling p(x), but allow us to 
+draw samples from p(x)
+
+=== PAGE 10 ===
+Generative Adversarial Networks
+Setup: Have data xi drawn from distribution pdata(x). Want to sample from pdata
+Goodfellow et al, “Generative 
+Adversarial Nets”, NeurIPS 2014
+
+=== PAGE 11 ===
+Generative Adversarial Networks
+Setup: Have data xi drawn from distribution pdata(x). Want to sample from pdata
+Idea: Introduce a latent variable z with simple prior p(z) (e.g. unit Gaussian)
+Sample 𝑧 ∼ 𝑝(𝑧) and pass to a Generator Network x = G(z)
+Then x is a sample from the Generator distribution pG. Want pG = pdata!
+Goodfellow et al, “Generative 
+Adversarial Nets”, NeurIPS 2014
+
+=== PAGE 12 ===
+Generative Adversarial Networks
+Setup: Have data xi drawn from distribution pdata(x). Want to sample from pdata
+Idea: Introduce a latent variable z with simple prior p(z) (e.g. unit Gaussian)
+Sample 𝑧 ∼ 𝑝(𝑧) and pass to a Generator Network x = G(z)
+Then x is a sample from the Generator distribution pG. Want pG = pdata!
+Sample 
+z from pz
+Generator 
+Network
+Train Generator Network G to convert 
+z into fake data x sampled from pG
+Generated 
+image
+Goodfellow et al, “Generative 
+Adversarial Nets”, NeurIPS 2014
+Gz
+
+=== PAGE 13 ===
+Generative Adversarial Networks
+Setup: Have data xi drawn from distribution pdata(x). Want to sample from pdata
+Idea: Introduce a latent variable z with simple prior p(z) (e.g. unit Gaussian)
+Sample 𝑧 ∼ 𝑝(𝑧) and pass to a Generator Network x = G(z)
+Then x is a sample from the Generator distribution pG. Want pG = pdata!
+Sample 
+z from pz
+Fake
+Real 
+image
+Real
+Generator 
+Network Discriminator 
+Network
+Train Generator Network G to convert 
+z into fake data x sampled from pG
+By fooling the discriminator D
+Train Discriminator Network D 
+to classify data as real or fake
+Generated 
+image
+Goodfellow et al, “Generative 
+Adversarial Nets”, NeurIPS 2014
+z G
+D
+
+=== PAGE 14 ===
+Generative Adversarial Networks
+Setup: Have data xi drawn from distribution pdata(x). Want to sample from pdata
+Idea: Introduce a latent variable z with simple prior p(z) (e.g. unit Gaussian)
+Sample 𝑧 ∼ 𝑝(𝑧) and pass to a Generator Network x = G(z)
+Then x is a sample from the Generator distribution pG. Want pG = pdata!
+Sample 
+z from pz
+z G
+D
+Fake
+Real
+Generator 
+Network Discriminator 
+Network
+Train Generator Network G to convert 
+z into fake data x sampled from pG
+By fooling the discriminator D
+Train Discriminator Network D 
+to classify data as real or fake
+Jointly train G and 
+D. Hopefully pG
+converges to pdata
+Real 
+image
+Generated 
+image
+Goodfellow et al, “Generative 
+Adversarial Nets”, NeurIPS 2014
+
+=== PAGE 15 ===
+Generative Adversarial Networks: Training Objective
+min
+𝐺
+max
+𝐷
+𝐸𝑥~𝑝𝑑𝑎𝑡𝑎 log 𝐷 𝑥 + 𝐸𝑧~𝑝(𝑧) log 1 − 𝐷 𝐺 𝑧
+Goodfellow et al, “Generative 
+Adversarial Nets”, NeurIPS 2014
+Jointly train generator G and discriminator D with a minimax game
+
+=== PAGE 16 ===
+Generative Adversarial Networks: Training Objective
+min
+𝑮
+max
+𝑫
+𝐸𝑥~𝑝𝑑𝑎𝑡𝑎 log 𝐷 𝑥 + 𝐸𝑧~𝑝(𝑧) log 1 − 𝐷 𝐺 𝑧
+Goodfellow et al, “Generative 
+Adversarial Nets”, NeurIPS 2014
+Jointly train generator G and discriminator D with a minimax game
+D(x) = P(x is real)
+D(x) = 0 => fake
+D(x) = 1 => real
+
+=== PAGE 17 ===
+Generative Adversarial Networks: Training Objective
+min
+𝑮
+max
+𝑫
+𝐸𝑥~𝑝𝑑𝑎𝑡𝑎 log 𝐷 𝑥 + 𝐸𝑧~𝑝(𝑧) log 1 − 𝐷 𝐺 𝑧
+Jointly train generator G and discriminator D with a minimax game
+Goodfellow et al, “Generative 
+Adversarial Nets”, NeurIPS 2014
+D(x) = P(x is real)
+D(x) = 0 => fake
+D(x) = 1 => real
+Imagine 
+fixing G
+Discriminator wants 
+D(x) = 1 for real data
+Discriminator wants 
+D(x) = 0 for fake data
+
+=== PAGE 18 ===
+Generative Adversarial Networks: Training Objective
+min
+𝑮
+max
+𝑫
+𝐸𝑥~𝑝𝑑𝑎𝑡𝑎 log 𝐷 𝑥 + 𝐸𝑧~𝑝(𝑧) log 1 − 𝐷 𝐺 𝑧
+Jointly train generator G and discriminator D with a minimax game
+Goodfellow et al, “Generative 
+Adversarial Nets”, NeurIPS 2014
+D(x) = P(x is real)
+D(x) = 0 => fake
+D(x) = 1 => real
+Imagine 
+fixing D
+This term does not 
+depend on G
+Generator wants 
+D(x) = 1 for fake data
+
+=== PAGE 19 ===
+Generative Adversarial Networks: Training Objective
+min
+𝑮
+max
+𝑫
+𝐸𝑥~𝑝𝑑𝑎𝑡𝑎 log 𝐷 𝑥 + 𝐸𝑧~𝑝(𝑧) log 1 − 𝐷 𝐺 𝑧
+Jointly train generator G and discriminator D with a minimax game
+Goodfellow et al, “Generative 
+Adversarial Nets”, NeurIPS 2014
+Train G and D using alternating gradient updates
+= min
+𝑮
+max
+𝑫
+𝑉(𝐺, 𝐷)
+
+=== PAGE 20 ===
+Generative Adversarial Networks: Training Objective
+min
+𝑮
+max
+𝑫
+𝐸𝑥~𝑝𝑑𝑎𝑡𝑎 log 𝐷 𝑥 + 𝐸𝑧~𝑝(𝑧) log 1 − 𝐷 𝐺 𝑧
+Jointly train generator G and discriminator D with a minimax game
+Goodfellow et al, “Generative 
+Adversarial Nets”, NeurIPS 2014
+Train G and D using alternating gradient updates
+= min
+𝑮
+max
+𝑫
+𝑉(𝐺, 𝐷) While True:
+𝐷 = 𝐷 + 𝛼𝐷
+𝑑𝑉
+𝑑𝐷
+𝐺 = 𝐺 − 𝛼𝐺
+𝑑𝑉
+𝑑𝐺
+
+=== PAGE 21 ===
+Generative Adversarial Networks: Training Objective
+min
+𝑮
+max
+𝑫
+𝐸𝑥~𝑝𝑑𝑎𝑡𝑎 log 𝐷 𝑥 + 𝐸𝑧~𝑝(𝑧) log 1 − 𝐷 𝐺 𝑧
+Jointly train generator G and discriminator D with a minimax game
+Goodfellow et al, “Generative 
+Adversarial Nets”, NeurIPS 2014
+Train G and D using alternating gradient updates
+= min
+𝑮
+max
+𝑫
+𝑉(𝐺, 𝐷) While True:
+𝐷 = 𝐷 + 𝛼𝐷
+𝑑𝑉
+𝑑𝐷
+𝐺 = 𝐺 − 𝛼𝐺
+𝑑𝑉
+𝑑𝐺
+We are not minimizing any overall 
+loss! No training curves to look at!
+
+=== PAGE 22 ===
+Generative Adversarial Networks: Training Objective
+min
+𝑮
+max
+𝑫
+𝐸𝑥~𝑝𝑑𝑎𝑡𝑎 log 𝐷 𝑥 + 𝐸𝑧~𝑝(𝑧) log 1 − 𝐷 𝐺 𝑧
+Jointly train generator G and discriminator D with a minimax game
+Goodfellow et al, “Generative 
+Adversarial Nets”, NeurIPS 2014
+At start of training, generator is very
+bad and discriminator can easily tell apart 
+real/fake, so D(G(z)) close to 0
+
+
+=== PAGE 23 ===
+Generative Adversarial Networks: Training Objective
+min
+𝑮
+max
+𝑫
+𝐸𝑥~𝑝𝑑𝑎𝑡𝑎 log 𝐷 𝑥 + 𝐸𝑧~𝑝(𝑧) log 1 − 𝐷 𝐺 𝑧
+Jointly train generator G and discriminator D with a minimax game
+Goodfellow et al, “Generative 
+Adversarial Nets”, NeurIPS 2014
+At start of training, generator is very
+bad and discriminator can easily tell apart 
+real/fake, so D(G(z)) close to 0
+Problem: Gradients for G are close to 0
+
+
+=== PAGE 24 ===
+Generative Adversarial Networks: Training Objective
+min
+𝑮
+max
+𝑫
+𝐸𝑥~𝑝𝑑𝑎𝑡𝑎 log 𝐷 𝑥 + 𝐸𝑧~𝑝(𝑧) log 1 − 𝐷 𝐺 𝑧
+Jointly train generator G and discriminator D with a minimax game
+Goodfellow et al, “Generative 
+Adversarial Nets”, NeurIPS 2014
+At start of training, generator is very
+bad and discriminator can easily tell apart 
+real/fake, so D(G(z)) close to 0
+Problem: Gradients for G are close to 0
+Solution: Generator wants D(G(z)) = 1.
+Train generator to minimize –log(D(G(z)) 
+and discriminator to maximize log(1 -D(G(z))
+so generator gets strong gradients at start
+
+=== PAGE 25 ===
+Generative Adversarial Networks: Training Objective
+min
+𝑮
+max
+𝑫
+𝐸𝑥~𝑝𝑑𝑎𝑡𝑎 log 𝐷 𝑥 + 𝐸𝑧~𝑝(𝑧) log 1 − 𝐷 𝐺 𝑧
+Jointly train generator G and discriminator D with a minimax game
+Goodfellow et al, “Generative 
+Adversarial Nets”, NeurIPS 2014
+Why is this a good objective?
+
+=== PAGE 26 ===
+Generative Adversarial Networks: Training Objective
+min
+𝑮
+max
+𝑫
+𝐸𝑥~𝑝𝑑𝑎𝑡𝑎 log 𝐷 𝑥 + 𝐸𝑧~𝑝(𝑧) log 1 − 𝐷 𝐺 𝑧
+Jointly train generator G and discriminator D with a minimax game
+Goodfellow et al, “Generative 
+Adversarial Nets”, NeurIPS 2014
+Why is this a good objective?
+Inner objective is maximized by
+𝐷𝐺
+∗ 𝑥 = 𝑝𝑑𝑎𝑡𝑎 𝑥
+𝑝𝑑𝑎𝑡𝑎 𝑥 + 𝑝𝐺(𝑥)
+(for any pG)
+(Proof omitted)
+
+=== PAGE 27 ===
+Generative Adversarial Networks: Training Objective
+min
+𝑮
+max
+𝑫
+𝐸𝑥~𝑝𝑑𝑎𝑡𝑎 log 𝐷 𝑥 + 𝐸𝑧~𝑝(𝑧) log 1 − 𝐷 𝐺 𝑧
+Jointly train generator G and discriminator D with a minimax game
+Goodfellow et al, “Generative 
+Adversarial Nets”, NeurIPS 2014
+Why is this a good objective?
+Inner objective is maximized by
+𝐷𝐺
+∗ 𝑥 = 𝑝𝑑𝑎𝑡𝑎 𝑥
+𝑝𝑑𝑎𝑡𝑎 𝑥 + 𝑝𝐺(𝑥)
+(for any pG)
+Outer objective is 
+then minimized by
+𝑝𝐺 𝑥 = 𝑝𝑑𝑎𝑡𝑎 𝑥
+(Proof omitted)
+
+=== PAGE 28 ===
+Generative Adversarial Networks: Training Objective
+min
+𝑮
+max
+𝑫
+𝐸𝑥~𝑝𝑑𝑎𝑡𝑎 log 𝐷 𝑥 + 𝐸𝑧~𝑝(𝑧) log 1 − 𝐷 𝐺 𝑧
+Jointly train generator G and discriminator D with a minimax game
+Goodfellow et al, “Generative 
+Adversarial Nets”, NeurIPS 2014
+Why is this a good objective?
+Inner objective is maximized by
+𝐷𝐺
+∗ 𝑥 = 𝑝𝑑𝑎𝑡𝑎 𝑥
+𝑝𝑑𝑎𝑡𝑎 𝑥 + 𝑝𝐺(𝑥)
+(for any pG) Caveats: 
+1. Neural nets with fixed capacity may not 
+be able to represent optimal D and G
+2. This tells us nothing about convergence
+to the solution with finite data
+(Proof omitted)
+Outer objective is 
+then minimized by
+𝑝𝐺 𝑥 = 𝑝𝑑𝑎𝑡𝑎 𝑥
+
+=== PAGE 29 ===
+GAN Architectures: DC-GAN
+Generator G and discriminator D 
+are both neural networks
+Usually CNNs … GANs fell out of 
+favor before ViT became popular
+DC-GAN was the first GAN 
+architecture that worked on non-
+toy data
+Radford et al, ICLR 2016
+
+
+=== PAGE 30 ===
+GAN Architectures: DC-GAN
+Generator G and discriminator D 
+are both neural networks
+Usually CNNs … GANs fell out of 
+favor before ViT became popular
+DC-GAN was the first GAN 
+architecture that worked on non-
+toy data
+Radford et al, ICLR 2016
+GPT-1 Paper (2018)
+GPT-2 Paper (2019)
+
+=== PAGE 31 ===
+GAN Architectures: StyleGAN
+Generator G and discriminator D 
+are both neural networks
+StyleGAN uses a more complex 
+architecture that injects noise via 
+adaptive normalization.
+At each layer predict a scale w 
+and shift b the same shape as x:
+𝐴𝑑𝑎𝐼𝑁 𝑥, 𝑤, 𝑏 𝑖 = 𝑤𝑖
+𝑥𝑖 − 𝜇(𝑥)
+𝜎(𝑥) + 𝑏𝑖
+Karras et al, ”A Stye-Based Generator Architecture 
+for Generative Adversarial Networks”, CVPR 2019
+
+=== PAGE 32 ===
+GANs: Latent Space Interpolation
+Latent space is smooth.
+Given latent vectors z0 and z1, we 
+can interpolate between them:
+𝑧𝑡 = 𝑡𝑧𝑜 + 1 − 𝑡 𝑧1
+𝑥𝑡 = 𝐺 𝑧𝑡
+The resulting image xt smoothly 
+interpolate between samples!
+
+=== PAGE 33 ===
+GANs: Latent Space Interpolation
+Latent space is smooth.
+Given latent vectors z0 and z1, we 
+can interpolate between them:
+𝑧𝑡 = 𝑡𝑧𝑜 + 1 − 𝑡 𝑧1
+𝑥𝑡 = 𝐺 𝑧𝑡
+The resulting image xt smoothly 
+interpolate between samples!
+Karras et al, ”Alias-Free Generative Adversarial Networks”, NeurIPS 2021
+
+=== PAGE 34 ===
+Generative Adversarial Networks: Summary
+Jointly train Generator and 
+Discriminator with a minimax game 
+Pros:
+- Simple formulation
+- Very good image quality
+Cons:
+- No loss curve to look at
+- Unstable training
+- Hard to scale to big models + data
+These were the go-to generative 
+models from ~2016 – 2021 
+
+=== PAGE 35 ===
+Diffusion Models
+Sohl-Dickstein et al, “Deep Unsupervised Learning using noneuilibriumthermodynamics”, ICML 2015
+Song and Ermon, “Generative modeling by estimnatinggradients of the data distribution”, NaurIPS 2019
+Ho et al, “Denoising Diffusion ProbabalisticModels”, NeurIPS 2020
+Song et al, “Score-Based Generative Modeling through Stochastic Differential Equations”, ICLR 2021
+Song et al, “Denoising Diffusion Implicit Models”, ICLR 2021
+
+=== PAGE 36 ===
+Diffusion Models
+Warning: Terminology and 
+notation in this area is a mess!
+There are many different 
+mathematical formalisms; tons 
+of variance in terminology and 
+notation between papers.
+We’ll just cover the basics of a 
+modern “clean” implementation 
+(Rectified Flow)
+
+=== PAGE 37 ===
+Diffusion Models: Intuition
+Pick a noise distribution 𝑧 ∼ 𝑝𝑛𝑜𝑖𝑠𝑒
+(Usually unit Gaussian)
+
+=== PAGE 38 ===
+Diffusion Models: Intuition
+Pick a noise distribution 𝑧 ∼ 𝑝𝑛𝑜𝑖𝑠𝑒
+(Usually unit Gaussian)
+Consider data x corrupted under varying 
+noise levels t to give noisy data xt
+t = 0
+No noise
+t = 1
+Full noise
+
+
+=== PAGE 39 ===
+Diffusion Models: Intuition
+Pick a noise distribution 𝑧 ∼ 𝑝𝑛𝑜𝑖𝑠𝑒
+(Usually unit Gaussian)
+Consider data x corrupted under varying 
+noise levels t to give noisy data xt
+Train a neural network to remove a little 
+bit of noise: 𝑓𝜃(𝑥𝑡, 𝑡)
+t = 0
+No noise
+t = 1
+Full noise
+
+
+=== PAGE 40 ===
+Diffusion Models: Intuition
+Pick a noise distribution 𝑧 ∼ 𝑝𝑛𝑜𝑖𝑠𝑒
+(Usually unit Gaussian)
+Consider data x corrupted under varying 
+noise levels t to give noisy data xt
+Train a neural network to remove a little 
+bit of noise: 𝑓𝜃(𝑥𝑡, 𝑡)
+At inference time, sample 𝑥1 ∼ 𝑝𝑛𝑜𝑖𝑠𝑒 and 
+apply 𝑓𝜃 many times in sequence to 
+generate a noiseless sample x0
+t = 0
+No noise
+t = 1
+Full noise
+
+
+=== PAGE 41 ===
+Diffusion Models: Rectified Flow
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+Suppose we have a simple pnoise
+(e.g. Gaussian) and samples from pdata
+Liu et al, “Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow”, 2022
+Lipman et al, “Flow Matching for Generative Modeling”, 2022
+
+=== PAGE 42 ===
+Diffusion Models: Rectified Flow
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+Suppose we have a simple pnoise
+(e.g. Gaussian) and samples from pdata
+On each training iteration, sample:
+𝑧 ∼ 𝑝𝑛𝑜𝑖𝑠𝑒 𝑥 ∼ 𝑝𝑑𝑎𝑡𝑎 𝑡 ∼ 𝑈𝑛𝑖𝑓𝑜𝑟𝑚 0, 1
+𝑧
+𝑥
+Liu et al, “Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow”, 2022
+Lipman et al, “Flow Matching for Generative Modeling”, 2022
+
+=== PAGE 43 ===
+Diffusion Models: Rectified Flow
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+Suppose we have a simple pnoise
+(e.g. Gaussian) and samples from pdata
+On each training iteration, sample:
+𝑧 ∼ 𝑝𝑛𝑜𝑖𝑠𝑒 𝑥 ∼ 𝑝𝑑𝑎𝑡𝑎 𝑡 ∼ 𝑈𝑛𝑖𝑓𝑜𝑟𝑚 0, 1
+Set 𝑥𝑡 = 1 − 𝑡 𝑥 + 𝑡𝑧, 𝑣 = 𝑧 − 𝑥
+𝑧
+𝑥
+𝑥𝑡
+𝑣
+Liu et al, “Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow”, 2022
+Lipman et al, “Flow Matching for Generative Modeling”, 2022
+
+=== PAGE 44 ===
+Diffusion Models: Rectified Flow
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+Suppose we have a simple pnoise
+(e.g. Gaussian) and samples from pdata
+On each training iteration, sample:
+𝑧 ∼ 𝑝𝑛𝑜𝑖𝑠𝑒 𝑥 ∼ 𝑝𝑑𝑎𝑡𝑎 𝑡 ∼ 𝑈𝑛𝑖𝑓𝑜𝑟𝑚 0, 1
+Set 𝑥𝑡 = 1 − 𝑡 𝑥 + 𝑡𝑧, 𝑣 = 𝑧 − 𝑥
+Train a neural network to predict v:
+𝐿 = 𝑓𝜃 𝑥𝑡, 𝑡 − 𝑣 2
+2
+𝑧
+𝑥
+𝑣
+Liu et al, “Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow”, 2022
+Lipman et al, “Flow Matching for Generative Modeling”, 2022
+𝑥𝑡
+
+=== PAGE 45 ===
+Diffusion Models: Rectified Flow
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+𝑧
+𝑥
+𝑣
+Core training loop is just 
+a few lines of code!
+Liu et al, “Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow”, 2022
+Lipman et al, “Flow Matching for Generative Modeling”, 2022
+𝑥𝑡
+
+=== PAGE 46 ===
+Rectified Flow: Sampling
+Liu et al, “Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow”, 2022
+Lipman et al, “Flow Matching for Generative Modeling”, 2022
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+Choose number of steps T (often T=50)
+
+=== PAGE 47 ===
+Rectified Flow: Sampling
+Liu et al, “Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow”, 2022
+Lipman et al, “Flow Matching for Generative Modeling”, 2022
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+Choose number of steps T (often T=50)
+Sample 𝑥 ∼ 𝑝𝑛𝑜𝑖𝑠𝑒
+𝑥1
+
+=== PAGE 48 ===
+Rectified Flow: Sampling
+Liu et al, “Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow”, 2022
+Lipman et al, “Flow Matching for Generative Modeling”, 2022
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+Choose number of steps T (often T=50)
+Sample 𝑥 ∼ 𝑝𝑛𝑜𝑖𝑠𝑒
+For t in [1, 1 −
+1
+𝑇 , 1 −
+2
+𝑇 , … , 0]:
+Evaluate 𝑣𝑡 = 𝑓𝜃(𝑥𝑡, 𝑡)
+𝑣1
+𝑥1
+
+=== PAGE 49 ===
+Rectified Flow: Sampling
+Liu et al, “Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow”, 2022
+Lipman et al, “Flow Matching for Generative Modeling”, 2022
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+Choose number of steps T (often T=50)
+Sample 𝑥 ∼ 𝑝𝑛𝑜𝑖𝑠𝑒
+For t in [1, 1 −
+1
+𝑇 , 1 −
+2
+𝑇 , … , 0]:
+Evaluate 𝑣𝑡 = 𝑓𝜃(𝑥𝑡, 𝑡)
+Step 𝑥 = 𝑥 − 𝑣𝑡/𝑇
+𝑣1
+𝑥1
+𝑥2/3
+
+=== PAGE 50 ===
+Rectified Flow: Sampling
+Liu et al, “Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow”, 2022
+Lipman et al, “Flow Matching for Generative Modeling”, 2022
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+Choose number of steps T (often T=50)
+Sample 𝑥 ∼ 𝑝𝑛𝑜𝑖𝑠𝑒
+For t in [1, 1 −
+1
+𝑇 , 1 −
+2
+𝑇 , … , 0]:
+Evaluate 𝑣𝑡 = 𝑓𝜃(𝑥𝑡, 𝑡)
+Step 𝑥 = 𝑥 − 𝑣𝑡/𝑇 𝑣2/3
+𝑥1
+𝑥2/3
+
+=== PAGE 51 ===
+Rectified Flow: Sampling
+Liu et al, “Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow”, 2022
+Lipman et al, “Flow Matching for Generative Modeling”, 2022
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+Choose number of steps T (often T=50)
+Sample 𝑥 ∼ 𝑝𝑛𝑜𝑖𝑠𝑒
+For t in [1, 1 −
+1
+𝑇 , 1 −
+2
+𝑇 , … , 0]:
+Evaluate 𝑣𝑡 = 𝑓𝜃(𝑥𝑡, 𝑡)
+Step 𝑥 = 𝑥 − 𝑣𝑡/𝑇 𝑣2/3
+𝑥1
+𝑥2/3
+𝑥1/3
+
+=== PAGE 52 ===
+Rectified Flow: Sampling
+Liu et al, “Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow”, 2022
+Lipman et al, “Flow Matching for Generative Modeling”, 2022
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+Choose number of steps T (often T=50)
+Sample 𝑥 ∼ 𝑝𝑛𝑜𝑖𝑠𝑒
+For t in [1, 1 −
+1
+𝑇 , 1 −
+2
+𝑇 , … , 0]:
+Evaluate 𝑣𝑡 = 𝑓𝜃(𝑥𝑡, 𝑡)
+Step 𝑥 = 𝑥 − 𝑣𝑡/𝑇 𝑣1/3
+𝑥1
+𝑥2/3
+𝑥0
+𝑥1/3
+
+=== PAGE 53 ===
+Rectified Flow: Sampling
+Liu et al, “Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow”, 2022
+Lipman et al, “Flow Matching for Generative Modeling”, 2022
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+Choose number of steps T (often T=50)
+Sample 𝑥 ∼ 𝑝𝑛𝑜𝑖𝑠𝑒
+For t in [1, 1 −
+1
+𝑇 , 1 −
+2
+𝑇 , … , 0]:
+Evaluate 𝑣𝑡 = 𝑓𝜃(𝑥𝑡, 𝑡)
+Step 𝑥 = 𝑥 − 𝑣𝑡/𝑇 𝑣1/3
+𝑥1
+𝑥2/3
+𝑥0
+𝑥1/3
+
+=== PAGE 54 ===
+Rectified Flow: Sampling
+Liu et al, “Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow”, 2022
+Lipman et al, “Flow Matching for Generative Modeling”, 2022
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+Choose number of steps T (often T=50)
+Sample 𝑥 ∼ 𝑝𝑛𝑜𝑖𝑠𝑒
+For t in [1, 1 −
+1
+𝑇 , 1 −
+2
+𝑇 , … , 0]:
+Evaluate 𝑣𝑡 = 𝑓𝜃(𝑥𝑡, 𝑡)
+Step 𝑥 = 𝑥 − 𝑣𝑡/𝑇
+Return x
+𝑥1
+𝑥2/3
+𝑥0
+𝑥1/3
+
+=== PAGE 55 ===
+Rectified Flow: Sampling
+Liu et al, “Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow”, 2022
+Lipman et al, “Flow Matching for Generative Modeling”, 2022
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+Choose number of steps T (often T=50)
+Sample 𝑥 ∼ 𝑝𝑛𝑜𝑖𝑠𝑒
+For t in [1, 1 −
+1
+𝑇 , 1 −
+2
+𝑇 , … , 0]:
+Evaluate 𝑣𝑡 = 𝑓𝜃(𝑥𝑡, 𝑡)
+Step 𝑥 = 𝑥 − 𝑣𝑡/𝑇
+Return x
+𝑥1
+𝑥2/3
+𝑥0
+𝑥1/3
+
+
+=== PAGE 56 ===
+Rectified Flow: Summary
+Liu et al, “Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow”, 2022
+Lipman et al, “Flow Matching for Generative Modeling”, 2022
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+𝑧
+𝑥
+𝑣
+𝑥𝑡
+Training
+Sampling
+
+=== PAGE 57 ===
+𝑥𝑡
+Conditional Rectified Flow
+Liu et al, “Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow”, 2022
+Lipman et al, “Flow Matching for Generative Modeling”, 2022
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+𝑧
+𝑥
+𝑣
+Training
+Sampling
+𝑝𝑑𝑎𝑡𝑎 𝑥 ∣ 𝑦 = ∎
+
+
+=== PAGE 58 ===
+𝑥𝑡
+Conditional Rectified Flow
+Liu et al, “Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow”, 2022
+Lipman et al, “Flow Matching for Generative Modeling”, 2022
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+𝑧
+𝑥
+𝑣
+Training
+Sampling
+𝑝𝑑𝑎𝑡𝑎 𝑥 ∣ 𝑦 = ∎
+
+
+=== PAGE 59 ===
+𝑥𝑡
+Conditional Rectified Flow
+Liu et al, “Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow”, 2022
+Lipman et al, “Flow Matching for Generative Modeling”, 2022
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+𝑧
+𝑥
+𝑣
+Training
+Sampling
+𝑝𝑑𝑎𝑡𝑎 𝑥 ∣ 𝑦 = ∎
+
+=== PAGE 60 ===
+𝑥𝑡
+Conditional Rectified Flow
+Liu et al, “Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow”, 2022
+Lipman et al, “Flow Matching for Generative Modeling”, 2022
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+𝑧
+𝑥
+𝑣
+Training
+Sampling
+𝑝𝑑𝑎𝑡𝑎 𝑥 ∣ 𝑦 = ∎
+Can we control how 
+much we “emphasize” 
+the conditioning y?
+
+=== PAGE 61 ===
+Classifier-Free Guidance (CFG)
+Ho and Salimans, “Classifier-Free Diffusion Guidance”, arXiv 2022
+Training
+Randomly drop y during training.
+Now the same model is conditional and unconditional!
+Can we control how 
+much we “emphasize” 
+the conditioning y?
+𝑥𝑡
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+𝑧
+𝑥
+𝑣 𝑝𝑑𝑎𝑡𝑎 𝑥 ∣ 𝑦 = ∎
+
+=== PAGE 62 ===
+Classifier-Free Guidance (CFG)
+Ho and Salimans, “Classifier-Free Diffusion Guidance”, arXiv 2022
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+Training
+𝑝𝑑𝑎𝑡𝑎 𝑥 ∣ 𝑦 = ∎
+𝑥𝑡
+Randomly drop y during training.
+Now the same model is conditional and unconditional! 
+Consider a noisy 𝑥𝑡:
+Can we control how 
+much we “emphasize” 
+the conditioning y?
+
+=== PAGE 63 ===
+Classifier-Free Guidance (CFG)
+Ho and Salimans, “Classifier-Free Diffusion Guidance”, arXiv 2022
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+Training
+𝑝𝑑𝑎𝑡𝑎 𝑥 ∣ 𝑦 = ∎
+𝑥𝑡
+𝑣∅
+Randomly drop y during training.
+Now the same model is conditional and unconditional! 
+Consider a noisy 𝑥𝑡:
+𝑣∅ = 𝑓𝜃(𝑥𝑡, 𝑦∅, 𝑡) points toward 𝑝(𝑥)
+Can we control how 
+much we “emphasize” 
+the conditioning y?
+
+=== PAGE 64 ===
+Classifier-Free Guidance (CFG)
+Ho and Salimans, “Classifier-Free Diffusion Guidance”, arXiv 2022
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+𝑣𝑦Training
+𝑝𝑑𝑎𝑡𝑎 𝑥 ∣ 𝑦 = ∎
+𝑥𝑡
+𝑣∅
+Randomly drop y during training.
+Now the same model is conditional and unconditional! 
+Consider a noisy 𝑥𝑡:
+𝑣∅ = 𝑓𝜃(𝑥𝑡, 𝑦∅, 𝑡) points toward 𝑝(𝑥)
+𝑣𝑦 = 𝑓𝜃(𝑥𝑡, 𝑦, 𝑡) points toward 𝑝 𝑥 𝑦
+Can we control how 
+much we “emphasize” 
+the conditioning y?
+
+=== PAGE 65 ===
+Classifier-Free Guidance (CFG)
+Ho and Salimans, “Classifier-Free Diffusion Guidance”, arXiv 2022
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+𝑣𝑦Training
+𝑝𝑑𝑎𝑡𝑎 𝑥 ∣ 𝑦 = ∎
+𝑥𝑡
+𝑣∅
+𝑣𝑐𝑓𝑔
+Randomly drop y during training.
+Now the same model is conditional and unconditional! 
+Consider a noisy 𝑥𝑡:
+𝑣∅ = 𝑓𝜃(𝑥𝑡, 𝑦∅, 𝑡) points toward 𝑝(𝑥)
+𝑣𝑦 = 𝑓𝜃(𝑥𝑡, 𝑦, 𝑡) points toward 𝑝 𝑥 𝑦
+𝑣𝑐𝑓𝑔 = 1 + 𝑤 𝑣𝑦 − 𝑤𝑣∅ points more toward 𝑝 𝑥 𝑦
+Can we control how 
+much we “emphasize” 
+the conditioning y?
+
+=== PAGE 66 ===
+Classifier-Free Guidance (CFG)
+Ho and Salimans, “Classifier-Free Diffusion Guidance”, arXiv 2022
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+𝑣𝑦Training
+𝑝𝑑𝑎𝑡𝑎 𝑥 ∣ 𝑦 = ∎
+𝑥𝑡
+𝑣∅
+𝑣𝑐𝑓𝑔
+Randomly drop y during training.
+Now the same model is conditional and unconditional! 
+Consider a noisy 𝑥𝑡:
+𝑣∅ = 𝑓𝜃(𝑥𝑡, 𝑦∅, 𝑡) points toward 𝑝(𝑥)
+𝑣𝑦 = 𝑓𝜃(𝑥𝑡, 𝑦, 𝑡) points toward 𝑝 𝑥 𝑦
+𝑣𝑐𝑓𝑔 = 1 + 𝑤 𝑣𝑦 − 𝑤𝑣∅ points more toward 𝑝 𝑥 𝑦
+During sampling, step according to 𝑣𝑐𝑓𝑔
+Can we control how 
+much we “emphasize” 
+the conditioning y?
+
+=== PAGE 67 ===
+Classifier-Free Guidance (CFG)
+Ho and Salimans, “Classifier-Free Diffusion Guidance”, arXiv 2022
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+𝑣𝑦Training
+𝑝𝑑𝑎𝑡𝑎 𝑥 ∣ 𝑦 = ∎
+𝑥𝑡
+𝑣∅
+𝑣𝑐𝑓𝑔
+Can we control how 
+much we “emphasize” 
+the conditioning y?
+Sampling
+
+=== PAGE 68 ===
+Classifier-Free Guidance (CFG)
+Ho and Salimans, “Classifier-Free Diffusion Guidance”, arXiv 2022
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+𝑣𝑦Training
+𝑝𝑑𝑎𝑡𝑎 𝑥 ∣ 𝑦 = ∎
+𝑥𝑡
+𝑣∅
+𝑣𝑐𝑓𝑔
+Can we control how 
+much we “emphasize” 
+the conditioning y?
+Sampling
+
+=== PAGE 69 ===
+Classifier-Free Guidance (CFG)
+Dhariwal and Nichol, “Diffusion Models beat GANs on Image Synthesis”, arXiv 2021
+Ho and Salimans, “Classifier-Free Diffusion Guidance”, arXiv 2022
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+𝑣𝑦Training
+𝑝𝑑𝑎𝑡𝑎 𝑥 ∣ 𝑦 = ∎
+𝑥𝑡
+𝑣∅
+𝑣𝑐𝑓𝑔
+Can we control how 
+much we “emphasize” 
+the conditioning y?
+Sampling
+”Classifier-Free” because 
+earlier methods used a 
+separate discriminative 
+model 𝑝(𝑦 ∣ 𝑥) to compute 
+step direction 
+𝜕
+𝜕𝑥 log 𝑝(𝑦 ∣ 𝑥)
+
+=== PAGE 70 ===
+Classifier-Free Guidance (CFG)
+Dhariwal and Nichol, “Diffusion Models beat GANs on Image Synthesis”, arXiv 2021
+Ho and Salimans, “Classifier-Free Diffusion Guidance”, arXiv 2022
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+𝑣𝑦Training
+𝑝𝑑𝑎𝑡𝑎 𝑥 ∣ 𝑦 = ∎
+𝑥𝑡
+𝑣∅
+𝑣𝑐𝑓𝑔
+Can we control how 
+much we “emphasize” 
+the conditioning y?
+Sampling Used everywhere in 
+practice! Very important 
+for high-quality outputs
+
+=== PAGE 71 ===
+Classifier-Free Guidance (CFG)
+Dhariwal and Nichol, “Diffusion Models beat GANs on Image Synthesis”, arXiv 2021
+Ho and Salimans, “Classifier-Free Diffusion Guidance”, arXiv 2022
+𝑝𝑑𝑎𝑡𝑎
+𝑝𝑛𝑜𝑖𝑠𝑒
+𝑣𝑦Training
+𝑝𝑑𝑎𝑡𝑎 𝑥 ∣ 𝑦 = ∎
+𝑥𝑡
+𝑣∅
+𝑣𝑐𝑓𝑔
+Can we control how 
+much we “emphasize” 
+the conditioning y?
+Sampling Used everywhere in 
+practice! Very important 
+for high-quality outputs
+Doubles the cost 
+of sampling…
+
+=== PAGE 72 ===
+Noise Schedules
+Esser et al, “Scaling Rectified Flow Transformers for High -Resolution Image Synthesis”, arXiv 2024
+There may be many pairs (x, z) that give the 
+same xt; network must average over them 
+Full noise (t=1) is easy: optimal v is mean of pdata
+No noise (t=0) is easy: optimal v is mean of pnoise
+Middle noise is hardest, most ambiguous
+But we give equal weight to all noise levels!
+Solution: Use a non-uniform noise schedule
+Training
+t
+p(t)
+Put more emphasis on middle noise
+
+=== PAGE 73 ===
+Noise Schedules
+Esser et al, “Scaling Rectified Flow Transformers for High -Resolution Image Synthesis”, arXiv 2024
+There may be many pairs (x, z) that give the 
+same xt; network must average over them 
+Full noise (t=1) is easy: optimal v is mean of pdata
+No noise (t=0) is easy: optimal v is mean of pnoise
+Middle noise is hardest, most ambiguous
+But we give equal weight to all noise levels!
+Solution: Use a non-uniform noise schedule
+Training
+t
+p(t)
+Put more emphasis on middle noise
+Common choice: logit-normal sampling
+
+=== PAGE 74 ===
+Noise Schedules
+Esser et al, “Scaling Rectified Flow Transformers for High -Resolution Image Synthesis”, arXiv 2024
+There may be many pairs (x, z) that give the 
+same xt; network must average over them 
+Full noise (t=1) is easy: optimal v is mean of pdata
+No noise (t=0) is easy: optimal v is mean of pnoise
+Middle noise is hardest, most ambiguous
+But we give equal weight to all noise levels!
+Solution: Use a non-uniform noise schedule
+Training
+t
+p(t)
+Put more emphasis on middle noise
+Common choice: logit-normal sampling
+For high-res data, often shift to higher 
+noise to account for pixel correlations
+
+=== PAGE 75 ===
+Diffusion: Rectified Flow
+Esser et al, “Scaling Rectified Flow Transformers for High -Resolution Image Synthesis”, arXiv 2024
+Training
+t
+p(t)
+Put more emphasis on middle noise
+Common choice: logit-normal sampling
+For high-res data, often shift to higher 
+noise to account for pixel correlations
+Sampling
+Simple and scalable setup 
+for many generative 
+modeling problems!
+
+=== PAGE 76 ===
+Diffusion: Rectified Flow
+Esser et al, “Scaling Rectified Flow Transformers for High -Resolution Image Synthesis”, arXiv 2024
+Training
+t
+p(t)
+Put more emphasis on middle noise
+Common choice: logit-normal sampling
+For high-res data, often shift to higher 
+noise to account for pixel correlations
+Sampling
+Simple and scalable setup 
+for many generative 
+modeling problems!
+Problem: Does not 
+work naively on high-
+resolution data
+
+=== PAGE 77 ===
+Latent Diffusion Models (LDMs)
+Image
+H x W x 3
+Encoder
+Decoder
+Image
+H x W x 3
+Latent
+H/D x W/D x C
+Train encoder + decoder to 
+convert images to latents
+Rombach et al, “High -Resolution Image Synthesis 
+with Latent Diffusion Models”, CVPR 2022
+
+=== PAGE 78 ===
+Latent Diffusion Models (LDMs)
+Image
+H x W x 3
+Encoder
+Decoder
+Image
+H x W x 3
+Latent
+H/D x W/D x C
+Train encoder + decoder to 
+convert images to latents
+Rombach et al, “High -Resolution Image Synthesis 
+with Latent Diffusion Models”, CVPR 2022
+Common setting: D=8, C=16
+Image: 256 x 256 x 3 
+=> Latent: 32 x 32 x 16
+Encoder / Decoder are CNNs with attention
+
+=== PAGE 79 ===
+Latent Diffusion Models (LDMs)
+Image
+H x W x 3
+Encoder
+Decoder
+Image
+H x W x 3
+Latent
+H/D x W/D x C
+Train encoder + decoder to 
+convert images to latents
+Train diffusion model to 
+remove noise from latents
+(Encoder is frozen)
+Rombach et al, “High -Resolution Image Synthesis 
+with Latent Diffusion Models”, CVPR 2022
+Noisy Latent
+H/D x W/D x C
+Denoised Latent
+H/D x W/D x C
+
+=== PAGE 80 ===
+Latent Diffusion Models (LDMs)
+Image
+H x W x 3
+Encoder
+Decoder
+Image
+H x W x 3
+Latent
+H/D x W/D x C
+Train encoder + decoder to 
+convert images to latents
+Train diffusion model to 
+remove noise from latents
+(Encoder is frozen)
+After training:
+Rombach et al, “High -Resolution Image Synthesis 
+with Latent Diffusion Models”, CVPR 2022
+Noisy Latent
+H/D x W/D x C
+Denoised Latent
+H/D x W/D x C
+
+=== PAGE 81 ===
+Latent Diffusion Models (LDMs)
+Image
+H x W x 3
+Encoder
+Decoder
+Image
+H x W x 3
+Latent
+H/D x W/D x C
+Train encoder + decoder to 
+convert images to latents
+Train diffusion model to 
+remove noise from latents
+(Encoder is frozen)
+After training:
+Sample random 
+latent
+Rombach et al, “High -Resolution Image Synthesis 
+with Latent Diffusion Models”, CVPR 2022
+Noisy Latent
+H/D x W/D x C
+Denoised Latent
+H/D x W/D x C
+
+=== PAGE 82 ===
+Latent Diffusion Models (LDMs)
+Image
+H x W x 3
+Encoder
+Decoder
+Image
+H x W x 3
+Latent
+H/D x W/D x C
+Train encoder + decoder to 
+convert images to latents
+Train diffusion model to 
+remove noise from latents
+(Encoder is frozen)
+…
+After training:
+Sample random 
+latent
+Iteratively apply 
+diffusion model
+to remove noise
+Rombach et al, “High -Resolution Image Synthesis 
+with Latent Diffusion Models”, CVPR 2022
+Noisy Latent
+H/D x W/D x C
+Denoised Latent
+H/D x W/D x C
+
+=== PAGE 83 ===
+Latent Diffusion Models (LDMs)
+Image
+H x W x 3
+Encoder
+Decoder
+Image
+H x W x 3
+Latent
+H/D x W/D x C
+Train encoder + decoder to 
+convert images to latents
+Train diffusion model to 
+remove noise from latents
+(Encoder is frozen)
+…
+After training:
+Sample random 
+latent
+Iteratively apply 
+diffusion model
+to remove noise
+run decoder to 
+get image
+Rombach et al, “High -Resolution Image Synthesis 
+with Latent Diffusion Models”, CVPR 2022
+Noisy Latent
+H/D x W/D x C
+Denoised Latent
+H/D x W/D x C
+
+=== PAGE 84 ===
+Latent Diffusion Models (LDMs)
+Image
+H x W x 3
+Encoder
+Decoder
+Image
+H x W x 3
+Latent
+H/D x W/D x C
+Train encoder + decoder to 
+convert images to latents
+Train diffusion model to 
+remove noise from latents
+(Encoder is frozen)
+…
+After training:
+Sample random 
+latent
+Iteratively apply 
+diffusion model
+to remove noise
+run decoder to 
+get image
+Rombach et al, “High -Resolution Image Synthesis 
+with Latent Diffusion Models”, CVPR 2022
+Latent diffusion is the most 
+common form today
+Noisy Latent
+H/D x W/D x C
+Denoised Latent
+H/D x W/D x C
+
+=== PAGE 85 ===
+Latent Diffusion Models (LDMs)
+Image
+H x W x 3
+Encoder
+Decoder
+Image
+H x W x 3
+Latent
+H/D x W/D x C
+Train encoder + decoder to 
+convert images to latents
+Rombach et al, “High -Resolution Image Synthesis 
+with Latent Diffusion Models”, CVPR 2022
+How do we train the 
+encoder+decoder?
+
+=== PAGE 86 ===
+Latent Diffusion Models (LDMs)
+Image
+H x W x 3
+Encoder
+Decoder
+Image
+H x W x 3
+Latent
+H/D x W/D x C
+Train encoder + decoder to 
+convert images to latents
+Rombach et al, “High -Resolution Image Synthesis 
+with Latent Diffusion Models”, CVPR 2022
+How do we train the 
+encoder+decoder?
+Solution: It’s a VAE!
+Typically with very 
+small KL prior weight
+Recall: VAE
+
+=== PAGE 87 ===
+Latent Diffusion Models (LDMs)
+Image
+H x W x 3
+Encoder
+Decoder
+Image
+H x W x 3
+Latent
+H/D x W/D x C
+Train encoder + decoder to 
+convert images to latents
+Rombach et al, “High -Resolution Image Synthesis 
+with Latent Diffusion Models”, CVPR 2022
+How do we train the 
+encoder+decoder?
+Solution: It’s a VAE!
+Typically with very 
+small KL prior weight
+Problem: Decoder 
+outputs often blurry
+Recall: VAE
+
+=== PAGE 88 ===
+Latent Diffusion Models (LDMs)
+Image
+H x W x 3
+Encoder
+Decoder
+Fake 
+image
+Latent
+H/D x W/D x C
+Rombach et al, “High -Resolution Image Synthesis 
+with Latent Diffusion Models”, CVPR 2022
+How do we train the 
+encoder+decoder?
+Solution: It’s a VAE!
+Typically with very 
+small KL prior weight
+Problem: Decoder 
+outputs often blurry
+Solution: Add a 
+discriminator!
+Discriminator
+Real 
+image
+Recall: VAE
+Recall: GAN
+
+=== PAGE 89 ===
+Latent Diffusion Models (LDMs)
+Image
+H x W x 3
+Encoder
+Decoder
+Fake 
+image
+Latent
+H/D x W/D x C
+Rombach et al, “High -Resolution Image Synthesis 
+with Latent Diffusion Models”, CVPR 2022
+Discriminator
+Real 
+image
+Train diffusion model to 
+remove noise from latents
+(Encoder is frozen)
+…
+After training:
+Sample random 
+latent
+Iteratively apply 
+diffusion model
+to remove noise
+run decoder to 
+get image
+Modern LDM pipelines use 
+VAE + GAN + diffusion! 
+
+=== PAGE 90 ===
+Diffusion Transformer (DiT)
+Peebles and Xie, ”Scalable Diffusion 
+Models with Transformer”, ICCV 2023
+Diffusion uses standard Transformer blocks!
+Main question: How to inject conditioning (timestep t, text, …)
+
+=== PAGE 91 ===
+Diffusion Transformer (DiT)
+Peebles and Xie, ”Scalable Diffusion 
+Models with Transformer”, ICCV 2023
+Diffusion uses standard Transformer blocks!
+Main question: How to inject conditioning (timestep t, text, …)
+Predict scale/shift:
+Most common for 
+diffusion timestep t
+
+=== PAGE 92 ===
+Diffusion Transformer (DiT)
+Peebles and Xie, ”Scalable Diffusion 
+Models with Transformer”, ICCV 2023
+Diffusion uses standard Transformer blocks!
+Main question: How to inject conditioning (timestep t, text, …)
+Predict scale/shift:
+Most common for 
+diffusion timestep t
+Cross-Attention / Joint Attention:
+Common for text, image, etc conditioning
+
+=== PAGE 93 ===
+Text-to-Image
+A professional documentary photograph of a 
+monkey shaking hands with a tiger in front of 
+the Eiffel tower. The monkey is wearing a hat 
+made out of bananas, and the tiger is 
+standing on two legs and wearing a suit.
+Text Prompt
+Pretrained 
+text encoder 
+(e.g. T5, CLIP)
+Text embeddings
+D x L 
+Diffusion 
+Transformer
+Noisy latents
+h x w x c
+Diffusion 
+timestep
+(scalar)
+Clean latents
+h x w x c Decoder Output image
+H x W x 3
+
+
+=== PAGE 94 ===
+Text-to-Image
+A professional documentary photograph of a 
+monkey shaking hands with a tiger in front of 
+the Eiffel tower. The monkey is wearing a hat 
+made out of bananas, and the tiger is 
+standing on two legs and wearing a suit.
+Text Prompt
+Pretrained 
+text encoder 
+(e.g. T5, CLIP)
+Text embeddings
+D x L 
+Diffusion 
+Transformer
+Noisy latents
+128 x 128 x 16
+Diffusion 
+timestep
+(scalar)
+Clean latents
+128 x 128 x 16 Decoder Output image
+1024 x 1024 x 3
+Example: FLUX.1 [dev]
+Text Encoder: T5 + CLIP
+Encoder/Decoder: 8x8 downsampling
+Diffusion model: 12B parameter model
+2x2 patchify => 64x64 = 1024 image tokens
+https://github.com/black-forest-labs/flux
+
+=== PAGE 95 ===
+Text-to-Video
+A red-faced monkey with white fur is bathing in a 
+natural hot spring. The monkey is playing in the water 
+with a miniature sail ship in front of it, made of wood 
+with a white sail and a small rudder. The hot spring is 
+surrounded by lush greenery, with rocks and trees.
+Text Prompt
+Pretrained 
+text encoder 
+(e.g. T5, CLIP)
+Text embeddings
+D x L 
+Diffusion 
+Transformer
+Diffusion 
+timestep
+(scalar)
+Clean latents
+t x h x w x c Decoder Output video
+T x H x W x 3
+Gupta et al, “Photorealistic Video Generation with Diffusion Models”, arXiv 2023 (Dec)
+OpenAI, “Sora: Creating Video from Text”, 2024 (Feb)
+Polyak et al, “Movie Gen: A Cast of Media Foundation Models”, arXiv 2024 (Oct)
+Kong et al, “HunyuanVideo: A Systematic Framework for Large Video Generative Models”, arXiv 2024 (Dec)
+NVIDIA, “Cosmos World Foundation Model Platform for Physical AI”, arXiv 2025 (Jan)
+Team Wan, “Wan: Open and Advanced Large-Scale Video Generative Models”, arXiv 2025 (March)
+Noisy latents
+t x h x w x c
+
+=== PAGE 96 ===
+Text-to-Video
+A red-faced monkey with white fur is bathing in a 
+natural hot spring. The monkey is playing in the water 
+with a miniature sail ship in front of it, made of wood 
+with a white sail and a small rudder. The hot spring is 
+surrounded by lush greenery, with rocks and trees.
+Text Prompt
+Pretrained 
+text encoder 
+(e.g. T5, CLIP)
+Text embeddings
+D x L 
+Diffusion 
+Transformer
+Diffusion 
+timestep
+(scalar)
+Clean latents
+t x h x w x c Decoder Output video
+T x H x W x 3
+Gupta et al, “Photorealistic Video Generation with Diffusion Models”, arXiv 2023 (Dec)
+OpenAI, “Sora: Creating Video from Text”, 2024 (Feb)
+Polyak et al, “Movie Gen: A Cast of Media Foundation Models”, arXiv 2024 (Oct)
+Kong et al, “HunyuanVideo: A Systematic Framework for Large Video Generative Models”, arXiv 2024 (Dec)
+NVIDIA, “Cosmos World Foundation Model Platform for Physical AI”, arXiv 2025 (Jan)
+Team Wan, “Wan: Open and Advanced Large-Scale Video Generative Models”, arXiv 2025 (March)
+Video from Meta Movie Gen
+(https://ai.meta.com/research/movie-gen/) 
+Noisy latents
+t x h x w x c
+
+=== PAGE 97 ===
+Noisy latents
+32 x 128 x 72 x 16
+Text-to-Video
+A red-faced monkey with white fur is bathing in a 
+natural hot spring. The monkey is playing in the water 
+with a miniature sail ship in front of it, made of wood 
+with a white sail and a small rudder. The hot spring is 
+surrounded by lush greenery, with rocks and trees.
+Text Prompt
+Pretrained 
+text encoder 
+(e.g. T5, CLIP)
+Text embeddings
+D x L 
+Diffusion 
+Transformer
+Diffusion 
+timestep
+(scalar)
+Clean latents
+33 x 128 x 72 x 16 Decoder Output video
+257 x 1024 x 576 x 3
+Example: Meta MovieGen
+Text Encoder: UL2, ByT5, MetaCLIP
+Encoder/Decoder: 8x8x8 downsample
+Diffusion model: 30B param DiT
+1x2x2 patchify => 76K tokens
+Gupta et al, “Photorealistic Video Generation with Diffusion Models”, arXiv 2023 (Dec)
+OpenAI, “Sora: Creating Video from Text”, 2024 (Feb)
+Polyak et al, “Movie Gen: A Cast of Media Foundation Models”, arXiv 2024 (Oct)
+Kong et al, “HunyuanVideo: A Systematic Framework for Large Video Generative Models”, arXiv 2024 (Dec)
+NVIDIA, “Cosmos World Foundation Model Platform for Physical AI”, arXiv 2025 (Jan)
+Team Wan, “Wan: Open and Advanced Large-Scale Video Generative Models”, arXiv 2025 (March)
+
+=== PAGE 98 ===
+Cosmos
+(NVIDIA)
+14B params
+Ray 2 (Luma)
+The Era of Video Diffusion Models
+Gup ta et al, “Photo realistic Video Ge nerat i o n with Diffusion Models” , ar X iv202 3 (Dec)
+Ope nA I, “ S o ra: Cr eating Video from  Text ”, 20 24 (F eb)
+Polyak et al, “M ovie Gen:  A  C a st of M edia F ounda tion Mo dels”, ar X iv202 4 (Oct )
+Kong e t al, “Hunyua nV ide o: A System atic Fr amewor k for  Larg e Vi d eo Gen erative Models” , ar X iv202 4 (Dec)
+NVIDIA ,  “Cosmo s World Founda tion Mo del Pl a tform  for  P h ysi ca l  A I” , ar X iv202 5 (Jan )
+T eam Wan , “Wan:  Open and Advance d Lar ge-Scale Video Ge nerat i ve  Mode l s” , ar X iv202 5 (M arch)
+WALT (Google)
+460M params
+January
+2024
+January
+2025
+Sora (OpenAI)
+Mochi
+(Genmo)
+10B params
+MovieGen
+(Meta)
+30B params
+March
+2024
+May
+2024
+July
+2024
+Sept
+2024
+Nov
+2024
+March
+2024
+May
+2024
+Wan 
+(Alibaba)
+14B params
+Veo 2
+(Google)
+LTX-Video
+(Lightricks)
+2B params
+Hunyuan
+(Tencent)
+13B params
+Step-Video
+(StepFun)
+30B params
+CogVideoX
+(Zhipu)
+5B params
+Kling 2.0 
+(Kuaishou)
+Gen3 (Runway)
+Dream Machine
+(Luma)
+Open-Source Model
+Technical Report
+No technical info
+
+=== PAGE 99 ===
+Diffusion Distillation
+…
+After training:
+Sample random 
+latent
+Iteratively apply 
+diffusion model
+to remove noise
+run decoder to 
+get image
+During sampling we need to run the diffusion model 
+many times (~30 – 50 for rectified flow)
+This is really slow!
+
+=== PAGE 100 ===
+Diffusion Distillation
+…
+After training:
+Sample random 
+latent
+Iteratively apply 
+diffusion model
+to remove noise
+run decoder to 
+get image
+During sampling we need to run the diffusion model 
+many times (~30 – 50 for rectified flow)
+This is really slow!
+Solution: distillation algorithms reduce the number 
+of steps (sometimes all the way to 1),
+can also bake in CFG
+Salimans and Ho, “Progressive Distillation for Fast Sampling of Diffusion Models”, ICLR 2022
+Song et al, “Consistency Models”, ICML 2023
+Sauer et al, “Adversarial Diffusion Distillation”, ECCV 2024
+Sauer et al, “Fast High -Resolution Image Synthesis with Latent Adversarial Diffusion Distillation”, arXiv 2024
+Lu and Song, “Simplifying, Stabilizing and Scaling Consistency Models”, ICLR 2025
+Salimans et al, “Multistep Distillation of Diffusion Models via Moment Matching”, NeurIPS 2025
+
+=== PAGE 101 ===
+Generalized Diffusion
+Rectified Flow
+Sample 𝑥 ∼ 𝑝𝑑𝑎𝑡𝑎, 𝑧 ∼ 𝑝𝑛𝑜𝑖𝑠𝑒
+Sample 𝑡 ∼ 𝑝𝑡
+Set 𝑥𝑡 = 1 − 𝑡 𝑥 + 𝑡𝑧
+Set 𝑣𝑔𝑡 = 𝑧 − 𝑥
+Compute 𝑣𝑝𝑟𝑒𝑑 = 𝑓𝜃 𝑥𝑡, 𝑡
+Compute loss 𝑣𝑔𝑡 − 𝑣𝑝𝑟𝑒𝑑 2
+2
+
+=== PAGE 102 ===
+Generalized Diffusion
+Rectified Flow
+Sample 𝑥 ∼ 𝑝𝑑𝑎𝑡𝑎, 𝑧 ∼ 𝑝𝑛𝑜𝑖𝑠𝑒
+Sample 𝑡 ∼ 𝑝𝑡
+Set 𝑥𝑡 = 1 − 𝑡 𝑥 + 𝑡𝑧
+Set 𝑣𝑔𝑡 = 𝑧 − 𝑥
+Compute 𝑣𝑝𝑟𝑒𝑑 = 𝑓𝜃 𝑥𝑡, 𝑡
+Compute loss 𝑣𝑔𝑡 − 𝑣𝑝𝑟𝑒𝑑 2
+2
+Sample 𝑥 ∼ 𝑝𝑑𝑎𝑡𝑎, 𝑧 ∼ 𝑝𝑛𝑜𝑖𝑠𝑒
+Sample 𝒕 ∼ 𝑝𝑡
+Set 𝑥𝑡 = 𝒂 𝒕 𝑥 + 𝒃(𝒕)𝑧
+Set 𝑦𝑔𝑡 = 𝒄(𝒕)𝑥 + 𝒅(𝒕)𝑧
+Compute 𝑦𝑝𝑟𝑒𝑑 = 𝑓𝜃 𝑥𝑡, 𝒕
+Compute loss 𝑦𝑔𝑡 − 𝑦𝑝𝑟𝑒𝑑 2
+2
+Generalized Diffusion
+
+=== PAGE 103 ===
+Generalized Diffusion
+Rectified Flow
+Sample 𝑥 ∼ 𝑝𝑑𝑎𝑡𝑎, 𝑧 ∼ 𝑝𝑛𝑜𝑖𝑠𝑒
+Sample 𝑡 ∼ 𝑝𝑡
+Set 𝑥𝑡 = 1 − 𝑡 𝑥 + 𝑡𝑧
+Set 𝑣𝑔𝑡 = 𝑧 − 𝑥
+Compute 𝑣𝑝𝑟𝑒𝑑 = 𝑓𝜃 𝑥𝑡, 𝑡
+Compute loss 𝑣𝑔𝑡 − 𝑣𝑝𝑟𝑒𝑑 2
+2
+Sample 𝑥 ∼ 𝑝𝑑𝑎𝑡𝑎, 𝑧 ∼ 𝑝𝑛𝑜𝑖𝑠𝑒
+Sample 𝒕 ∼ 𝑝𝑡
+Set 𝑥𝑡 = 𝒂 𝒕 𝑥 + 𝒃(𝒕)𝑧
+Set 𝑦𝑔𝑡 = 𝒄(𝒕)𝑥 + 𝒅(𝒕)𝑧
+Compute 𝑦𝑝𝑟𝑒𝑑 = 𝑓𝜃 𝑥𝑡, 𝒕
+Compute loss 𝑦𝑔𝑡 − 𝑦𝑝𝑟𝑒𝑑 2
+2
+Generalized Diffusion
+𝒂 𝒕 = 1 − 𝑡
+𝒃(𝒕) = 𝑡
+𝒄(𝒕) = −1
+𝒅(𝒕) = 1
+
+=== PAGE 104 ===
+Generalized Diffusion
+Sample 𝑥 ∼ 𝑝𝑑𝑎𝑡𝑎, 𝑧 ∼ 𝑝𝑛𝑜𝑖𝑠𝑒
+Sample 𝒕 ∼ 𝑝𝑡
+Set 𝑥𝑡 = 𝒂 𝒕 𝑥 + 𝒃(𝒕)𝑧
+Set 𝑦𝑔𝑡 = 𝒄(𝒕)𝑥 + 𝒅(𝒕)𝑧
+Compute 𝑦𝑝𝑟𝑒𝑑 = 𝑓𝜃 𝑥𝑡, 𝒕
+Compute loss 𝑦𝑔𝑡 − 𝑦𝑝𝑟𝑒𝑑 2
+2
+Generalized Diffusion
+𝒂 𝒕 = 𝜎 𝑡
+𝒃(𝒕) = 1 − 𝜎 𝑡
+If x and z are independent and 
+variance=1, then xt also has 
+variance=1
+Variance Preserving (VP)
+Song et al, “Score -Based Generative Modeling through Stochastic Differential Equations”, ICLR 2021
+
+=== PAGE 105 ===
+Generalized Diffusion
+Sample 𝑥 ∼ 𝑝𝑑𝑎𝑡𝑎, 𝑧 ∼ 𝑝𝑛𝑜𝑖𝑠𝑒
+Sample 𝒕 ∼ 𝑝𝑡
+Set 𝑥𝑡 = 𝒂 𝒕 𝑥 + 𝒃(𝒕)𝑧
+Set 𝑦𝑔𝑡 = 𝒄(𝒕)𝑥 + 𝒅(𝒕)𝑧
+Compute 𝑦𝑝𝑟𝑒𝑑 = 𝑓𝜃 𝑥𝑡, 𝒕
+Compute loss 𝑦𝑔𝑡 − 𝑦𝑝𝑟𝑒𝑑 2
+2
+Generalized Diffusion
+𝒂 𝒕 = 1
+𝒃(𝒕) = 𝜎 𝑡
+𝜎 1 Needs to be big enough 
+to drown out all signal in x
+Variance Exploding (VE)
+Song et al, “Score -Based Generative Modeling through Stochastic Differential Equations”, ICLR 2021
+Karras et al, “Elucidating the Design Space of Diffusion -Based Generative Models”, NeurIPS 2022
+
+=== PAGE 106 ===
+Generalized Diffusion
+Sample 𝑥 ∼ 𝑝𝑑𝑎𝑡𝑎, 𝑧 ∼ 𝑝𝑛𝑜𝑖𝑠𝑒
+Sample 𝒕 ∼ 𝑝𝑡
+Set 𝑥𝑡 = 𝒂 𝒕 𝑥 + 𝒃(𝒕)𝑧
+Set 𝑦𝑔𝑡 = 𝒄(𝒕)𝑥 + 𝒅(𝒕)𝑧
+Compute 𝑦𝑝𝑟𝑒𝑑 = 𝑓𝜃 𝑥𝑡, 𝒕
+Compute loss 𝑦𝑔𝑡 − 𝑦𝑝𝑟𝑒𝑑 2
+2
+Generalized Diffusion
+𝑦𝑔𝑡 = 𝑥 [𝒄 𝒕 = 1; 𝒅(𝒕) = 0]
+x-prediction
+Salimans and Ho, “Progressive Distillation of Diffusion Models”, ICLR 2022
+Ho et al, “Imagen Video: High Definition Video Generation with Diffusion Models”, arXiv 2022
+ε-prediction
+𝑦𝑔𝑡 = 𝒛 [𝒄 𝒕 = 0; 𝒅(𝒕) = 1]
+v-prediction
+𝑦𝑔𝑡 = 𝒃 𝒕 𝑧 − 𝒂 𝒕 𝑥 [𝒄 𝒕 = 𝒃 𝒕 ; 𝒅(𝒕) = − 𝒂 𝒕 ]
+
+=== PAGE 107 ===
+Generalized Diffusion
+Sample 𝑥 ∼ 𝑝𝑑𝑎𝑡𝑎, 𝑧 ∼ 𝑝𝑛𝑜𝑖𝑠𝑒
+Sample 𝒕 ∼ 𝑝𝑡
+Set 𝑥𝑡 = 𝒂 𝒕 𝑥 + 𝒃(𝒕)𝑧
+Set 𝑦𝑔𝑡 = 𝒄(𝒕)𝑥 + 𝒅(𝒕)𝑧
+Compute 𝑦𝑝𝑟𝑒𝑑 = 𝑓𝜃 𝑥𝑡, 𝒕
+Compute loss 𝑦𝑔𝑡 − 𝑦𝑝𝑟𝑒𝑑 2
+2
+Generalized Diffusion
+Salimans and Ho, “Progressive Distillation of Diffusion Models”, ICLR 2022
+Ho et al, “Imagen Video: High Definition Video Generation with Diffusion Models”, arXiv 2022
+How do we choose these 
+functions?
+Usually through some 
+mathematical formalism
+
+=== PAGE 108 ===
+Diffusion is a Latent Variable Model
+Sohl-Dickstein et al, “Deep Unsupervised Learning using Nonequilibrium Thermodynamics”, NeurIPS 2015
+Figure from Ho et al, “Denoising Diffusion Probabilistic Models”, NeurIPS 2020
+We know the forward process: Add Gaussian noise
+Learn a network to approximate the backward process
+Optimize variational lower bound (same as VAE)
+
+=== PAGE 109 ===
+Diffusion Learns the Score Function
+Song and Ermon, “Generative Modeling by Estimating Gradients of the Data Distribution”, NeurIPS 2019
+Ho et al, “Denoising Diffusion Probabilistic Models”, NeurIPS 2020
+For any distribution 𝑝 𝑥 over 𝑥 ∈ ℝ𝑁 the score function
+𝑠: ℝ𝑁 → ℝ𝑁 𝑠 𝑥 = 𝜕
+𝜕𝑥 log 𝑝(𝑥)
+Is a vector field pointing toward areas of high probability density
+Diffusion learns a neural network to approximate the score 
+function of pdata
+
+=== PAGE 110 ===
+Diffusion Solves Stochastic Differential Equations
+Song et al, “Score -Based Generative Modeling through Stochastic Differential Equations”, ICLR 2021
+We can describe a continuous noising process 
+as an SDE
+𝑑𝒙 = 𝑓 𝒙, 𝑡 𝑑𝑡 + 𝑔 𝑡 𝑑𝒘
+Gives a relationship between infinitesimal 
+changes in data x, time t, and noise w.
+Diffusion learns a neural network to 
+approximately solve this SDE
+
+=== PAGE 111 ===
+Perspectives on Diffusion Great blog post by Sander Dieleman:
+https://sander.ai/2023/07/20/perspectives.html
+(All his blog posts are great)
+
+=== PAGE 112 ===
+Autoregressive Models Strike Back
+Recall autoregressive models
+Too slow on raw pixels
+They work great on 
+(discrete) latents!
+
+
+=== PAGE 113 ===
+Image
+H x W x 3
+Encoder
+Decoder
+Image
+H x W x 3
+Latent
+H/D x W/D
+integers!
+Train encoder + decoder
+to convert images to 
+discrete latents
+Autoregressive Models Strike Back
+Train autoregressive model 
+to model sequences of 
+discrete latents
+Sample discrete latents from 
+the autoregressive model , 
+pass to decoder to get an 
+image
+van den Oord et  al, “Neural D iscrete Representation Learning”, NeurIPS2017
+Razaviet al,  “Generating Diverse High-Fidelity Images with VQ-VAE-2”, NeurIPS2019
+Esseret al,  “Taming Transformers for High-Resolution Image Synthesis”, CVPR 2021
+Yu et al,  “Scaling Autoregressive Models for Content-Rich Text-to-Image Generation”, arXiv 2022
+
+=== PAGE 114 ===
+Summary
+Generative Adversarial Networks
+Diffusion Models
+Latent Diffusion Models

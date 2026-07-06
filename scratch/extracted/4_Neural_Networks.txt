@@ -1,0 +1,306 @@
+=== PAGE 1 ===
+Lecture 4: Neural Networks and Backpropagation
+Prof. Xiaowei HU
+
+
+=== PAGE 2 ===
+Courtesy of Justin Johnson
+
+=== PAGE 3 ===
+Courtesy of Justin Johnson
+
+=== PAGE 4 ===
+Courtesy of Justin Johnson
+
+=== PAGE 5 ===
+Courtesy of Justin Johnson
+
+=== PAGE 6 ===
+Courtesy of Justin Johnson
+
+=== PAGE 7 ===
+Courtesy of Justin Johnson
+
+=== PAGE 8 ===
+Courtesy of Justin Johnson
+
+=== PAGE 9 ===
+Courtesy of Justin Johnson
+
+=== PAGE 10 ===
+Courtesy of Justin Johnson
+
+=== PAGE 11 ===
+Courtesy of Justin Johnson
+
+=== PAGE 12 ===
+Courtesy of Justin Johnson
+
+=== PAGE 13 ===
+Courtesy of Justin Johnson
+
+=== PAGE 14 ===
+Courtesy of Justin Johnson
+
+=== PAGE 15 ===
+Courtesy of Justin Johnson
+
+=== PAGE 16 ===
+Courtesy of Justin Johnson
+
+=== PAGE 17 ===
+Courtesy of Justin Johnson
+
+=== PAGE 18 ===
+Courtesy of Justin Johnson
+
+=== PAGE 19 ===
+Courtesy of Justin Johnson
+
+=== PAGE 20 ===
+Courtesy of Justin Johnson
+
+=== PAGE 21 ===
+Courtesy of Justin Johnson
+
+=== PAGE 22 ===
+Courtesy of Justin Johnson
+
+=== PAGE 23 ===
+Courtesy of Justin Johnson
+
+=== PAGE 24 ===
+Courtesy of Justin Johnson
+
+=== PAGE 25 ===
+Courtesy of Justin Johnson
+
+=== PAGE 26 ===
+Courtesy of Justin Johnson
+
+=== PAGE 27 ===
+Courtesy of Justin Johnson
+
+=== PAGE 28 ===
+Courtesy of Justin Johnson
+
+=== PAGE 29 ===
+Courtesy of Justin Johnson
+
+=== PAGE 30 ===
+Courtesy of Justin Johnson
+
+=== PAGE 31 ===
+Courtesy of Justin Johnson
+
+=== PAGE 32 ===
+Courtesy of Justin Johnson
+
+=== PAGE 33 ===
+Courtesy of Justin Johnson
+
+=== PAGE 34 ===
+Courtesy of Justin Johnson
+
+=== PAGE 35 ===
+Courtesy of Justin Johnson
+
+=== PAGE 36 ===
+Courtesy of Justin Johnson
+
+=== PAGE 37 ===
+Courtesy of Justin Johnson
+
+=== PAGE 38 ===
+Courtesy of Justin Johnson
+
+=== PAGE 39 ===
+Courtesy of Justin Johnson
+
+=== PAGE 40 ===
+Courtesy of Justin Johnson
+
+=== PAGE 41 ===
+Courtesy of Justin Johnson
+
+=== PAGE 42 ===
+Courtesy of Justin Johnson
+
+=== PAGE 43 ===
+Courtesy of Justin Johnson
+
+=== PAGE 44 ===
+Courtesy of Justin Johnson
+
+=== PAGE 45 ===
+Courtesy of Justin Johnson
+
+=== PAGE 46 ===
+Courtesy of Justin Johnson
+
+=== PAGE 47 ===
+Courtesy of Justin Johnson
+
+=== PAGE 48 ===
+Courtesy of Justin Johnson
+
+=== PAGE 49 ===
+Courtesy of Justin Johnson
+
+=== PAGE 50 ===
+Courtesy of Justin Johnson
+
+=== PAGE 51 ===
+Courtesy of Justin Johnson
+
+=== PAGE 52 ===
+Courtesy of Justin Johnson
+
+=== PAGE 53 ===
+Courtesy of Justin Johnson
+
+=== PAGE 54 ===
+Courtesy of Justin Johnson
+
+=== PAGE 55 ===
+Courtesy of Justin Johnson
+
+=== PAGE 56 ===
+Courtesy of Justin Johnson
+
+=== PAGE 57 ===
+Courtesy of Justin Johnson
+
+=== PAGE 58 ===
+Courtesy of Justin Johnson
+
+=== PAGE 59 ===
+Courtesy of Justin Johnson
+
+=== PAGE 60 ===
+Courtesy of Justin Johnson
+
+=== PAGE 61 ===
+Courtesy of Justin Johnson
+
+=== PAGE 62 ===
+Courtesy of Justin Johnson
+
+=== PAGE 63 ===
+Courtesy of Justin Johnson
+
+=== PAGE 64 ===
+Courtesy of Justin Johnson
+
+=== PAGE 65 ===
+Courtesy of Justin Johnson
+
+=== PAGE 66 ===
+Courtesy of Justin Johnson
+
+=== PAGE 67 ===
+Courtesy of Justin Johnson
+
+=== PAGE 68 ===
+Courtesy of Justin Johnson
+
+=== PAGE 69 ===
+Courtesy of Justin Johnson
+
+=== PAGE 70 ===
+Courtesy of Justin Johnson
+
+=== PAGE 71 ===
+Courtesy of Justin Johnson
+
+=== PAGE 72 ===
+Courtesy of Justin Johnson
+
+=== PAGE 73 ===
+Courtesy of Justin Johnson
+
+=== PAGE 74 ===
+Courtesy of Justin Johnson
+
+=== PAGE 75 ===
+Courtesy of Justin Johnson
+
+=== PAGE 76 ===
+Courtesy of Justin Johnson
+
+=== PAGE 77 ===
+Courtesy of Justin Johnson
+
+=== PAGE 78 ===
+Courtesy of Justin Johnson
+
+=== PAGE 79 ===
+Courtesy of Justin Johnson
+
+=== PAGE 80 ===
+Courtesy of Justin Johnson
+
+
+=== PAGE 81 ===
+Courtesy of Justin Johnson
+
+
+=== PAGE 82 ===
+Courtesy of Justin Johnson
+
+=== PAGE 83 ===
+Courtesy of Justin Johnson
+
+=== PAGE 84 ===
+Courtesy of Justin Johnson
+
+=== PAGE 85 ===
+Courtesy of Justin Johnson
+
+=== PAGE 86 ===
+Courtesy of Justin Johnson
+
+=== PAGE 87 ===
+Courtesy of Justin Johnson
+
+=== PAGE 88 ===
+Courtesy of Justin Johnson
+
+=== PAGE 89 ===
+Courtesy of Justin Johnson
+
+=== PAGE 90 ===
+Courtesy of Justin Johnson
+
+=== PAGE 91 ===
+Courtesy of Justin Johnson
+
+=== PAGE 92 ===
+Courtesy of Justin Johnson
+
+=== PAGE 94 ===
+Courtesy of Justin Johnson
+
+=== PAGE 95 ===
+Courtesy of Justin Johnson
+
+=== PAGE 96 ===
+Courtesy of Justin Johnson
+
+=== PAGE 97 ===
+Courtesy of Justin Johnson
+
+=== PAGE 98 ===
+Courtesy of Justin Johnson
+
+=== PAGE 99 ===
+Courtesy of Justin Johnson
+
+=== PAGE 100 ===
+Courtesy of Justin Johnson
+
+=== PAGE 101 ===
+Courtesy of Justin Johnson
+
+=== PAGE 102 ===
+Courtesy of Justin Johnson

@@ -1,0 +1,1446 @@
+=== PAGE 1 ===
+Lecture 14: 
+Multi-Modal Foundation Models
+
+=== PAGE 2 ===
+How have we been thinking about models in 
+this class so far? 
+Train a specialized model for each task
+Model 1Data 
+Domain 1
+Model 2Data 
+Domain 2
+Model 3Data 
+Domain 3
+Model 4Data 
+Domain 4
+Task 
+1
+Task 
+2
+Task 
+3
+Task 
+4
+
+=== PAGE 3 ===
+Now, we build Foundation Models
+Pre-train one model that acts as the foundation 
+for many different tasks
+Foundation 
+Model
+Large Scale 
+Diverse 
+Dataset
+Task 
+1
+Task 
+2
+Task 
+3
+Task 
+4
+Pre-training Fine-tuning / zero-shot / few-shot
+
+=== PAGE 4 ===
+Foundation Models
+GPTCommon 
+Crawl +
+Math 
+Problems
+Trivia
+Symbolic
+Reasoning
+Translation
+Pre-training Fine-tuning / zero-shot / few-shot
+Language
+
+=== PAGE 5 ===
+There are many classes of Foundation Models
+Language
+ELMo
+BERT
+GPT
+T5
+Classification
+CLIP
+CoCa
+LM + Vision
+LLaVA
+Flamingo
+GPT-4V
+Gemini
+Molmo
+And More!
+Segment Anything
+Whisper
+Dalle
+Stable Diffusion
+Imagen
+Chaining
+LMs + CLIP
+Visual Programming
+
+=== PAGE 6 ===
+How do identify a model as a Foundation?
+Always see with foundation models:
+- general /robust to many different tasks
+Often see with foundation models:
+- Large # params
+- Large amount of data
+- Self-supervised pre-training objective
+
+=== PAGE 7 ===
+Language models are out of scope for this class
+Language
+ELMo
+BERT
+GPT
+T5
+Classification
+CLIP
+CoCa
+LM + Vision
+LLaVA
+Flamingo
+GPT-4V
+Gemini
+Molmo
+And More!
+Segment Anything
+Whisper
+Dalle
+Stable Diffusion
+Imagen
+Chaining
+LMs + CLIP
+Visual Programming
+
+=== PAGE 8 ===
+We will focus on multimodal (vision) foundation models
+Language
+ELMo
+BERT
+GPT
+T5
+Classification
+CLIP
+CoCa
+LM + Vision
+LLaVA
+Flamingo
+GPT-4V
+Gemini
+Molmo
+And More!
+Segment Anything
+Whisper
+Dalle
+Stable Diffusion
+Imagen
+Chaining
+LMs + CLIP
+Visual Programming
+
+=== PAGE 9 ===
+Let’s start with the foundation models for 
+classification
+Language
+ELMo
+BERT
+GPT
+T5
+Classification
+CLIP
+CoCa
+LM + Vision
+LLaVA
+Flamingo
+GPT-4V
+Gemini
+Molmo
+And More!
+Segment Anything
+Whisper
+Dalle
+Stable Diffusion
+Imagen
+Chaining
+LMs + CLIP
+Visual Programming
+
+=== PAGE 10 ===
+Recall this self-supervised objective from 
+SimCLR
+Use Self Supervised 
+learning to learn good 
+image features
+Can train small classifiers 
+on top of these features 
+using supervised learning
+
+=== PAGE 11 ===
+Pull Together Push Apart
+The main idea was to learning concepts without 
+labels -> a self-supervised pretraining objective
+
+=== PAGE 12 ===
+The hope was that the learned representations 
+generalize to new instances
+
+=== PAGE 13 ===
+1. “A cute fluffy cat”
+2. “My favorite dog is a golden retriever”
+A
+B
+Can we generalize these representations 
+beyond just images? To language perhaps?
+
+=== PAGE 14 ===
+“My favorite dog is 
+a golden retriever”
+“A cute fluffy cat”
+What if this representation space could also 
+embed sentences/phrases?
+
+=== PAGE 15 ===
+SimClr
+Image 
+Encoder
+Image 
+Encoder
+
+
+=== PAGE 16 ===
+SimClr CLIP
+Image 
+Encoder
+Image 
+Encoder
+Image 
+Encoder
+Text 
+Encoder
+“A cute fluffy cat”
+“My favorite dog is 
+a golden retriever”
+“Monkeys are my 
+favorite animal”
+
+=== PAGE 17 ===
+Image 
+Encoder
+Text 
+Encoder
+“A cute fluffy cat”
+“My favorite dog is 
+a golden retriever”
+“Monkeys are my 
+favorite animal”
+CLIP is trained with the same 
+contrastive objective
+
+
+=== PAGE 18 ===
+Image 
+Encoder
+Text 
+Encoder
+“A cute fluffy cat”
+“My favorite dog is 
+a golden retriever”
+“Monkeys are my 
+favorite animal”
+CLIP Training Objective
+
+=== PAGE 19 ===
+Lots of image-text data can be found online
+https://en.wikipedia.org/wiki/Mount_Rainier
+CLIP training data was 
+scraped at scale from 
+images and their 
+associated alt-text from 
+the internet
+
+=== PAGE 20 ===
+CLIP Training Objective
+At the end of training, you 
+have a model that will give 
+you a similarity score 
+between an image and a 
+text
+
+=== PAGE 21 ===
+Step 1: Pretrain a 
+network on a pretext 
+task that doesn’t 
+require supervision
+Step 2: Transfer 
+encoder to 
+downstream tasks via 
+linear classifiers
+Downstream tasks:
+Image classification,
+object detection,
+semantic segmentation
+Using pre-trained models out of the box
+Pre-training tasks:
+Contrastive Objective
+
+
+=== PAGE 22 ===
+CLIP features w/ linear probe across multiple datasets
+
+
+=== PAGE 23 ===
+Big difference with language models: We can use 
+LLMs zero-shot for new downstream tasks
+Step 1: Pretrain a 
+network on a pretext 
+task that doesn’t 
+require supervision
+Step 2: Use the 
+model out of the box 
+in a creative way!
+“cake”
+“The movie 
+review ‘I hated 
+the movie’ is 
+____”
+“negative”
+“I love ___”
+
+
+=== PAGE 24 ===
+Step 1: Pretrain a 
+network on a pretext 
+task that doesn’t 
+require supervision
+Out of the box classification
+(No fine-tuning)
+But how do we use pre-trained vision-language models 
+in a zero-shot manner?
+Pre-training tasks:
+Contrastive Objective
+Step 2: Use the 
+model out of the box 
+in a creative way!
+
+=== PAGE 25 ===
+Clever trick: we can create a classifier using the 
+text encoder!
+Radford et al “ Learning Transferable Visual Models From Natural Language Supervision ”
+word
+Text 
+Encoder
+Image 
+Encoder
+Image vector text vector
+matching score
+0.27
+Image 
+Encoder
+Text 
+Encoder
+
+=== PAGE 26 ===
+Create a vector representation for each category!
+Radford et al “ Learning Transferable Visual Models From Natural Language Supervision ”
+Text 
+Encoder
+Image 
+Encoder
+Image vector
+Image 
+Encoder
+Text 
+Encoder
+plane
+dog
+bird
+“Bird” vector
+“Dog” vector
+“Plane” vector
+
+=== PAGE 27 ===
+Match a new image to the most similar vector
+Radford et al “ Learning Transferable Visual Models From Natural Language Supervision ”
+Text 
+Encoder
+Image 
+Encoder
+Image vector
+Image 
+Encoder
+Text 
+Encoder
+plane
+dog
+bird
+“Bird” vector
+“Dog” vector
+“Plane” vector0.13
+0.27
+0.09
+
+=== PAGE 28 ===
+You can think of this as a 1-NN algorithm with the 
+vectors as the training data
+Radford et al “ Learning Transferable Visual Models From Natural Language Supervision ”
+Text 
+Encoder
+Image 
+Encoder
+Image vector
+Image 
+Encoder
+Text 
+Encoder
+plane
+dog
+bird
+“Bird” vector
+“Dog” vector
+“Plane” vector0.13
+0.27
+0.09
+
+=== PAGE 29 ===
+Since CLIP was trained with phrases, you can improve 
+performance by using a phrase “A photo of a [category]”
+Radford et al “ Learning Transferable Visual Models From Natural Language Supervision ”
+Text 
+Encoder
+Image 
+Encoder
+Image vector
+Image 
+Encoder
+Text 
+Encoder
+“Bird” vector
+“Dog” vector
+“Plane” vector0.13
+0.27
+0.09
+A photo of a plane
+A photo of a dog
+A photo of a bird
++1.3% on
+ImageNet
+
+=== PAGE 30 ===
+A single phrase might be too biased.
+Solution: Use multiple phrases
+Radford et al “ Learning Transferable Visual Models From Natural Language Supervision ”
+Text 
+Encoder
+Image 
+Encoder
+Image vector
+Image 
+Encoder
+Text 
+Encoder
+A photo of a plane
+A photo of a dog
+A photo of a bird
+A drawing of a plane
+A drawing of a dog
+A drawing of a bird
+…
+…
+…
+“Bird” vector 1
+“Dog” vector 1
+“Plane” vector 1
+“Bird” vector 2
+“Dog” vector 2
+“Plane” vector 2
+
+=== PAGE 31 ===
+Use the average vector across phrases as the 
+representation for each category
+Radford et al “ Learning Transferable Visual Models From Natural Language Supervision ”
+Text 
+Encoder
+Image 
+Encoder
+Image vector
+Image 
+Encoder
+Text 
+Encoder
+A photo of a plane
+A photo of a dog
+A photo of a bird
+A drawing of a plane
+A drawing of a dog
+A drawing of a bird
+…
+…
+…
+Mean “Bird” vector
+Mean “Dog” vector
+Mean “Plane” vector0.13
+0.27
+0.09
++5% on
+ImageNet
+
+=== PAGE 32 ===
+That’s it! Now, you can use CLIP as a foundation 
+model for image classification for any dataset
+Radford et al “ Learning Transferable Visual Models From Natural Language Supervision ”
+
+=== PAGE 33 ===
+Exciting result after training on 400M image-text pairs
+Matches the accuracy of of ResNet 101 that has been trained 
+on ImageNet, except CLIP was trained with no human labels 
+at all!
+Radford et al “ Learning Transferable Visual Models From Natural Language Supervision ”
+
+=== PAGE 34 ===
+Here’s where things get even more exciting
+Radford et al “ Learning Transferable Visual Models From Natural Language Supervision ”
+
+=== PAGE 35 ===
+Training on ImageNet doesn’t generalize to other datasets. 
+ObjectNet contains the same categories but in weird viewpoints
+Radford et al “ Learning Transferable Visual Models From Natural Language Supervision ”
+
+=== PAGE 36 ===
+But CLIP zero-shot does so well!
+Q. Why do you think that is?
+Radford et al “ Learning Transferable Visual Models From Natural Language Supervision ”
+
+=== PAGE 37 ===
+CLIP performance is 
+great also on graphic 
+images , sketches, 
+adversarial datasets,
+Radford et al “ Learning Transferable Visual Models From Natural Language Supervision ”
+
+=== PAGE 38 ===
+Difference in performance between 
+linear probe vs zero-shot
+Radford et al “ Learning Transferable Visual Models From Natural Language Supervision ”
+
+=== PAGE 39 ===
+Why does CLIP perform so well?
+How can no labels beat labels??
+Scale!
+
+=== PAGE 40 ===
+Clip Parameters
+(307 Million)
+ImageNet ResNet Parameters
+(44.5 Million)
+CLIP scaled up the model parameters with the 
+transformer architecture
+
+=== PAGE 41 ===
+Clip Training Data
+(400 Million images)
+ImageNet ResNet Training Data 
+(1.28 Million)
+CLIP Scaled up the 
+training data by scraping 
+image-text pairs from the 
+internet
+
+=== PAGE 42 ===
+CoCa improved upon CLIP by adding a 
+generation objective
+“Contrastive Captioners are Image-Text Foundation Models”, 2022
+
+=== PAGE 43 ===
+CoCa added a decoder with a captioning loss
+“Contrastive Captioners are Image-Text Foundation Models”, 2022
+
+=== PAGE 44 ===
+CoCa: Contrastive Captioners are Image -Text 
+Foundation Models
+
+
+=== PAGE 45 ===
+Classifier foundation models now beat all other 
+models on ImageNet
+
+
+=== PAGE 46 ===
+Advantages of CLIP-style models
+1. Dot product is super efficient
+a. Easy to train (enables scaling)
+b. Fast inference, e.g., retrieval over 5B images
+2. Open-vocabulary (zero-shot generalization)
+3. Can be chained with other models (CuPL)
+[we will discuss this later today]
+
+=== PAGE 47 ===
+there is a mug in some grass there is some grass in a mug
+April 2022, Tristan Thrush et al:
+CLIP can’t distinguish between:
+
+
+=== PAGE 48 ===
+Disadvantages of CLIP-style models
+1. Rely too heavily on batch size to learn concepts
+Increasing batch size helps you understand fine-grained concepts
+Batch size: 4 “animal”
+Batch size: 100 “dog”
+Batch size: 32000 “Welsh Corgi”
+
+=== PAGE 49 ===
+Disadvantages of CLIP-style models
+1. Rely too heavily on batch size to learn concepts
+Increasing batch size helps you understand fine-grained concepts
+But there’s a limit to how fine-grained you can get this way
+Even in a batch of 32K, it’s unlikely you see both “a mug in some 
+grass” and “some grass in a mug”
+
+=== PAGE 50 ===
+Disadvantages of CLIP-style models
+1. Rely too heavily on batch size to learn concepts
+Winoground CREPE …
+there is a mug in 
+some grass
+there is some 
+grass in a mug
+ARO
+“compositionality”
+
+=== PAGE 51 ===
+Disadvantages of CLIP-style models
+1. Rely too heavily on batch size to learn concepts
+Solution? Hard Negative Fine-Tuning
+horse eating grass
+ grass eating horse
+TODO: Get 
+NegCLIP 
+scores for 
+these 
+captions now
+
+=== PAGE 52 ===
+Disadvantages of CLIP-style models
+1. Rely too heavily on batch size to learn concepts
+But training with hard negatives has its own problems…
+A black cat and a brown dog
+✓
+A brown cat and a black dog
+✗
+A brown dog and a black cat
+✗
+“hard positives”
+
+=== PAGE 53 ===
+Disadvantages of CLIP-style models
+1. Rely too heavily on batch size to learn concepts
+2. Image-level captions are insufficient supervision
+“living room” ✓
+“house plants” ✗
+“couch” ✗
+
+=== PAGE 54 ===
+Disadvantages of CLIP-style models
+Also train on region captions
+with bounding box coordinates
+1. Rely too heavily on batch size to learn concepts
+2. Image-level captions are insufficient supervision
+
+=== PAGE 55 ===
+Disadvantages of CLIP-style models
+1. Rely too heavily on batch size to learn concepts
+2. Image-level captions are insufficient supervision
+3. You can’t know everything in your 5B dataset
+It’s extremely important to be 
+intentional about data collection 
+and filtering
+
+
+=== PAGE 56 ===
+Foundation Models
+Language
+ELMo
+BERT
+GPT
+T5
+Classification
+CLIP
+CoCa
+LM + Vision
+LLaVA
+Flamingo
+GPT-4V
+Gemini
+Molmo
+And More!
+Segment Anything
+Whisper
+Dalle
+Stable Diffusion
+Imagen
+Chaining
+LMs + CLIP
+Visual Programming
+
+=== PAGE 57 ===
+LLaVA
+Motivation: Language models which do next token prediction 
+can be applied to a wide variety of tasks at inference (Math, 
+sentiment analysis, symbolic reasoning)
+Can we build a model that can accept images and text as 
+input, and then output text?
+→ Vision-La nguage Models
+
+=== PAGE 58 ===
+First, some historical context
+Vision-Language Models didn’t start with LLaVA!
+They go as far back as 2019 → ViLBERT
+
+
+=== PAGE 59 ===
+Historical context
+Vision-Language Models didn’t start with LLaVA!
+They go as far back as 2019 → ViLBERT
+BUT, they had to finetune for each task separately, 
+with non-trivial task-specific methods (e.g., Mask-RCNN 
+bounding box re-ranking for RefCOCO)
+→ Same paradigm as we discussed right at the beginning of this lecture:
+very task-specific
+
+=== PAGE 60 ===
+LLaVA uses the 
+autoregressive nature 
+of LLMs
+mul(→) + add (↑)
+Alignment
+q0
+Attention
+softmax (↑)
+y1
+Love
+I
+e2,
+0
+e1,
+0
+e0,
+0
+a2,
+0
+a1,
+0
+a0,
+0
+e2,
+1
+e1,
+1
+e0,
+1
+e2,
+2
+e1,
+2
+e0,
+2
+a2,
+1
+a1,
+1
+a0,
+1
+a2,
+2
+a1,
+2
+a0,
+2
+q1 q2
+y2y0
+k2
+k1
+k0
+v2
+v1
+v0
+cute
+are
+Cats
+so
+
+=== PAGE 61 ===
+Recall how transformers 
+decode language
+Transformer block
+Cats are so
+Cute
+Transformer block
+Transformer block
+Input Text
+
+=== PAGE 62 ===
+Key idea behind LLaVA – add visual 
+information to the LLM
+Transformer block
+Cats are so
+Cute
+Transformer block
+Transformer block
+Input Text
+V1 V2 VN…
+Input image tokensWhich image tokens 
+work best here? 
+
+=== PAGE 63 ===
+The CLIP encoder is a good option!
+At the end of training, you 
+have a model that will give 
+you a similarity score 
+between an image and a 
+text
+
+=== PAGE 64 ===
+Pooling token
+What features should we use 
+from CLIP?
+Patchify
+…
+CLS
+…
+Flatten + Linear proj + 
+2D pos embed
+CLS
+…
+Vision Transformer
+Extract Image Features from CLS 
+token for contrastive learning
+[Image source]
+
+=== PAGE 65 ===
+Pooling token
+What features should we use 
+from CLIP?
+Patchify
+…
+CLS
+…
+Flatten + Linear proj + 
+2D pos embed
+CLS
+…
+Vision Transformer
+But these tokens are not 
+supervised! (Could be random 
+and loss will not change)
+
+=== PAGE 66 ===
+Pooling token
+Use Penultimate Layer!
+Patchify
+…
+CLS
+…
+Flatten + Linear proj + 
+2D pos embed
+CLS
+…
+Vision Transformer
+CLS
+In practice, these tokens preserve spatial and linguistic 
+information best for LLMs. Can drop CLS for slight gains.
+L – 1 Layers Final Layer
+
+=== PAGE 67 ===
+LLaVA – Overall Architecture + Training Recipe
+Transformer block
+Cats are so
+Cute
+Transformer block
+Transformer block
+Input Text
+V1 V2 VN…
+Vision 
+Encoder 
+(CLIP)
+1. Initialize with pretrained Language Model
+for LLM Decoder (e.g. LLaMA) and
+pretrained image encoder (e.g. CLIP)
+2. T
+rain a new linear layer to bridge CLIP
+features to LLM input space
+3. Finetune LLM + linear layer together
+Linear Layer
+LLM 
+Decoder
+Can get reasonable performance with >100,000 samples 
+containing an input image, input instruction, and output text.
+
+=== PAGE 68 ===
+Flamingo followed up with a new way to fuse 
+visual features
+Transformer block
+<Image> cat so
+Cute
+Transformer block
+Transformer block
+This is
+Vision 
+encoder
+
+=== PAGE 69 ===
+Pre-trained parts of Flamingo
+Alayrac et al “Flamingo: a Visual Language Model for Few -Shot Learning. 2022.
+
+=== PAGE 70 ===
+There are 2 learned parts in Flamingo
+Alayrac et al “Flamingo: a Visual Language Model for Few -Shot Learning. 2022.
+
+=== PAGE 71 ===
+Perceiver sampler converts variable 
+sized image tokens to fixed sized 
+ones
+Alayrac et al “Flamingo: a Visual Language Model for Few -Shot Learning. 2022.
+
+=== PAGE 72 ===
+Flamingo full architecture
+Alayrac et al “Flamingo: a Visual Language Model for Few -Shot Learning. 2022.
+
+=== PAGE 73 ===
+Flamingo full architecture
+Learned method of 
+down-sampling 
+image/video 
+representations
+Alayrac et al “Flamingo: a Visual Language Model for Few -Shot Learning. 2022.
+
+=== PAGE 74 ===
+Flamingo full architecture
+Alayrac et al “Flamingo: a Visual Language Model for Few -Shot Learning. 2022.
+
+=== PAGE 75 ===
+Flamingo gated cross-attention
+Alayrac et al “Flamingo: a Visual Language Model for Few -Shot Learning. 2022.
+
+=== PAGE 76 ===
+Flamingo gated cross-attention
+Alayrac et al “Flamingo: a Visual Language Model for Few -Shot Learning. 2022.
+
+=== PAGE 77 ===
+Flamingo arranges its training data 
+similar to language modeling,
+with special tags <image>, <eos> to indicate when a 
+new image shows up or the text ends.
+Alayrac et al “Flamingo: a Visual Language Model for Few -Shot Learning. 2022.
+
+=== PAGE 78 ===
+Flamingo masked attention
+Alayrac et al “Flamingo: a Visual Language Model for Few -Shot Learning. 2022.
+
+=== PAGE 79 ===
+Flamingo masked attention
+Alayrac et al “Flamingo: a Visual Language Model for Few -Shot Learning. 2022.
+
+=== PAGE 80 ===
+Flamingo full architecture
+Alayrac et al “Flamingo: a Visual Language Model for Few -Shot Learning. 2022.
+
+=== PAGE 81 ===
+Flamingo results
+Alayrac et al “Flamingo: a Visual Language Model for Few -Shot Learning. 2022.
+
+=== PAGE 82 ===
+Alayrac et al “Flamingo: a Visual Language Model for Few -Shot Learning. 2022.
+Flaming enables in-context learning
+
+=== PAGE 83 ===
+Flamingo results
+Alayrac et al “Flamingo: a Visual Language Model for Few -Shot Learning. 2022.
+
+=== PAGE 84 ===
+Results: zero & few shot
+
+
+=== PAGE 85 ===
+Results: zero & few shot
+
+
+=== PAGE 86 ===
+Today, average performance across 
+11 visual understanding benchmarks
+API Only
+Open
+Weights
+Distilled
+
+=== PAGE 87 ===
+There are open -weight models
+but they are all distilled from GPT
+API Only
+Open
+Weights
+Distilled
+Open
+
+=== PAGE 88 ===
+How do we close the gap without relying 
+on proprietary models?
+
+=== PAGE 89 ===
+There are open -weight models
+but they are all distilled from GPT
+API Only
+Open
+Weights
+Distilled
+Open
+
+=== PAGE 90 ===
+Open
+Weights
+Data
+Code
+Evals
+API Only
+Open
+Weights
+Distilled
+Open
+Completely 
+Open
+Open Weights
+Open Data
+Open Code
+Open Evals
+
+=== PAGE 91 ===
+Open
+Weights
+Data
+Code
+Evals
+API Only
+Open
+Weights
+Distilled
+Open
+
+
+=== PAGE 92 ===
+with 325k pairwise comparisons
+and 870 human annotators
+One of the largest human 
+preference evaluations for VLMs
+
+=== PAGE 93 ===
+Molmo – 72B model ranks second for vision 
+tasks
+Barely second to GPT -4o
+Outperforming Gemini 1.5 Pro and Claude-3.5
+with 325k pairwise comparisons
+and 870 human annotators
+
+=== PAGE 94 ===
+Molmo-7B outperforms 
+- Gemini 1.5 Flash
+- LLAVA OneVision 72B
+- GPT-4V
+- QwenVL2 72B
+- and many others
+with 325k pairwise comparisons
+and 870 human annotators
+
+=== PAGE 95 ===
+Molmo grounds reasoning 
+directly in the pixels
+Example, it points when it 
+counts
+
+
+=== PAGE 96 ===
+Data matters! Quality over quantity even for pretraining
+LLAMA 3.1V
+6 Billion Image-Text pairs
+Molmo is trained with 
+PixMo
+700k Image -Text pairs
+
+=== PAGE 97 ===
+Internet data is incidental
+Human annotated data is intentional
+pink, japan, 
+aesthetic image
+love this winter picture by 
+person
+
+
+=== PAGE 98 ===
+PixMo data is intentional:
+This photograph captures a well -organized work desk set prominently 
+in the middle of the frame. The desk is large and rectangular , made 
+from a polished, rich wood that spans horizontally across the image . Its 
+structure is supported by four distinctive A -shaped legs, adding an 
+elegant touch. On the desk, a striking dual -monitor setup is noticeable: 
+a tall, vertical screen placed behind and to the right of a wider, 
+horizontal computer monitor.
+To the right of these monitors, a black mouse rests on a mouse pad. 
+Scattered around the mouse pad, some white papers or letters are 
+strewn across the far right side. On the left side of the desk, a black 
+desk lamp with an extended arm hangs down, illuminating the 
+workspace. Nearby, a stack of books is neatly placed in the upper left 
+corner of the table.
+The background wall is painted a subtle beige -white, complementing 
+the refined ambiance of the space. The floor below the desk features 
+elegant pinkish marble tiles, enhancing the room’s sophisticated look. 
+To the far right of the image, a large window or patio door allows natural 
+light to pour in, with clear glass that offers a glimpse into the outside 
+area. This exterior view includes part of a rustic brick wall and a metal 
+pail, hinting at an adjacent patio.
+
+
+=== PAGE 99 ===
+Collecting dense captions is hard!!!
+This image features a screenshot taken from a tablet device . At the top -right corner, the time is displayed as 11:48, 
+alongside a battery icon indicating 67% power remaining . The device also shows a telephony signal strength of four out of 
+five bars and roughly three -quarters Wi -Fi connectivity. Additionally, a clock alarm icon is present, as well as an icon 
+resembling a white rectangle with a blue letter "N" in it, whose specific function is unclear.
+The main portion of the screen, approximately 80% of it, is a solid medium blue color devoid of any content. At the bottom of
+the screen, there are several folders and icons representing various apps and functionalities:
+1. The first folder contains three icons:
+- An icon likely for contacts.
+- An icon probably for telephone.
+- An icon that seems to represent a text messaging app.
+2. The second folder houses four apps:
+- A Gmail app icon indicated by a red "M" on a white background.
+- A YouTube app icon characterized by a red play button.
+- A map app icon depicting a map.
+- An unidentified app icon represented by a blue folder with its top corner bent down on the right.
+3. The third icon is a white oval with six dots, arranged in two rows of three, likely representing an app drawer or menu.
+4. The fourth icon resembles a red, yellow, and green shutter with a blue dot in the middle, suggesting it might be for a
+camera or photo viewing app.
+5. Next to it, there is a silver colored camera icon with a black lens and a blue spot in the center, hinting at a camer a
+application.
+At
+ the very bottom of the screen , there are three navigational icons:
+- A left arrow triangle in white at the bottom- left corner.
+- A white oval in the center, indicative of a home button.
+- A white rectangle on the bottom -right corner, likely for accessing recent apps or multitasking.
+Overall, this image captures the home screen of a tablet, providing an overview of available functionalities and connectivity
+status.
+
+
+=== PAGE 100 ===
+Questions designed to extract meaningful visual information 
+from annotators
+• What is the image at first glance?
+• What are the objects and their counts?
+• What does the text say?
+• What are the positions of the objects?
+• What subtle details are noticeable?
+• What is in the background?
+• What is the style and color?
+
+=== PAGE 101 ===
+People don’t like to type
+… but they love to talk
+We ask annotators to speak for 60 to 90 
+seconds about an image
+We automatically convert speech into 
+text for pretraining
+
+=== PAGE 102 ===
+Start with off-the-self
+Large Language Model 
+& Visual Encoder
+
+
+=== PAGE 103 ===
+From perception To action
+
+
+=== PAGE 104 ===
+Pointing to count, pointing to ground
+
+
+=== PAGE 105 ===
+Pointing examples
+
+
+=== PAGE 106 ===
+Chaining Molmo + SAM 2
+
+
+=== PAGE 107 ===
+Foundation Models
+Language
+ELMo
+BERT
+GPT
+T5
+Classification
+CLIP
+CoCa
+LM + Vision
+LLaVA
+Flamingo
+GPT-4V
+Gemini
+Molmo
+And More!
+Segment Anything
+Whisper
+Dalle
+Stable Diffusion
+Imagen
+Chaining
+LMs + CLIP
+Visual Programming
+
+=== PAGE 108 ===
+Segment Anything Model (SAM)
+What does it mean to have a segmentation foundation model?
+Images: He et al. Mask R-CNN. 2017
+Masking model trained on 
+dataset of specific number of 
+objects (80 in COCO)
+Model outputs masks of all 
+objects in that image that is one 
+of the categories of interest
+
+=== PAGE 109 ===
+Segment Anything Model (SAM)
+What does it mean to have a segmentation foundation model?
+Images: Kirillov et al. Segment Anything. 2023.
+Masking model trained on a 
+dataset of a huge number of 
+categories
+Model outputs mask of any 
+objects that the user cares 
+about
+
+=== PAGE 110 ===
+Segment Anything Model (SAM)
+What does it mean to have a segmentation foundation model?
+Images: Kirillov et al. Segment Anything. 2023.
+Masking model trained on a 
+dataset of a huge number of 
+categories
+Model outputs mask of any 
+objects that the user cares 
+about
+How to get this?
+How to know this?
+
+=== PAGE 111 ===
+How to know what to mask?
+“Cats”
+
+=== PAGE 112 ===
+Basic SAM Architecture
+Images: Kirillov et al. Segment Anything. 2023.
+
+=== PAGE 113 ===
+SAM Architecture
+Images: Kirillov et al. Segment Anything. 2023.
+
+=== PAGE 114 ===
+Ambiguity in correct prompt 
+Images: Kirillov et al. Segment Anything. 2023.
+
+=== PAGE 115 ===
+Ambiguity in correct prompt 
+Images: Kirillov et al. Segment Anything. 2023.
+
+=== PAGE 116 ===
+SAM Architecture
+Images: Kirillov et al. Segment Anything. 2023.
+
+=== PAGE 117 ===
+Basic SAM Architecture
+Images: Kirillov et al. Segment Anything. 2023.
+1. Loss only calculated with respect to best mask
+2. Model also trained to output confidence score for each mask
+
+=== PAGE 118 ===
+Segment Anything Model (SAM)
+What does it mean to have a segmentation foundation model?
+Images: Kirillov et al. Segment Anything. 2023.
+Masking model trained on a 
+dataset of a huge number of 
+categories
+Model outputs mask of any 
+objects that the user cares 
+about
+How to get this?
+How to know this?
+
+=== PAGE 119 ===
+Segment Anything Model (SAM)
+Image Source: https://segment-anything.com/
+
+
+=== PAGE 120 ===
+Segment Anything Model (SAM)
+Images: Kirillov et al. Segment Anything. 2023.
+
+=== PAGE 121 ===
+SAM Results
+Image Source: Kirillov et al. Segment Anything. 2023
+
+
+=== PAGE 122 ===
+SAM Results
+Image Source: Kirillov et al. Segment Anything. 2023
+
+
+=== PAGE 123 ===
+Zero-Shot with SAM
+Image Source: https://segment-anything.com/
+
+=== PAGE 124 ===
+Zero-Shot with SAM
+Image Source: https://segment-anything.com/
+
+=== PAGE 125 ===
+Foundation Models
+Language
+ELMo
+BERT
+GPT
+T5
+Classification
+CLIP
+CoCa
+LM + Vision
+LLaVA
+Flamingo
+GPT-4V
+Gemini
+Molmo
+And More!
+Segment Anything
+Whisper
+Dalle
+Stable Diffusion
+Imagen
+Chaining
+LMs + CLIP
+Visual Programming
+
+=== PAGE 126 ===
+What happens when a model is asked to classify 
+a concept it has never seen?
+A photo of a marimba
+A photo of a viaduct
+A photo of a papillon
+A photo of a lorikeet
+Pratt et al “What does a platypus look like? Generating customized prompts for zero -shot image classification”. 2023.
+
+=== PAGE 127 ===
+Solution: chaining
+1. Get an LLM to generate a description.
+2. Classify using the description
+Pratt et al “What does a platypus look like? Generating customized prompts for zero -shot image classification”. 2023.
+
+=== PAGE 128 ===
+CuPL (CUstomized Prompts via Language models)
+Pratt et al “What does a platypus look like? Generating customized prompts for zero -shot image classification”. 2023.
+
+=== PAGE 129 ===
+CuPL (CUstomized Prompts via Language models)
+Pratt et al “What does a platypus look like? Generating customized prompts for zero -shot image classification”. 2023.
+
+=== PAGE 130 ===
+Can we generalize the idea of chaining to all 
+vision tasks?
+Are there 3 people in the boat?
+Many Visual Question 
+Answering models which 
+have been trained to do 
+this type of task
+Gupta et al “Visual Programming: Compositional visual reasoning without training”. 2023.
+
+=== PAGE 131 ===
+VisProg (visual programming)
+Gupta et al “Visual Programming: Compositional visual reasoning without training”. 2023.
+
+=== PAGE 132 ===
+VisProg (visual programming)
+Train a new model for 
+your task
+Write a python script with the 
+models you have
+Multi-image 
+VQA model
+output
+Class MyMultiImageVQA():
+Def ProcessIms():
+Ans1 = VQA(Image1)
+Ans2 = VQA(Image2)
+Return Ans1 + Ans2
+General to 2 images now, but not beyond that
+Gupta et al “Visual Programming: Compositional visual reasoning without training”. 2023.
+
+=== PAGE 133 ===
+VisProg (visual programming)
+Class MyMultiImageVQA():
+Def ProcessIms():
+Ans1 = VQA(Image1)
+Ans2 = VQA(Image2)
+Return Ans1 + Ans2
+GPT False
+Gupta et al “Visual Programming: Compositional visual reasoning without training”. 2023.
+
+=== PAGE 134 ===
+VisProg (visual programming)
+Gupta et al “Visual Programming: Compositional visual reasoning without training”. 2023.
+
+=== PAGE 135 ===
+VisProg (visual programming)
+Gupta et al “Visual Programming: Compositional visual reasoning without training”. 2023.
+
+=== PAGE 136 ===
+VisProg (visual programming)
+Gupta et al “Visual Programming: Compositional visual reasoning without training”. 2023.
+
+=== PAGE 137 ===
+VisProg (visual programming)
+Gupta et al “Visual Programming: Compositional visual reasoning without training”. 2023.
+
+=== PAGE 138 ===
+VisProg (visual programming)
+Gupta et al “Visual Programming: Compositional visual reasoning without training”. 2023.
+
+=== PAGE 139 ===
+Summary
+Foundation 
+Model
+Large Scale 
+Diverse 
+Dataset
+Task 
+1
+Task 
+2
+Task 
+3
+Task 
+4
+
+=== PAGE 140 ===
+Summary
+
+
+=== PAGE 141 ===
+Summary
+
+
+=== PAGE 142 ===
+Summary
+
+
+=== PAGE 143 ===
+Summary
+

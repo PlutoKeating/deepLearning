@@ -1,0 +1,266 @@
+=== PAGE 1 ===
+Lecture 2: Image Classification with Linear Classifiers
+Prof. Xiaowei HU
+
+
+=== PAGE 2 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 3 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 4 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 5 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 6 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 7 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 8 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 9 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 10 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 11 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 12 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 13 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 14 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 15 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 16 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 17 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 18 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 19 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 20 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 21 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 22 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 23 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 24 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 25 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 26 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 27 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 28 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 29 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 30 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 31 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 32 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 33 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 34 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 35 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 36 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 37 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 38 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 39 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 40 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 41 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 42 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 43 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 44 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 45 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 46 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 47 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 48 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 49 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 50 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 51 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 52 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 53 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 54 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 55 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 56 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 57 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 58 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 59 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 60 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 61 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 62 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 63 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 64 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 65 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 66 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 67 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 68 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 69 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 70 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 72 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 73 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 74 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 75 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 76 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 77 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 78 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 79 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 80 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 81 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 82 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 83 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 84 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 85 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 86 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 87 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 89 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli
+
+=== PAGE 91 ===
+Courtesy of Fei-Fei Li & Ehsan Adeli

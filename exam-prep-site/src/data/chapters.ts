@@ -27,4 +27,5 @@ export const labs = [
   { id: 1, name: 'Lab 1: PyTorch入门', file: 'lab01_pytorch_intro.md' },
   { id: 2, name: 'Lab 2: CNN与迁移学习', file: 'lab02_cnn_transfer.md' },
   { id: 3, name: 'Lab 3: 检测与分割', file: 'lab03_detection_seg.md' },
+  { id: 4, name: 'Lab 4: DCGAN生成对抗网络', file: 'lab04_dcgan_generation.md' },
 ];

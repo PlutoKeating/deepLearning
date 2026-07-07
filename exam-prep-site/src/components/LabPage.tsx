@@ -16,11 +16,11 @@ export default function LabPage({ name, file }: LabPageProps) {
       .then(async (res) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const text = await res.text();
-        setContent(text || `# ${name}\n\nContent pending.`);
+        setContent(text || `# ${name}\n\n内容加载中... Content pending.`);
         setLoading(false);
       })
       .catch(() => {
-        setContent(`# ${name}\n\nLab content is being generated. Please check back soon.`);
+        setContent(`# ${name}\n\n实验回顾内容正在同步加载中，请稍后刷新重试... Lab content is syncing.`);
         setLoading(false);
       });
   }, [file, name]);
@@ -29,7 +29,7 @@ export default function LabPage({ name, file }: LabPageProps) {
     return (
       <div className="flex items-center justify-center py-20">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-400" />
-        <span className="ml-3 text-gray-400">Loading lab content...</span>
+        <span className="ml-3 text-gray-400">正在加载实验内容... Loading lab content...</span>
       </div>
     );
   }

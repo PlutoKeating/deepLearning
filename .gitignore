@@ -35,3 +35,10 @@ Thumbs.db
 # Temp
 .tmp/
 *.log
+
+# Claude folders
+.claude/
+
+# Lab 04 Ignored files
+labs/lab04_dcgan_generation/data/
+labs/lab04_dcgan_generation/outputs/

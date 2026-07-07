@@ -21,12 +21,12 @@ function Layout() {
         flex flex-col
       `}>
         <div className="p-5 border-b border-gray-800">
-          <h1 className="text-lg font-bold text-white">Deep Learning & CV</h1>
-          <p className="text-xs text-gray-500 mt-1">Final Exam Prep Wiki</p>
+          <h1 className="text-lg font-bold text-white">深度学习与视觉 · DL & CV</h1>
+          <p className="text-xs text-gray-500 mt-1">期末通关备考知识库 Prep Wiki</p>
         </div>
 
         <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider px-2 mb-2 mt-2">Chapters</p>
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider px-2 mb-2 mt-2">章节精讲 (Chapters)</p>
           {chapters.map((ch) => (
             <NavLink
               key={ch.id}
@@ -43,7 +43,7 @@ function Layout() {
             </NavLink>
           ))}
 
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider px-2 mb-2 mt-6">Labs</p>
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider px-2 mb-2 mt-6">实验回顾 (Labs)</p>
           {labs.map((lab) => (
             <NavLink
               key={lab.id}

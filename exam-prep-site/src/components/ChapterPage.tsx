@@ -26,7 +26,7 @@ export default function ChapterPage({ chapter }: ChapterPageProps) {
         setError(`第 ${chapter.id} 章内容正在努力加载或同步中，请稍后刷新重试... Chapter content is syncing.`);
         setLoading(false);
       });
-  }, [chapter.file]);
+  }, [chapter.file, chapter.id]);
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">

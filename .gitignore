@@ -5,8 +5,8 @@ yarn-debug.log*
 yarn-error.log*
 
 # Vite / React build output
-exam-prep-site/dist/
-exam-prep-site/dist-ssr/
+study-site/dist/
+study-site/dist-ssr/
 
 # Python / Virtual Environment
 .venv/

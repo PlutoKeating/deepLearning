@@ -55,7 +55,7 @@ Preparing for a rigorous final exam in Deep Learning and Computer Vision? Look n
 
 ```bash
 deepLearning/
-├── exam-prep-site/         # 💻 Decoupled React+Vite web application
+├── study-site/             # 💻 Decoupled React+Vite web application
 │   ├── src/                #   └─ Flashcards, quiz dashboard, and paper explorer
 │   └── public/             #   └─ Static public assets
 ├── references/             # 📚 Study Raw Source Materials
@@ -78,7 +78,7 @@ Launch the interactive dashboard locally:
 
 ```bash
 # Navigate to the site folder
-cd exam-prep-site
+cd study-site
 
 # Install package dependencies
 npm install
@@ -87,7 +87,7 @@ npm install
 npm run dev
 ```
 
-### 2. Compile Static Assets
+### 2. Build for Production
 
 To build the static application for production deployment:
 
@@ -100,7 +100,7 @@ The optimized single-page app will be outputted to `dist/`, ready to upload and 
 
 ## ☁️ Cloudflare Pages Deployment Guide
 
-This decoupled web application (`exam-prep-site/`) is perfectly engineered for seamless hosting on **Cloudflare Pages** with automated CI/CD.
+This decoupled web application (`study-site/`) is perfectly engineered for seamless hosting on **Cloudflare Pages** with automated CI/CD.
 
 ### Step-by-Step Deployment Configuration
 
@@ -113,7 +113,7 @@ This decoupled web application (`exam-prep-site/`) is perfectly engineered for s
 | **Project Name** | `deep-learning-study-site` | Your public subdomain (e.g., `deep-learning-study-site.pages.dev`) |
 | **Production Branch** | `main` | The default branch to trigger live production deployments |
 | **Framework Preset** | **Vite** | Auto-configures standard Vite single-page application presets |
-| **Root Directory** | `exam-prep-site` | **[CRITICAL]** Points Cloudflare to the sub-folder containing the frontend project |
+| **Root Directory** | `study-site` | **[CRITICAL]** Points Cloudflare to the sub-folder containing the frontend project |
 | **Build Command** | `npm run build` | Compiles the React + TS + Vite project |
 | **Build Output Directory** | `dist` | The folder containing production-ready compiled static HTML/JS/CSS |
 
@@ -121,7 +121,7 @@ This decoupled web application (`exam-prep-site/`) is perfectly engineered for s
 5. **Click "Save and Deploy":** Cloudflare will instantly pull your code, install dependencies, run the Vite build, and deploy your site live!
 
 > [!IMPORTANT]
-> Because we have set the **Root Directory** to `exam-prep-site`, Cloudflare Pages will run all installation and build commands relative to that subdirectory. Do not set the build command to `cd exam-prep-site && npm run build` unless Root Directory is left blank.
+> Because we have set the **Root Directory** to `study-site`, Cloudflare Pages will run all installation and build commands relative to that subdirectory. Do not set the build command to `cd study-site && npm run build` unless Root Directory is left blank.
 
 > [!NOTE]
 > Every commit pushed to your GitHub `main` branch will trigger an automated build and deploy. Preview deployments are also automatically generated for non-main branches!
